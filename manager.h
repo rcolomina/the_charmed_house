@@ -73,7 +73,7 @@ class Manager{
 	  vector<string> v_comandos;
 
 	  //TODO: Construir escenarios y objetos del mundo
-	  map<string,Escenario*> escenarios_mundo;
+	  map<string,Escenario*> mundo;
 	  map<string,Objeto> objetos_mundo;
 	  
 	  //Inventario y jugador por defecto.

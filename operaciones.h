@@ -8,6 +8,7 @@
 
 #include "parametros.h"
 #include "escenario.h"
+#include "inventario.h"
 
 using namespace std;
 using namespace parametros;
@@ -50,10 +51,14 @@ class Ver : public ICommand{
 //class Ver : public ICommand{};
 class Examinar: public ICommand{
 	public:
-	  Examinar(Escenario &escenario):escenario(escenario){}	  
+	 Examinar(Escenario &escenario,Inventario &inventario,string &parametro):
+		  escenario(escenario),inventario(inventario),parametro(parametro){}	  
 	  void execute();
+	  string describir_objeto(Objeto *objeto);
 	private:
 	  Escenario &escenario;
+ 	  Inventario &inventario;
+	  string &parametro;
 };
 //class Inventario : public ICommand{};
 

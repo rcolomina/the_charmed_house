@@ -20,6 +20,8 @@ class Invocador{
 	  void salir();
 	  void ayuda_comandos();
 	  void ver_comando();
+	  void examinar_comando(string parametro);
+
 	  void set_command(ICommand *command);
 
 	private:

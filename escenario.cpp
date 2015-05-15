@@ -12,10 +12,10 @@ bool Escenario::get_existe_objeto_escenario(string nombre){
 	  
 	  for(map<string,Objeto*>::iterator it=objetos.begin();
 			it!=objetos.end();
-			it++)
-	 			 if(it->second->get_nombre()==nombre)
+			it++){
+	 		 if(it->first==nombre)
 						return true;
-
+	  }
 	  return false;
 }
 
@@ -26,10 +26,10 @@ string Escenario::get_objetos_disponibles(){
 	  for(map<string,Objeto*>::iterator it=objetos.begin();
 			it!=objetos.end();it++){
 			 lista_objetos+=" ";
-			 lista_objetos+=it->second->get_nombre();
+			 lista_objetos+=it->first;
 	  }
 	  if(lista_objetos=="")
-			 return string("no objetos");
+			 return string("No hay nada");
 
 	 return lista_objetos;
 }

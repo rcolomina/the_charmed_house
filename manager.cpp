@@ -27,7 +27,7 @@ Manager::Manager():dt(1.0/60.0),tiempo(0),continuar_loop(true),contador_mal_comp
 	  Escenario *escena=new Escenario(id_escena1,nombre1,descripcion1,observacion1);
 
 	  //insertar escenario en mundo
-	  escenarios_mundo[nombre1]=escena;
+	  mundo[nombre1]=escena;
 
 	  //selecionamos la escena de arranque del juego. TODO: Cargar desde fichero de salvaguarda
 	  escena_actual=escena;
@@ -40,7 +40,7 @@ Manager::Manager():dt(1.0/60.0),tiempo(0),continuar_loop(true),contador_mal_comp
 	  escena=new Escenario(2,nombre,descripcion2,observacion2);
 
 	  //insertar escenario en mundo
-	  escenarios_mundo[nombre]=escena;
+	  mundo[nombre]=escena;
 
 
 	  //TERCENRA ESCENA: Lapida
@@ -51,14 +51,14 @@ Manager::Manager():dt(1.0/60.0),tiempo(0),continuar_loop(true),contador_mal_comp
 	  escena=new Escenario(3,nombre,descripcion3,observacion3);
 	  
 	  //insertar escenario en mundo
-	  escenarios_mundo[nombre]=escena;
+	  mundo[nombre]=escena;
 
 	  //ENLAZAR ESCENARIOS ENTRE SI
 	  //Id: 1->(2,3) ,2<->1, 3<->1
-     escenarios_mundo[escena1]->set_salida(escenarios_mundo[escena2],oeste);
-     escenarios_mundo[escena1]->set_salida(escenarios_mundo[escena3],este);
-	  escenarios_mundo[escena2]->set_salida(escenarios_mundo[escena1],este);
-	  escenarios_mundo[escena3]->set_salida(escenarios_mundo[escena1],oeste);
+     mundo[escena1]->set_salida(mundo[escena2],oeste);
+     mundo[escena1]->set_salida(mundo[escena3],este);
+	  mundo[escena2]->set_salida(mundo[escena1],este);
+	  mundo[escena3]->set_salida(mundo[escena1],oeste);
 
 	  //CONSTRUIR OBJETOS
 	  int id_obj=1;
@@ -84,11 +84,11 @@ Manager::Manager():dt(1.0/60.0),tiempo(0),continuar_loop(true),contador_mal_comp
 
 	  //INSERTAR OBJETOS EN ESCENARIOS
 	  
-	  escenarios_mundo[escena2]->set_objeto(o_baston);
+	  mundo[escena2]->set_objeto(o_baston);
 
 	  //entrada de la mandion
-	  escenarios_mundo[escena1]->set_objeto(o_ladrillo);
-	  escenarios_mundo[escena1]->set_objeto(o_llave);
+	  mundo[escena1]->set_objeto(o_ladrillo);
+	  mundo[escena1]->set_objeto(o_llave);
 
 	  //CONSTRUIR INVENTARIO
 	  //inventario.insertar_objeto(objeto);
@@ -97,10 +97,12 @@ Manager::Manager():dt(1.0/60.0),tiempo(0),continuar_loop(true),contador_mal_comp
      ICommand *exit=new Exit(continuar_loop);
 	  ICommand *ayuda=new Ayuda(v_comandos);
 	  ICommand *ver=new Ver(&escena_actual); //pasar direccion del puntor a una escena
+	  ICommand *examinar=new Examinar(*escena_actual,inventario,parametro1); //pasamos direccion al escenario actual y al inventario
 
 	  mapComandos[s_exit]=exit;
 	  mapComandos[s_ayuda]=ayuda;
 	  mapComandos[s_ver]=ver;
+	  mapComandos[s_examinar]=examinar;
 	  
 	  //construir invocador de comandos
 	  invocador_comandos=Invocador(mapComandos);
@@ -191,7 +193,7 @@ string Manager::get_descripcion_estado_actual(){
 	  descripcion+="\n";
 	  if(escena_actual->get_objetos_disponibles()!="")
 	       {
-			 descripcion+="Puedes ver: ";
+			 descripcion+="Puedes ver : \n";
 	       descripcion+=escena_actual->get_objetos_disponibles();
           }
 		return descripcion;
@@ -230,8 +232,8 @@ void Manager::tratamiento_comandos(string comando){
 			  if(comando==s_ver)
 					invocador_comandos.ver_comando();
 
-//			  if(comando==s_examinar)
-//					 invocador_comandos.examinar_comando();
+			  if(comando==s_examinar)
+					 invocador_comandos.examinar_comando(parametro1);
 
 //			  if(comando==s_ver))
 //			  invocador_comandos.ver_descripcion();
@@ -243,7 +245,7 @@ void Manager::tratamiento_comandos(string comando){
 //					cout<<endl<<get_comandos_disponibles();
 
 //					cout<<endl<<get_descripcion_estado_actual();
-
+/*
 			 else if(comando=="examinar"){
 					if(parametro1=="")
 						  cout<<escena_actual->get_observacion()<<endl;
@@ -262,10 +264,10 @@ void Manager::tratamiento_comandos(string comando){
 							  cout<<"No se puede examinar eso.";
 						}
 						  
-			      }
+			      }*/
 
-			 else if(comando=="inventario")
-					cout<<endl<<"Posees lo siguiente: "<<inventario.listar()<<endl;
+			 if(comando=="inventario")
+				  cout<<endl<<"Posees lo siguiente: "<<endl<<inventario.listar()<<endl;
 
 			 else if(comando=="norte" or comando=="n")
                {
@@ -404,15 +406,15 @@ void Manager::actualizar_objetos(){
 //SEGURO??
 
 // Escenario 1: La entrada de la mansion
-	  if(escena_actual->get_id()==1){
+	  if(escena_actual->get_id()==id_escena1){
 			 //Chequear el ladrillo de la puerta
-			 Objeto *ladrillo=escenarios_mundo[escena1]->get_objeto("ladrillo");
-			 Objeto *llave=escenarios_mundo[escena1]->get_objeto("llave dorada");
+/*			 Objeto *ladrillo=mundo[escena1]->get_objeto(o_ladrillo);
+			 Objeto *llave=mundo[escena1]->get_objeto(o_llave);
 			 if(llave!=NULL and ladrillo!=NULL)
 					if(not llave->get_visible() and ladrillo->get_usado()){
 						  cout<<"Una llave dorada aparece ante tu vista."<<endl;
 						  llave->set_visible(true);
-					}
+					}*/
 
 			 //
 

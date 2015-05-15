@@ -71,6 +71,8 @@ namespace parametros{
 	  const string descripcion3="Cerca de la casa hay un pequeños cementerio. En una de las lápidas puedes leer unas extrañas inscripciones grabadas en forma de árbol.";
 	  const string observacion3="Mirando atentamente sobre una de las lápida, descubres una inscripción: I-D-I-I-D-D-I-D-I-D-D-D. ¿Podrían ser paso de baile?";
 
+	  const string descripcion4="";
+	  const string descripcion5="";
 	  //OBJETOS DEL MUNDO
 	  
 

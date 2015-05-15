@@ -10,7 +10,8 @@ void Ayuda::execute(){
 //				 cout<<"Ayuda : execute()"<<endl;
 				 cout<<"Comandos disponibles:"<<endl;
 				 
-				 for(vector<string>::iterator it=v_comandos.begin();it!=v_comandos.end();
+				 for(vector<string>::iterator it=v_comandos.begin();
+					   it!=v_comandos.end();
 						it++)
 				 {
 						cout<<*it<<" ";
@@ -34,5 +35,14 @@ void Ver::execute(){
 }
 
 void Examinar::execute(){
+
+		  //recorrer objetos del escenario actual y del inventario
+	  if(string(parametro)==string(""))
+			cout<<"¿Examinar que? (deletrea correctamente)"<<endl;
+	 else if(inventario.get_existe_objeto(parametro))
+			cout<<(inventario.get_objeto(parametro))->get_descripcion()<<endl;
+	 else if(escenario.get_existe_objeto_escenario(parametro))
+			cout<<(escenario.get_objeto(parametro))->get_descripcion()<<endl;		  
+
 
 }

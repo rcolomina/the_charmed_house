@@ -4,7 +4,7 @@ Inventario::Inventario(){}
 
 
 string Inventario::listar(){
-	  string lista_inventario="";
+	  string lista_inventario=string("");
 	  //Recorrer map
 	  for(map<string,Objeto*>::iterator it=objetos_inventario.begin();
 			it!=objetos_inventario.end();it++){
@@ -21,7 +21,8 @@ string Inventario::listar(){
 bool Inventario::get_existe_objeto(string nombre){
 	  for(map<string,Objeto*>::iterator it=objetos_inventario.begin();
 		  it!=objetos_inventario.end();it++)
-			 if(it->first==nombre)return true;
+			 if(it->first==nombre)
+				  return true;
 	  return false;
 
 }
