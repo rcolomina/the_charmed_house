@@ -9,6 +9,10 @@
 #include <map>
 #include <list>
 
+//#include <thread>         // std::this_thread::sleep_for
+//#include <chrono>         // std::chrono::seconds
+ 
+
 #include "inventario.h"
 //#include "escenario.h"
 #include "objeto.h"
@@ -32,6 +36,8 @@ class Manager{
 	  void update();
 	  void dibujar();
      void tratamiento_comandos(string comando);
+
+	  void prologo();
 
 	  void actualizar_objetos();
 	  void actualizar_salidas();

@@ -18,9 +18,9 @@ Manager::Manager():dt(1.0/60.0),tiempo(0),continuar_loop(true),contador_mal_comp
 //	  tiempo=0; //segundos	  
 	  //variables del jugador
 //	  contador_mal_comportamiento=0;
+	  int id_escena;
 
 	  //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero 
-	  int id_escena=1;
 	  string nombre="La entrada principal de la mansion";
 	  //string escena=nombre;
      //creamos la escena 
@@ -111,12 +111,46 @@ Manager::Manager():dt(1.0/60.0),tiempo(0),continuar_loop(true),contador_mal_comp
 
 }
 
+void Manager::prologo(){
+
+	  cout<<endl<<"¡BIENVENIDO QUERIDO JUGADOR! \n\nLA CASA ENVANTADA v1.0"<<endl<<endl;
+	  cout<<tituloPreludio<<endl;
+
+	  string my_string=textoPreludio1;
+	  string::iterator my_iter;
+	  for(my_iter = my_string.begin(); my_iter != my_string.end(); my_iter++)
+	  {
+			 usleep(50000);
+			 cout<<*my_iter<<flush;
+	  }
+
+	  cout<<endl;
+//	  cout<<textoPreludio1<<endl;
+	  sleep(2);
+
+	  my_string=textoPreludio2;
+	  for(my_iter = my_string.begin(); my_iter != my_string.end(); my_iter++)
+	  {
+			 usleep(50000);
+			 cout<<*my_iter<<flush;
+	  }
+	  
+
+	  sleep(3);
+	  cout<<endl;
+	  cout<<textoComienzo<<endl;
+	  cout<<endl;
+	  sleep(4);
+
+}
+
 void Manager::run(){
 
 	  //Marcar la primera entrada al metodo
 	  primera_entrada=true;
 
-	  cout<<endl<<"¡BIENVENIDO QUERIDO JUGADOR! \n\nLA CASA ENVANTADA v1.0"<<endl<<endl;
+//	  prologo();
+
 
 	  while(continuar_loop){
 
@@ -266,7 +300,7 @@ void Manager::tratamiento_comandos(string comando){
 						  
 			      }*/
 
-			 if(comando=="inventario")
+			 if(comando=="inventario" or comando=="i")
 				  cout<<endl<<"Posees lo siguiente: "<<endl<<inventario.listar()<<endl;
 
 			 else if(comando=="norte" or comando=="n")

@@ -59,7 +59,17 @@ namespace parametros{
 
 
      //DESCRIPCIONES ESCENARIOS: TODO ¿Cómo organizar las descripciones y observaciones de un escenario?
+
 	  const int id_escena1=1;
+
+	  const string tituloPreludio="PRELUDIO:";
+
+ 	  const string textoPreludio1="En un pueblo lejos de la ciudad, había una casa ruinosa y antigua desde que tengo ojos para ver. Como aventurero que soy, he tenido en mente explorarla en todo momento, pero nunca me he atrevido. Existen carteles prohibiendo el paso en sus alrededores. Quien quiera que sea el dueño, desea que los intrusos permanezcan lejos.";
+	  const string textoPreludio2="Durante noches había estado soñando con aquella casa en ruinas, imaginando que podría haber en su inferior. Una noche, en uno de mis sueños, vislumbré una figura humana irreconocible. Lo único que pude descifrar en aquel enigmático sueño, es la llamada de aquella entidad. Susurraba, -Ayuuudame!!, ayuudame!!-.  \n Desde aquel momento, no pude esperar más. Debía entrar en aquella casa abandonada,  a pesar de que las advertencias en los alrededores.";
+
+	 const string textoComienzo="La aventura comienza…" ; 
+
+
 	  const string nombre1="La Entrada a la Casa";
 	  const string escena1=nombre1;
 	  const string descripcion1="Una casa antigua construída en piedra y madera se presenta ante tí. \nA duras penas se sostiene sobre sus\n cimientos.\nHay carteles de cortesia advirtiendo a los intrusos. \n¡ATENCION! NO PASAR, PELIGRO, FUERA!, A LA MIERDA, ¿NO TE HAS ENTERADO?.";
