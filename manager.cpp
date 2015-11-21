@@ -2,9 +2,9 @@
 
 using namespace parametros;
 
-Manager::Manager():dt(1.0/60.0),tiempo(0),continuar_loop(true),contador_mal_comportamiento(0)
-	  
+const double freq=1.0/60.0; 
 
+Manager::Manager():dt(freq),tiempo(0),continuar_loop(true),contador_mal_comportamiento(0)
 {
 	  //Crear vector de comandos
 	  comandos_disponibles="Comandos disponibles:";
