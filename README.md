@@ -1,2 +1,2 @@
-# LaCasaEncantada
-Juego conversacional en modo texto para Linux.
+# The Charmed House
+Convensational text Game for Linux OS
