@@ -5,16 +5,10 @@
 
 #include "operaciones.h"
 
-// Ejecuta los comandos
+// This class gather all commands existing in game.
 class Invocador{
 	public:
 	  Invocador(){}
-//	  Invocador(ICommand *exit=0):exit(exit){}
-	  Invocador(ICommand *exit,
-					ICommand *ayuda,
-					ICommand *ver):
-			 exit(exit),ayuda(ayuda),ver(ver){}
-	  //Invocador(list<ICommand*> lcomandos):lcomandos(lcomandos){}
 	  Invocador(map<string,ICommand*> mapComandos):mapComandos(mapComandos){}
 
 	  void salir();
@@ -24,10 +18,12 @@ class Invocador{
 
 	  void set_command(ICommand *command);
 
+      void exec(string command);    
+ 
 	private:
-	  ICommand *exit;
+     /*  ICommand *exit;
 	  ICommand *ayuda;
-	  ICommand *ver;
+	  ICommand *ver;*/
 
 	  //list<ICommand*> lcomandos;
 	   map<string,ICommand*> mapComandos;

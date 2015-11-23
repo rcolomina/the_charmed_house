@@ -1,5 +1,7 @@
 #include "operaciones.h"
 
+
+
 void Exit::execute(){
 //			 cout<<"Exit desde Exit"<<endl;
 			 continuar_loop=false;
@@ -36,9 +38,10 @@ void Ver::execute(){
 
 void Examinar::execute(){
 
+     // This shows user a description of objects examinated
 		  //recorrer objetos del escenario actual y del inventario
 	  if(string(parametro)==string(""))
-			cout<<"¿Examinar que? (deletrea correctamente)"<<endl;
+			cout<<"What examine? (spell it correctly)"<<endl;
 	 else if(inventario.get_existe_objeto(parametro))
 			cout<<(inventario.get_objeto(parametro))->get_descripcion()<<endl;
 	 else if(escenario.get_existe_objeto_escenario(parametro))

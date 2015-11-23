@@ -55,8 +55,8 @@ Manager::Manager():dt(freq),tiempo(0),continuar_loop(true),contador_mal_comporta
 
 	  //ENLAZAR ESCENARIOS ENTRE SI
 	  //Id: 1->(2,3) ,2<->1, 3<->1
-     mundo[escena1]->set_salida(mundo[escena2],oeste);
-     mundo[escena1]->set_salida(mundo[escena3],este);
+      mundo[escena1]->set_salida(mundo[escena2],oeste);
+      mundo[escena1]->set_salida(mundo[escena3],este);
 	  mundo[escena2]->set_salida(mundo[escena1],este);
 	  mundo[escena3]->set_salida(mundo[escena1],oeste);
 
@@ -94,7 +94,7 @@ Manager::Manager():dt(freq),tiempo(0),continuar_loop(true),contador_mal_comporta
 	  //inventario.insertar_objeto(objeto);
 
 	  //Construir los comandos y conectarlos al invocador
-     ICommand *exit=new Exit(continuar_loop);
+      ICommand *exit=new Exit(continuar_loop);
 	  ICommand *ayuda=new Ayuda(v_comandos);
 	  ICommand *ver=new Ver(&escena_actual); //pasar direccion del puntor a una escena
 	  ICommand *examinar=new Examinar(*escena_actual,inventario,parametro1); //pasamos direccion al escenario actual y al inventario
@@ -106,9 +106,7 @@ Manager::Manager():dt(freq),tiempo(0),continuar_loop(true),contador_mal_comporta
 	  
 	  //construir invocador de comandos
 	  invocador_comandos=Invocador(mapComandos);
-
 	  
-
 }
 
 void Manager::prologo(){
@@ -257,17 +255,21 @@ string Manager::get_salidas_estado_actual(){
 //Tratamiento de la línea de comandos 
 void Manager::tratamiento_comandos(string comando){
 
-	        if(comando==s_exit)
-					 invocador_comandos.salir();
+     if(comando==s_exit or comando==s_ayuda or comando==s_ver)
+          invocador_comandos.exec(comando);
+     
+/*
+  if(comando==s_exit)
+  invocador_comandos.salir();
 
-			  if(comando==s_ayuda)
-				    invocador_comandos.ayuda_comandos();
+  if(comando==s_ayuda)
+  invocador_comandos.ayuda_comandos();
 
-			  if(comando==s_ver)
-					invocador_comandos.ver_comando();
-
-			  if(comando==s_examinar)
-					 invocador_comandos.examinar_comando(parametro1);
+  if(comando==s_ver)
+  invocador_comandos.ver_comando();
+*/
+               if(comando==s_examinar)
+                    invocador_comandos.examinar_comando(parametro1);
 
 //			  if(comando==s_ver))
 //			  invocador_comandos.ver_descripcion();
