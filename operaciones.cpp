@@ -49,3 +49,11 @@ void Examinar::execute(){
 
 
 }
+
+
+void CommandInventario::execute(){
+	  cout<<endl<<"Posees lo siguiente: "<<endl<<inventario.listar()<<endl;
+
+
+
+}

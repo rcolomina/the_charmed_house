@@ -29,7 +29,7 @@ string Escenario::get_objetos_disponibles(){
 			 lista_objetos+=it->first;
 	  }
 	  if(lista_objetos=="")
-			 return string("No hay nada");
-
-	 return lista_objetos;
+			 return string("");
+	  else
+			 return lista_objetos;
 }

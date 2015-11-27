@@ -11,7 +11,8 @@
 
 //#include <thread>         // std::this_thread::sleep_for
 //#include <chrono>         // std::chrono::seconds
- 
+
+#include <fstream> 
 
 #include "inventario.h"
 //#include "escenario.h"
@@ -70,7 +71,8 @@ class Manager{
 	  //Gestion de loop y comando de entrada de usuario
 	  string comandos_disponibles;
 	  bool continuar_loop;
-	  
+
+	  // user inputs
 	  string comando;
 	  string parametro1;
 	  string parametro2;
@@ -99,6 +101,7 @@ class Manager{
 	  Invocador invocador_comandos;	   //gestiona los comandos 
 	  map<string,ICommand*> mapComandos;
 
+	  
 }; 
 
 #endif

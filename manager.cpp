@@ -4,7 +4,10 @@ using namespace parametros;
 
 const double freq=1.0/60.0; 
 
-Manager::Manager():dt(freq),tiempo(0),continuar_loop(true),contador_mal_comportamiento(0)
+Manager::Manager():dt(freq),
+						 tiempo(0),
+						 continuar_loop(true),
+						 contador_mal_comportamiento(0)
 {
 	  //Crear vector de comandos
 	  comandos_disponibles="Comandos disponibles:";
@@ -42,7 +45,6 @@ Manager::Manager():dt(freq),tiempo(0),continuar_loop(true),contador_mal_comporta
 	  //insertar escenario en mundo
 	  mundo[nombre]=escena;
 
-
 	  //TERCENRA ESCENA: Lapida
 	  id_escena=3;
 	  nombre="EL cementerio";
@@ -55,8 +57,8 @@ Manager::Manager():dt(freq),tiempo(0),continuar_loop(true),contador_mal_comporta
 
 	  //ENLAZAR ESCENARIOS ENTRE SI
 	  //Id: 1->(2,3) ,2<->1, 3<->1
-      mundo[escena1]->set_salida(mundo[escena2],oeste);
-      mundo[escena1]->set_salida(mundo[escena3],este);
+	  mundo[escena1]->set_salida(mundo[escena2],oeste);
+	  mundo[escena1]->set_salida(mundo[escena3],este);
 	  mundo[escena2]->set_salida(mundo[escena1],este);
 	  mundo[escena3]->set_salida(mundo[escena1],oeste);
 
@@ -94,15 +96,18 @@ Manager::Manager():dt(freq),tiempo(0),continuar_loop(true),contador_mal_comporta
 	  //inventario.insertar_objeto(objeto);
 
 	  //Construir los comandos y conectarlos al invocador
-      ICommand *exit=new Exit(continuar_loop);
-	  ICommand *ayuda=new Ayuda(v_comandos);
-	  ICommand *ver=new Ver(&escena_actual); //pasar direccion del puntor a una escena
-	  ICommand *examinar=new Examinar(*escena_actual,inventario,parametro1); //pasamos direccion al escenario actual y al inventario
+	  ICommand *c_exit=new Exit(continuar_loop);
+	  ICommand *c_ayuda=new Ayuda(v_comandos);
+	  ICommand *c_ver=new Ver(&escena_actual); //pasar direccion del puntor a una escena
+	  ICommand *c_examinar=new Examinar(*escena_actual,inventario,parametro1); //pasamos direccion al escenario actual y al inventario
 
-	  mapComandos[s_exit]=exit;
-	  mapComandos[s_ayuda]=ayuda;
-	  mapComandos[s_ver]=ver;
-	  mapComandos[s_examinar]=examinar;
+	  ICommand *c_inventario=new CommandInventario(inventario);
+
+	  mapComandos[s_exit]=c_exit;
+	  mapComandos[s_ayuda]=c_ayuda;
+	  mapComandos[s_ver]=c_ver;
+	  mapComandos[s_examinar]=c_examinar;
+	  mapComandos[s_inventario]=c_inventario;
 	  
 	  //construir invocador de comandos
 	  invocador_comandos=Invocador(mapComandos);
@@ -255,21 +260,14 @@ string Manager::get_salidas_estado_actual(){
 //Tratamiento de la línea de comandos 
 void Manager::tratamiento_comandos(string comando){
 
-     if(comando==s_exit or comando==s_ayuda or comando==s_ver)
+     if(comando==s_exit or comando==s_ayuda or comando==s_ver or comando==s_inventario)
           invocador_comandos.exec(comando);
-     
-/*
-  if(comando==s_exit)
-  invocador_comandos.salir();
 
-  if(comando==s_ayuda)
-  invocador_comandos.ayuda_comandos();
+	  if(comando==s_examinar)
+			 invocador_comandos.examinar_comando(parametro1);
 
-  if(comando==s_ver)
-  invocador_comandos.ver_comando();
-*/
-               if(comando==s_examinar)
-                    invocador_comandos.examinar_comando(parametro1);
+//	  if(comando=="inventario" or comando=="i")
+//			 cout<<endl<<"Posees lo siguiente: "<<endl<<inventario.listar()<<endl;
 
 //			  if(comando==s_ver))
 //			  invocador_comandos.ver_descripcion();
@@ -302,10 +300,8 @@ void Manager::tratamiento_comandos(string comando){
 						  
 			      }*/
 
-			 if(comando=="inventario" or comando=="i")
-				  cout<<endl<<"Posees lo siguiente: "<<endl<<inventario.listar()<<endl;
 
-			 else if(comando=="norte" or comando=="n")
+	  if(comando=="norte" or comando=="n")
                {
 					  if(escena_actual->get_salida("norte"))
 					     {
@@ -370,8 +366,6 @@ void Manager::tratamiento_comandos(string comando){
 							         (parametro1=="maricón" or parametro1=="Maricón") or (parametro1=="maricon" or parametro1=="Maricon") or
 							 (parametro2=="maricón" or parametro2=="Maricón") or (parametro2=="maricon" or parametro2=="Maricon");
 
-
-
 					  bool cabron=(comando=="cabron" or comando=="Cabron") or (comando=="Cabrón" or comando=="cabrón") or
 					              (parametro1=="cabron" or parametro1=="Cabron") or (parametro1=="Cabrón" or parametro1=="cabrón") or
 									  (parametro2=="cabron" or parametro2=="Cabron") or (parametro2=="Cabrón" or parametro2=="cabrón");		 
@@ -426,11 +420,7 @@ void Manager::clock(){
  			 sleep(1); //detiene el hilo durante 1 segundo
 			 tiempo++;
 	  }
-
 }
-
-
-
 
 
 
@@ -453,9 +443,6 @@ void Manager::actualizar_objetos(){
 					}*/
 
 			 //
-
-
-
 	  }
 
 	  //if(
@@ -477,176 +464,22 @@ void Manager::dibujar(){
 
 	  int id_esc=escena_actual->get_id();
 
-	  if(id_esc==1){
+	  fstream fs;
+	  string fileImagetext;
 
- cout<<" .0000000000000000000KKKKKKKKKKKKKKKKKKKXXXXXXXXXXXXXXNNNXXWNNWWMMMWNNNNNNNNWWMMMMMMM"<<endl;
- cout<<" .0000000000000000KKKKKKKKKKKKKKKKKKKXXXXXXXXXXXXXNXXNXNNNWWWWWWMMMWNWNNWWWWNWWMMMMMM"<<endl;
- cout<<" .00000000000000KKKKKKKKKKKKKKKKKKKXXXXXXXXXXXXXXNWWMWNNWMMMMMMMMMMMWNWMMMMWMMMMMMMMM"<<endl;
- cout<<" .0000000000000KKKKKKKKKKKKKKKKKKKKXXXXNWXKXXXXXNNNNWWNNWMMMMMMMMMMMMWWMMMMMMMMMMMMMM"<<endl;
- cout<<" .0000000000KKKKKKKKKKKKKKKKKKKKKKXXXXXXXK0XXXNNXXXNNNNNWMWWMMMMMMMMMWWWWMWMMMMMMMMMM"<<endl;
- cout<<" .000000KKKKKKKKKKKKKKKKKKKKKKKKKXXXXXXXKkOKXXWWWNNWWWWNNWMMMMMMMMMMMWWNNWNWMMMMMWWMW"<<endl;
- cout<<" .xdkkkxxOKKKKKKKKKKKKKKKKKKKKKXXOOOkkxkdollclO0OOKNNNNNNNNWWMMMMMMMMWWWWWXKXKXKK0000"<<endl;
- cout<<" .00KKKKKKKKKKKKKKKKKKKKKKKKKKXXXXX0oc::;,'''loOKXXNWNNNNNNWWWMMMMMMMMMWWWWWWWWWWWWWW"<<endl;
- cout<<" .KKKKKKKKKKKKKKKKKKKKKKKKKKXXXXXXXK:........oklkXXXXXNNNNNWWMMMWMMWWMMMWWWWWWWNNWWWW"<<endl;
- cout<<" .KKKKKKKKKKKKKKKKKKKKKKKKKXXXXXXXKc..',.....,kkoKXXXNNNNNNNWWWWWMMMMMMMMMMMMMMMWWWMM"<<endl;
- cout<<" .KKKKKKKKKKKKKKKKKKKKKKKXXXXXXXX0;...','.....,l:dxNNNNNNNNNNWMWWMMMMMMMMMMMMMMMMMMMM"<<endl;
- cout<<" .KKKKKKKKKKKKKKKKKKKKKXXXXXXXXXx'............',;xoXNNNNNNNWWWMMMMMMMMMMMMMMMMMMMWMMM"<<endl;
- cout<<" .KKKKKKKKKKKKKKKKKKXXXXXXXXXXk:....''..''....'..:xNNNNNNWWWWWMMMMMMMMMMMMMMMMMMMMMWM"<<endl;
- cout<<" .KKKKKKKKKKKKKKKXXXXXXXXXXXx,'...................,xXNNWWMMMMMMMMWWWMMMMMMMMMMMMMMMMM"<<endl;
- cout<<" .XXXXXNNXKKXXXXXNNWWNNWWNNNN0:..,,;,;;:l:ccc;,ol:''lKWWNWN0kkKWWXWWWWWWWWWWWWWMMMMMM"<<endl;
- cout<<" .KXXXXXNXXXXXNNNWWWWMMMMMWWWWX....':::;::;;::,dxc;.'lkNKKl;,,o0XkXMWWWWWWWWWMMMMMMMW"<<endl;
- cout<<" .XNXXXXXXXXNNNNNNWWWMMMMMMWWMK,:lc:''','.,::c,kKxo,.',cl:;,,','':dKXWWWWWWWWWWWMMMMM"<<endl;
- cout<<" .XXXXXXXXXNNXXXNNWWWWWWWNWNWWx;ll'.':ox:.':cc,xo.......',,'.....'dokNWWWWWWWWWMMMMMM"<<endl;
- cout<<" .XXXXXXXXXXXXXNNWWWK0kkkxdool;:cc'..lod;.':::,c'......'cdo,......'ooONWWWWWWWMMMMMMM"<<endl;
- cout<<" .XXXXNNNNXNNXXXNNNd,'''.......;::..'ccc,.':c:,,'.......:cc'........coOWWNK0NWWWMMMMM"<<endl;
- cout<<" .NWWWMMMMMMMWWWNNk,.,ol'......,:;...llo,.',,,'.........'''.........',oOKo''oWWWWWWMM"<<endl;
-cout<<"...XNNNWWWWWWWWWW0:...;dl.......'''...''....................'''''''''''''',,;;0WWWWWWW"<<endl;
-cout<<"...kkK00OkKNNNN0c.....,c'.......................  .........................;::kK0KOO0O"<<endl;
-cout<<"...WMMMMMMWWNk:......................................................''''...;lNWWWWWWW"<<endl;
-cout<<"...NNNNNNOxl,'............ .....''.'',,,,;,:;;;''...''',,,,;;;;;;:;::::,;....:xOOWWWWW"<<endl;
-cout<<".'.XXXXXNXkc,...............':::::::;,,;;:ccccc,''.;::::;,,',,;::c:c::;;o,.......c0WWW"<<endl;
-cout<<"'..XXXNNNNNN0''',,,,,,,,,;;,,:;;;;,,;cc;,,,',;:,'..;:;''';:::,;;;::;:;::xd...'''',,xWW"<<endl;
-cout<<".'.NNNNNNNNNK,::::;;'''''',;','',,''cdd:',;c;,,''..;:;..'odod,,,,c:::;:;xl'.....',.,kW"<<endl;
-cout<<"...NNNNNNNNNO,::::'..;co,..,,,,oo;''ldl:,'coc,:''..,;,...llcl,'',;,;:;;:dc,.....';.';O"<<endl;
-cout<<"...NNNNNNNNNx;::::...oox'..,,;,ol,,.;;,.'.,;,.'.'..,,'...lolo,,',:;;;;;;l:;.....';,'.;"<<endl;
-cout<<"...NNNNNNWNNl::::;..'lcl.....'''..,'c:;';;coo:,'::::;;.',loco,'',::;;;;;l::;:,,::col;o"<<endl;
-cout<<"  .NNNNNNNNW:::::'..'dll...'''','''',,'';,,;;;,;,,,'''',:lc,,'',;:;::::;l:c,;''oolco,l"<<endl;
-cout<<",..NXkxxdddo,;,,,''',,''''''.............................,;;,,;;;;;;;;;,ldl''',co,,;''"<<endl;
-cout<<"...KKo'......................................................'',;;;;;;;'lxd;;,,:l';','"<<endl;
-cout<<".. ............  .....................................'........',,,,',,':ko'','.'.;:,'"<<endl;
-cout<<".  ...  ......    ........  .....................  ..,.......'......',,':d;..'.......'"<<endl;
-cout<<";. c'..  .. ..... .......  ..........................,.....''.......'';';l;..........."<<endl;
-cout<<".. l;. ...........................,,''''......'......c,.'..'''',',;',,,',:;'......'..."<<endl;
-cout<<".. ... ........'.c......o;...........................ll,''','''l;cd,,;;,,:;'....'....."<<endl;
-cout<<"'. ,'.......''.:'x'..'.,d;....,,.        ..;.........ll;'',,,''c;:l,',,';:;,....'..'.."<<endl;
-cout<<".. ;;.;lc..''.';,o..''.,l,.''.;,.        .':.''.'....cc;'',,,''ccco;';;,,;;;.''.;'.,.."<<endl;
-cout<<".. ...  ......'',:..''.:l;.,o,;,.       ...'.........,c,..,,,''llcd;';;,.;;:....;,.,.."<<endl;
-cout<<"'' ....... .....,,..'..:c,.,c:'..  .. .',............,,.....'..;;;:,.';;',;:....',.,.."<<endl;
-cout<<" . '.......,'.''''...'.....;,lc:. .',,,,'............;,...............',.;:;.......','"<<endl;
-cout<<"'. ,...'..';;',.,,...,..'.';;0;,c;:c,,',:; ..........';;.....'''',,,,,',':xd,.',....,'"<<endl;
-cout<<".. ',''''''',';;.'.''''''''';xc::;,c:::,:d:,'..:;....,;,,''...';:d:......;dx..'''..:od"<<endl;
-cout<<".. ,;:;;,,''..','.............';cl;:,':;:k;:;;,;d'''.'c;,'',,c:c;cd......:cl'',;;':okk"<<endl;
-cout<<".. ;l:;c:;'.,lood;...............':cc;:odKko:c:;O,,::co;,'';,c;',lx',loc..lc:;c::c:::l"<<endl;
-cout<<".' ','',,''.ldkOX,................',c:ldx0xc::,'x;,:ooll:'.';;:;:ccc;;ld'.;::;::;:cc:l"<<endl;
-cout<<".' ;,'.',.'',odxo''..,:llo:lc,.';::cccloxxooo:;:c::;lodllccclodxxkxkoclxxxxxxdooooc,:c"<<endl;
-cout<<".. ::ccl:::c::cooolc;'.,,;colc;;,'';cccldxddddddddddddddddollooodxxxdodddddddddooo;;cl"<<endl;
-cout<<".. :::::lc:clc::c:ll::cllloollccclc::llllodoooooooooooooodoc:codxOkxoccloooolooooc,,::"<<endl;
-cout<<".  ;;,:lcllodddddxxcc::cllllcc:c:ccc:;,,,;codoooodooooooooc:;:ldk0OOdccclccol:cclc,,::"<<endl;
-cout<<".. c:c:;'coooddxxkl,;','.,:cllllcccoollccccclooololooddlcclc:cllxkkko:;;c:;;cc::c:'.,;"<<endl;
-cout<<";::;,,;:lcloooo;;c:,;:cclllcccodxdoollllllcllc:ldoll:loll;coodkkOxlcclllooooc:;,,,."<<endl;
-
-	  }
+	  if(id_esc==1)
+			 fileImagetext="fronthouse.txt";
 	  else if(id_esc==3)
-	  {
-
-cout<<"xkkdl'cOx'   ...  .okxdlllooooxxOOOkOK0x0KKOKXKxX0ooodddO0kdxOOO0OdldoxxxxkkxodxkOxxx0KkKXKNNWWMWNWNK0O0KXXX0O0KKKXXXXXKkxO0KKKKKXKKKKKKKKKK0OkkOO0OO00000N"<<endl;
-cout<<"o00OO:;k:.  ...  .:KXX0kk0O0KKXNWMMNNXN0k0NNNNNKKWNKNNNK000K0o:dxk00kok0kkdoxkOOxdxkkO0koxO000OO0O0KKXNWWWWNKKXNNXXXX0OOKXXXKKKKKKKKKKKKKKKKK00OO000KKK00KW"<<endl;
-cout<<"'0KXKc...  ...   .lkOOkdxxdddxO0KKXXXWWNX0O00XXWKO0NNNXKK00KX0kdONNKKXK0kdk0KXXXNK000KXKKOxKNXNNXNNNNWMWMWWNK0NNNXKOOKXKKXKKKKKKKKKKKKKKKKKKKKKKK0XWWWNXXXW"<<endl;
-cout<<" 'k0Xd.   .x:..  .loodc'OKKKKKKKKKK0O0OkxOOkxdxkxclxodkOOO0K000kclodxollcxxkxddxxkkxO000KXKOO0KXNWWMWNXNWNX0Odxkxkk0XXXXKKKKKKKKKKKKKKKKKKKKKXXKKNWMMWWWWWW"<<endl;
-cout<<"  lNNl    d0,.   .xNK0k:;dOKXXKXK000kOKKO000kkkxdxoooc;:lllllodccoccocd0OOXNNXKXXXKKOdkO000K0OdoOOOOOkkkxdxkkO0XXXXXNNXXXXXXXKKKKKKKKKKKKKXNWNXXNNWMMMWWWWW"<<endl;
-cout<<"  .ll.   ,Od.     .'''....''''.',:clc..,;llooloddddokOOOKK0OxOKO0KKOdkKOkxOKKXXNNNNNNNKKXNNNNWW00NWWWWNNNNWWNNNNNNNNNNNNNXXXXXXXXKKKKKXXXNWWWWNNNWWWWWWWWWN"<<endl;
-cout<<"        .kx'     .'ldxdcxxoldl;lcdkkdd:,l0KNNNXXNWN00NXXXKKKK00OOXXKKdx0KkoxOOkOXXNNNNNKNNNNWWWWKKWWWWNWWWWWWWWWNNNNWWWWNNNXXXXXXXXXXXXNNNWNNNWWWWWWWWWWWWX"<<endl;
-cout<<"       ,0x'.     ,ooxoldxxkkxoldlodlccc;.oO0KK0XNNNXOKKKKKKKKKXX0XNNKO0kx0K0kxxkO0KKKKKKKKKKNWNNN0XNNNNNNWWWMWWWNNNNWWWWNNNNNNNNNNNNNXXNNNWNNNNWWNNNNNNNNNK"<<endl;
-cout<<"      .::...   .;0XKkxKXK00KK0OKKKKKOxxko.ldxdx0KKXX0k0KKKKKKKKXK0XXXK0KK0OO0KOod0XXXXXXNNXXWWWWNXONNNNNNNNNWWWNNNNNNNNNNNNNWWWWWNNNNNNNNNNNNNNNNNNNNNNNNNO"<<endl;
-cout<<"      ....    .o0kOxdKK0O00XKKkKKKKKKKKO0l,xKKKKK00Okkk0KKK00KKKKkKKKKKKXXXKkkk00xkk0KXXNNWWNNNNNXK0KKXWNWNNNNNNNNNNNNNWWWWWWWWWWWNNNNXNNNNNNXXXXXXXNNNNXXk"<<endl;
-cout<<"            ..xNNKkdxk00KXXKKKO0KKKKKKKK0OklcoxO0000kOOOO000O0000OOKKKKKKKKK000OOOO0kxxk0KXNNWWWXKXNXXXNWWWWNNNNNNNNNNNWWWWWWMMMMMWWNNXXXXNNXXXXXXXXXXXXXXO"<<endl;
-cout<<".          .'k0KKXKKXNXKXXXKKK0O0K00KKKK0000Okdlc,:l:codokkkkkO0KKOOKKKKKKKKKKKKXX0O00O00000KK00XNNNNNWXXXKKXKXNXXXNWWWWWWWWWMMMMWWWWNNXXKXXXXXXXXXXXXXXXK0"<<endl;
-cout<<"           .dWWWNXXXNNXXKKK0KK00OO0KKKKKKKKK0K0K0ldxkxO0xldox0K000OkO00000000KKKKXNNNXXK0000KXXXNMWWWWWNNNXNNNXNXXXNWWWWWWWWWWWWWNNNNNXXXKKKKKKKKKKXKKXXKKx"<<endl;
-cout<<"          :KNNWWWWNNNNNXXXXKXXKKKO0KKKKKKKKKKKK0OdKK0kk0OO0000000000Oxk000000KKKKKXNWWWMMWWWWWWWWWWWWNNNNNXXXXXXXXXXNNWWNNNNNNNNNNNNNXXXKKK0000KKK0KK000OkO"<<endl;
-cout<<". .      .xXXXNNNNNNNWWWWWWWWWWWNNXKKKKXXXKKKKKKOk000OkO00000000000OOOOkkO000KKKKXNWMMMMMMMMMMMWWWNNNNNNNXXXXKKKKKKKKKKKKKKKXXXXXKKKKKK00000000000OO0Okxxox"<<endl;
-cout<<"....      oXXXXXXNNNNNNNNNNNNNNNNNNNNNNXXNNNNXXXXKKK000000000000000KKKKKK00000KKKXXWMMMMMMMMMMMWWNNNXXXXXXKKKKKKK00000000000000000000000000000000OOkxkxolll"<<endl;
-cout<<",..       ,0XXXXXXNNNNNNNNNNNNNNNNNNNNNNWWNNNNNNXXXXXXXXXXXXXXXXNNNNWWWWMWWWWWWMMMMMMMWWWWWWWWWNNNNNXXXKKXXKK0000000000OOOOOOOOO000000000OOO0OOOOOkxdoddc:c"<<endl;
-cout<<":,'.      .cKXXXXXNXNNNNNNNNNNNWNNNNNNNNNNNNNNNNNNWWWMMMMMMMMMWMMMWWWWWWMMMMMMMMWWWWWNNNNNNNXXXXXXXXXKKK000000OOOOOOkkxdooOOOOOOOOOOO000000OO00OOOkdlcc:ccc"<<endl;
-cout<<"x;,.      ..kKKKKKNNNNNNNNNNNNNWWWNNNNNNNNNNNNWWNNWWMMMMMMMMMMMWWNNNNXNNNNNNNNNNNNNNNXXXXKKKKKKK00000000OOOOOOOOOOOc..   .xOOOOOOOOOOO00000000OOOOkdo:;;,,:"<<endl;
-cout<<"0c;.       .lNNXNNNNNNNNNNNNNNNNWWNNNNNNNNNNNNNNNNNNNWWWWWMMMWWWNNNXXXXXXXXNNNXNXXXXXXXXXKKKKK00000000OOOOOOOOOOOOOo     .oOOOOOOOO00000OOOOOOOkkkxoloc,;;;"<<endl;
-cout<<"Xkc,. .    .,XNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNXXXXXXXXXNNNNNNNNNNNNNNXXXXXXXXKKKKKKKKKKKKKKKKKKx.     .lO0O000000000OOOOOOOOkxxdodlc;,,"<<endl;
-cout<<"X0o;...    ..kNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNKkKNNNNNNNNNNNNNNNNNNNNNNNNNWWWX:.       '':KKKKKKKKKK000000OOkkOkxoolc,"<<endl;
-cout<<"NNk:'...    .,KNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNKkXNNNNNNNNNNKl0NNWNNNNNX0kOXNNNNNXXXXNNNNk;,.          .OKKKKKKKKK00000OOkkxxxxxxoc;"<<endl;
-cout<<"NNXl,...    ..lXNNNNNNNNNNNNNNNNNNNNNNWWWNNNNNNNNNNNNNNNNNNNNNNNNNNNNNKxXNNNNNNNNNNXoKNNNNNN0o;...,o0NNNNXXNNNNNk...          .dKKK0000000000OOkkkxoolll,.'"<<endl;
-cout<<"NNNk;...     ..kNNNNNNWWWWWWWWWWWWNNWWMWWNNNNNNNNNNNNNNNNNNNNOlKNNNNNNKdXNNNNNNNNNNXdKNNNWXx:.......,dXNNNNNNNWWK'..        .k0KKKKKKKKK0KKKKK000Okdoc;.. ."<<endl;
-cout<<"NNNXc,..     ..cNNWNNWWWWWWWNNNNNNNNNNNNXKXNNNNNNNNNNNNNNNWWO;.;ONWWWWXdXNNWWWWWWWWXlOWNNXl,..........dNNNNNNWWWW0Ox'       dXXKKKKKKK000000000OOkdxx;..  '"<<endl;
-cout<<"NNNNx'....   ...ONNWWWWWWWWWWWWNNXXXXXk:'..,cxKNNXNNNNNWWWWNl,..,XNNNNKc0NNNNNNNWWWKcxNNXc......   ....kNNNNNNNNNNNNXo      xXXKKKKKKKKKK00000Okkxxo:..   '"<<endl;
-cout<<"NNNN0;,...   ...cNNNNWWWWWWWNNNNNXXN0c.........l0XXXXNNNWNNNc,..xNNNNN0;ONNNNNNNNXN0cdNNk;. .... .  ...;WWNNNNNNNNNXXO...   cKKXXXXXNNNXKKKKOOkko::'...   '"<<endl;
-cout<<"XNNNKc:,..     .'KNN0dk0NNNNNNNNXNN0:...........'OKKKXXNNNNNl,..kXNNNN0;xNNNNNXOkKN0loNNd,.  ...    .. .kNNNNNNNXXXXX0'..   '0KKXXXXXXXXXXKK0kxl;'....    ."<<endl;
-cout<<"KXXXOc;'...  .  .xNNNO;oNWNNNNNNNNNo....  .  ..  ,KNNNNNNNNO;,...;0NNNO;cOokNK:..'O0llN0;...  ... ...   :0NXKXOo;;lKXX;      OXXXXXXNX0dlxKXKXk:'....     ;"<<endl;
-cout<<"0KKkc::,..      .'l0NK:cokNNNNNWNW0;......       .cXNNNNNOl;;......;kNk:,;;:d;....,occKK;..    ......    'cdKk,....'ONo      oNNNO;o0l'...;OOxc,....      ;"<<endl;
-cout<<"OOd:.:l;'.       .,dOl',.,loONNWNNO,..  ...   .   .'o0KKd..',..   .dXNk:;::c'......'c:dXc::.               :Oc......,Xk.     ;XNO, ,;.........,,....       "<<endl;
-cout<<"x,,'.lo:'.       .,;','.. ..,clKNNO;. ....... ...    .:c;..,;;... .,Okc,..,.........'''d:::. .         .. .:d,.......k0..    .OXKl.;. ....   .''....       "<<endl;
-cout<<":.;,.cc:..       ....,'.   .....ll,,. ............    ..;;.:::'.....:cc;'',...........'''cl.           ,o..oo........cK,      ,lOxc................        "<<endl;
-cout<<",:,'';c:..        .':,.'. .,'...',';' ........  ..     .,;.ccc,..'....;'',:'. .....,;,,:;lc.           ,l..xk........kK'.       ;oc.........,.':'..        "<<endl;
-cout<<";:.'.,lc'.       .''cc,;. .'...'''';; .... ..          .,'.ccc,';.......;:c........,,';',lc.. .        .. .dOc......'k:.       .cc;.........,.'c,.         "<<endl;
-cout<<",;.'',ol,..      .':cc,;. .c,...,,,,:..... .. .        .'.'ccc,;........,cc.. .   .,c,;,;lc.           ..  .,c.......:c.        ':,.........;.'c'.         "<<endl;
-cout<<",;';''ol;.  ..   ..,:c,:' .,'.  .''';'.........  .     ....cc:';.......,',:....... 'l,;;;o:.           ...  .:...........       ...........',.',.          "<<endl;
-cout<<",;;:.'ol;. .... ....'.,:, .... .....,:....  ....       ..;:ccc;,.......;.,'.       'l'..;l;            ...  ''................      ..........'..          "<<endl;
-cout<<";,:;.,oc,.....    ....;:'    .......'c'.........  ..   ..cclccc'.......::'.        .:...;l,             ....''............           .........'.           "<<endl;
-cout<<":,:,.;oc'....    ...c:'.      .......:;............. ...,,,,,;:.........'..        ..;'.:o;  ...  ... . .,..;'..''......              ..........           "<<endl;
-cout<<"::c;.co:,,...    ...',...........,,,;::................':;;;;:;',..                .;c..:c,...... .......'..,'.''..........            .....''.            "<<endl;
-cout<<":cc:,ol:c,..     ..''''.'''''''',,',,,c'...............''',,c;...               ... ...,lc'...... .......'..,:;c,..........            .   ....            "<<endl;
-cout<<"::::co:c:..      ..''''''''''''''''''':,...............',',,;..             .. ........;l,. ..... ..  ....',:lll............                 .            ."<<endl;
-cout<<"''',ll:l;.       .'''''''''''''''''''',;...............,;;,'.             ........,,,,,:c' .,cc:,....  ...',clll.  ........                 ..            '"<<endl;
-cout<<"..',:::,.         .'',,''','',,,'''',,,;.. ...........'::;;,.......          .....',''':c, .:l;,'....'''...',,,,'.........                  ..            '"<<endl;
-cout<<"'''.'....         ............''...''..'. ............,;;;,;'.....            .. ..',,,:c,.,oc;'....lxoc,....................              ..              "<<endl;
-cout<<"....'..........................................'.....'';;,,,'..            .      ...',,;;'','.   .cxdo:'............';;,,.   ...............             ."<<endl;
-cout<<".....''..........................''.'''..'''''.''.....';,,,,,...............          ....',;:c'..,lc:;;;..   ..    .         .....'''''''..              ."<<endl;
-cout<<"................................'''''''''',',''',,'''',,'',,,',,,,,,,'',,,''',',,;,,..',,,;,;;;,,;,',;;,,.            .... ........',,::;,'.              ."<<endl;
-cout<<".......''.'.'''','''''',,''''''''''''''''''''.'.''''''''''''''''''''''',''','''''''''''''',,,,,,,'','''''....''..''''',''',''''''',:::cccc;...            ."<<endl;
-cout<<".........'',''''''''''',','''..'.'''''''',''''..'',''''''''''''''''''',,,,'''''''.''''''.'',,',''''''''''',''''''''''''''''''.....';;;;;;;;;'.            ."<<endl;
-cout<<"....''''''''''''''''','''''.''''''''','','''',,',,,,,,,,,,,,,,,,,,,,,,,::,,,,,,''''','''.'','''',',''',,,,,,,,,,'''''''''''''''''''''''''''''.............."<<endl;
-
-	  }
+			 fileImagetext="cementery.txt";
 	  else if(id_esc==2)
-	  {
+			 fileImagetext="stones.txt";
 
-cout<<"..........................      ......................................................................................                             "<<endl;                       
-cout<<"........................................................................................................................                           "<<endl;                       
-cout<<"''.....................................................................................................................                            "<<endl;                       
-cout<<",''''....................................................................................................................                          "<<endl;                        
-cout<<",,,''''....................................................................................................................                        "<<endl;                        
-cout<<";,,,,'''''..................................................................................................................                       "<<endl;                        
-cout<<";;;,,,,''''''................................................................................................................                      "<<endl;                        
-cout<<";;;;;,,,,,''''''.............................................................................................................                      "<<endl;                        
-cout<<"::;;;;;;,,,,''''''''.....................................',;:::;;,,''.......................................................                       "<<endl;                        
-cout<<":::::;;;;,,,,,,,,,'''''.............................,coxkOkxdol::;;,,,,,''........................................:looollc::;,,''....              "<<endl;                        
-cout<<"c::::::clllcc:;;;,,,'''''''......................'lkKKK0Okdolc:;,,,,,;;;;,,'....................................;XXKKOOxdoc::;;;;,,,,,'.           "<<endl;                        
-cout<<"cc:coxxdl:;;;;;;,,,,,''''''''''''''''''''''''''''kXXXK0Okdlc:;,,,,,,,,,;;;,,....................................;XXKK0kxol::;;;;;;;;;;;,.          "<<endl;                        
-cout<<",cxOkdc:;;;;;;;,,,,''.''''''''''''''''''''''''''lXXXK0Okdol:;,,,,,,,,,,,,,,''....................................,dOOkxol:;,,,,,,,,,,''.           "<<endl;                        
-cout<<"o0Oxl:;;;;;;;,,,''....',,,,'''''''''''''''''''''lXXKK0kxdoc:;;,,,'''''''''''..................................;lxkO00Okxdl:;,''.......             "<<endl;                        
-cout<<"0Oxl:::::;;,,'......'',,,,,,'',,,,,,,''''''''''',o0K00Okxdocc:;,,,''........................................;0NXXXXKK00Okdol:;,,''',,'.            "<<endl;                        
-cout<<"Okdllcc::;,''''',,,,,,,,,,,''',,,,,,,,,,'''''''''';lxkOOkxdlc;,'............................................kNNNNXXXK00kxdolc::;;;;;;;;'           "<<endl;                        
-cout<<"ldddddollc::::;;;,,,'''.....',,,,,,,,,,,,,,,,,,;;:clloxxxxdolc:;,,''''''''''''..............................:KNNXXXKK0Okdolc:::;::::::;'           "<<endl;                        
-cout<<"ccccokOkdolc::;,'........'',,,,,,,,,,,,,,,:ldxOOOOkkxxdoolcc:::;;;;;;;;,,,,,,,,,,,,,''........................:x0KK0Okxdlc::;;;;;;;;;,..           "<<endl;                        
-cout<<",;;o00kxdolc;;;,,,,,,,,,,,,,,,,,,,,,,,;ox0KK00OOkxxdolcc:::;;;;;;;;;;;;;;;;;;;;;;;;;;;,'...................';:clok0Okxdolc:;;,,,''''...            "<<endl;                        
-cout<<"'''ckOOkkxxxxddol::;;,,,,;;;;;;,,,'',dKXXKK00Okkdollc:;;;;;,;;;;;;;;;;;;;;;;;;;;;;;;;;;,,...............ckKXKKKKK000OOkxdoc:;,,''',,,,,,.          "<<endl;                        
-cout<<",,'';okOOOkdlc:;;;;;;;;;;;;;;;;;,,''xNXXKK0OOkddlc::;;,,,,,,,,,,,,,;;;;;;;;;;;;;;;;;,,,,'..............lXNXXXKKK00OOkkxdolcc:;;,,;;;;;;;;.         "<<endl;                        
-cout<<"',cx00Okxoc:;,,,,;;;;;;;;;;;;;,,''.cXXXKKOkkxdlc:;;,,,'''''''''',,,,,,,,,,,,,,,,,,,,,'''...............'x0KK000Okkxddoolc::;;,,,,,,,,,'..          "<<endl;                        
-cout<<":OKKOkdoc;,,,,,,,,;;;;;;,,,,,''..',lXXK0Okxxolc:;,,'''''''.''''''''''''''''''''''''.......................';::clodoolcc:;;,'''.......              "<<endl;                        
-cout<<"OK0kdlc;,''''''',,,,,,''''....',,;;;xKK0Oxdolc:;,,''''.....................................................,coxOOkkxdoolc:;;,'''........           "<<endl;                        
-cout<<"xOxo:;,''..''''''...........''',,,,,,cxOkxdolc::;;,,,'''''''............................................'o0XKKKKK00OOOkkxdoolc::;;,,,,,,'..        "<<endl;                        
-cout<<",ccc;;;,,,,,'.....   .................',:loddoolcc::;;,,,,'''..........................................;KXXXXXKKKK00OOkkxdoolcc::;;;;,,,,,,'       "<<endl;                        
-cout<<"'''''',,;::;,'..........'''''''''''''''''..'''',,,;;::;;,'...........................''''''........    kXXXXXXXKKK00Okkxddolcc::;;;;;,,,,,,,'      "<<endl;                        
-cout<<"'''';ldkkxdolc:;;,,,,,,,,,,,,,;;;,,,,,,,''.',;:loxxxdoc:;;,'''...............''''''''',,,,,,,,,,''..   oXXXXXXXKK00Okkxdollc::;;;,,,,,,,,,,,,.     "<<endl;                        
-cout<<"'';oO000Okxdolc::;;;,,,,,,;;;;;;;;;;;,,;cokO000OOkkxddollc:;;,,'''''''''''''''''',,,,,,,,,,,,,,,,,,'.  .xKKKKKKK00Okxxdolcc:;;,,,,,,,,,,,,,,'      "<<endl;                        
-cout<<".:OKK00Okxdolc::;;;;,,,,,;;;;;;;;;;;:ok0KK000OOkkkxddoollc::;;,,,,'''''''''',,,,,,,,,,,,,''''','''''..   ;x00000Okkxdollc:;;,,,''''''''''''.       "<<endl;                        
-cout<<".xKK0OOkxdol:;;;,,,,,,,,,,;;;;;;;;oOKKKKK00OOkkxxddoollcc::;;;,,,,'''',,,',,,,,,,,,,'''''''''''''.....    .,dkkkkxxdollc:;;,,'''''''''''...        "<<endl;                        
-cout<<".d00Okxdolc:;,,'''''''''',,,,,,,l0XKKKK00OOkkxxddoolcc:::;;,,,,,,'''','',''''''''''''.................';cooddddddddoolcc:;;;,,,,''''....           "<<endl;                        
-cout<<" .dkkxoll:;,''............'..',xXXXKKK00OOkxxdoolcc::;;;,,,''''''''''''''''''''.................. .;oxkkkkkkkkkkkxxxdoolc:;;,''...........         "<<endl;                        
-cout<<"   ,lll::,'...................lXXXKKK00Okxxdoolc::;;,,,'''''''...'''.'................            ckOOOOO0OO0OOOOkkkxxxddollc:;;,'''..........     "<<endl;                        
-cout<<"     ..'''.........           oXXKK00Okkxdolc:;;;,,'''............................               .kO000000000000OOOkkkkxxxddoollcc::;;,,'''''''..  "<<endl;                        
-cout<<"                              .OK00Okxddol:;;,,''..........................                       oO000KKKK0000000OOOOOkkkkxxddooollcc::;,,,,,''''. "<<endl;                       
-cout<<"                                ckkxdolc:;,'''................                                    .lkO00000000000000OOOOOkkkkxxddoollc::;;,,,,,,,,, "<<endl;
-cout<<"                                 .,cc::;,''...........                                              .:oxkkkOOOOO000OOOOOOOOkkxxddoolc:;;;,,,,,,,,'''"<<endl;                      
-cout<<"                                     ...........                                                       .';coodxxxxkkkkkkkkxxxdddolc:;;,,'''''''''..."<<endl;                      
-cout<<"                                                                                                            ..',;cllloooooooollc::;,''............  "<<endl;                       
-cout<<"            .                                                                                                  p     ....'',,,,,,''.......           "<<endl;                       
-cout<<"                                                                                                                                                    "<<endl;                       
-cout<<"                                                                                                                                                    "<<endl;                       
-cout<<"                                                                                                                                                   "<<endl;                        
-cout<<"                     .   ..                                                                                                                        "<<endl;                        
-
-
+	  fs.open(fileImagetext.c_str(),fstream::in);
+	  string line;
+	  if(fs.is_open()){
+			 while(getline(fs,line)){
+					cout<<line<<endl;
+			 }
+			 fs.close(); 
+	  }
 }
-
-
-
-};
-

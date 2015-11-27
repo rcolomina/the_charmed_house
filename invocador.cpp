@@ -1,6 +1,9 @@
 #include "invocador.h"
 
 void Invocador::exec(string command){
+
+	  // 
+
      ICommand *icommand=mapComandos[command];
      if(icommand!=0){
           icommand->execute();
@@ -24,6 +27,9 @@ void Invocador::examinar_comando(string parametro1){
      else
           cout<<"Error!: Comando ver no inicializado"<<endl;
 }
+
+
+
 
 
 

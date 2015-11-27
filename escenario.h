@@ -24,12 +24,8 @@ class Escenario{
 	  map<string,Objeto*> get_objetos(){return objetos;} //que objetos hay disponible
 	  string get_objetos_disponibles();
 	  
-
 	  Objeto* get_objeto(string nombre){return objetos[nombre];}
-
 	  bool get_existe_objeto_escenario(string nombre);
-
-
 
 	  //////setters/////
 	  void set_salidas(map<string,Escenario*> salidas); //se invocará en la construcción del mundo
@@ -54,6 +50,13 @@ class Escenario{
 	  map<string,Escenario*> salidas; //guarda par (coordenada, Escenario*)
 	  map<string,Objeto*> objetos;    //nombre y referenca a objeto
 };
+
+/*
+class ScenePuzzle : public Escenario{
+	public:
+	  ScenePuzzle(){}
+
+};*/
 
 #endif
 

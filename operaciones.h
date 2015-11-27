@@ -60,7 +60,14 @@ class Examinar: public ICommand{
  	  Inventario &inventario;
 	  string &parametro;
 };
-//class Inventario : public ICommand{};
+
+class CommandInventario : public ICommand{
+	public:
+	  CommandInventario(Inventario &inventario):inventario(inventario){}
+	  void execute();
+	private:
+	  Inventario &inventario;
+};
 
 /*class Norte : public ICommand{
 
