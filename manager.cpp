@@ -468,11 +468,11 @@ void Manager::dibujar(){
 	  string fileImagetext;
 
 	  if(id_esc==1)
-			 fileImagetext="fronthouse.txt";
+			 fileImagetext="./txt/fronthouse.txt";
 	  else if(id_esc==3)
-			 fileImagetext="cementery.txt";
+			 fileImagetext="./txt/cementery.txt";
 	  else if(id_esc==2)
-			 fileImagetext="stones.txt";
+			 fileImagetext="./txt/stones.txt";
 
 	  fs.open(fileImagetext.c_str(),fstream::in);
 	  string line;
