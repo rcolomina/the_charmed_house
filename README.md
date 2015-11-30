@@ -1,14 +1,14 @@
-
+# The Charmed House
 
 Where nothing is as it seems .
 
 # Introduction
 
-Old style convensational game based on text under Linux OS. The player interacts with the wordd typing simple phrases verbs and names. It is a simple command line interface (CLI): command parameter1 ... parameterN. Usually, these comands will have one parameter or two parameters at most. Rarelly a command will have 3 or more parameters, but it is opened to build a more complex conversational game. 
+Old style convensational game based on text under Linux OS. The player interacts with the wordd typing simple phrases verbs and names. It is a simple command line interface (CLI): command parameter1 ... parameterN. Usually, these comands will have one parameter or two parameters at most. Rarelly a command will have 3 or more parameters, but it left opened to build a more complex conversational game. 
 
-The world is divided in scenes, so the player will use cardinal directions to move around. Many objects are available to be used with others objets. An inventario allows to the player to bring objects between scenes. Somethimes it would be a little tricky to solve.
+The world is divided into scenes. A player much use cardinal points to oriented himself in around. In the scenes, there are many objects available that can be used with others objets. All scenes and objects have descriptions that give clues to the player to solve the puzzles. The will have an inventario allows to the player to bring objects between scenes. Sometimes game would be a little tricky to solve but descriptions will come to help the player.
 
-The scenes have text images that are shown in all game as pure text converting from pictures. the game tries to represent the current player situation ilustrating in any sence the progression of a player in game with at least old style console primitive graphics.
+The scenes have a mix of text and images that are shown in all of them as pure text converting from pictures. The game presents to the current player situations not only described with text, but ilustrated with old styple console primitive graphics.
 
 # The argument of the game
 
