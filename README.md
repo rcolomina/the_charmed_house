@@ -28,5 +28,5 @@ This program has its own Makefile which make easy the compilation process using 
 
 # Playing
 
-At the beginning of the game, the player starts with a prompt. In this prompt player can type commands to move around world, pickup or drop objects, use them or between to be combined, push buttons, open doors, etc. 
+At the beginning of the game, the player starts with a prompt. In this prompt the player can type commands to move around the world, pickup or drop objects, use them or combined with others, push buttons, open doors, traps, etc. 
 
