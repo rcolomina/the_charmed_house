@@ -2,13 +2,12 @@
 
 Inventario::Inventario(){}
 
-
 string Inventario::listar(){
 	  string lista_inventario=string("");
 	  //Recorrer map
 	  for(map<string,Objeto*>::iterator it=objetos_inventario.begin();
 			it!=objetos_inventario.end();it++){
-			 lista_inventario+=" ";
+			 lista_inventario+=" ";			
 			 lista_inventario+=it->second->get_nombre();
 	  }
 	  if(lista_inventario=="")
@@ -20,22 +19,71 @@ string Inventario::listar(){
 
 bool Inventario::get_existe_objeto(string nombre){
 	  for(map<string,Objeto*>::iterator it=objetos_inventario.begin();
-		  it!=objetos_inventario.end();it++)
+				  it!=objetos_inventario.end();it++){
 			 if(it->first==nombre)
 				  return true;
+     }
 	  return false;
-
-}
-
-
-void Inventario::insertar_objeto(Objeto *objeto){
-	  // if(objeto.get_nombre()!="")
-	  string nombre=objeto->get_nombre();
-  	  if(nombre!="")
-	    objetos_inventario[nombre]=objeto;
 }
 
 
 Objeto* Inventario::get_objeto(string nombre){
 	  return objetos_inventario[nombre];
+}
+
+
+bool Inventario::posee_alcanzador(){
+	  map<string,Objeto*>::iterator it;
+	  for(it=objetos_inventario.begin();it!=objetos_inventario.end();it++)
+	  {
+			//			 cout<<it->second->get_alcanzador()<<endl;
+			 if(it->second->get_alcanzador())
+					return true;
+	  }
+	  return false;
+}
+
+
+Objeto* Inventario::tomar_alcanzador(){
+	  map<string,Objeto*>::iterator it;
+	  for(it=objetos_inventario.begin();it!=objetos_inventario.end();it++)
+	  {
+			 if(it->second->get_alcanzador())
+					return it->second;
+	  }
+	  return 0;
+}
+
+
+
+bool Inventario::posee_desatascador(){
+	  map<string,Objeto*>::iterator it;
+	  for(it=objetos_inventario.begin();it!=objetos_inventario.end();it++)
+	  {
+			 if(it->second->get_desatascador())
+					return true;
+	  }
+	  return false;
+}
+
+Objeto* Inventario::tomar_desatascador(){
+	  map<string,Objeto*>::iterator it;
+	  for(it=objetos_inventario.begin();it!=objetos_inventario.end();it++)
+	  {
+			 if(it->second->get_desatascador())
+					return it->second;
+	  }
+	  return 0;
+}
+
+
+
+void Inventario::insertar_objeto(Objeto *objeto){	  
+	  string nombre=objeto->get_nombre();
+  	  if(nombre!="")
+	    objetos_inventario[nombre]=objeto;
+}
+
+void Inventario::eliminar(string nombre){
+	  objetos_inventario.erase(nombre);
 }

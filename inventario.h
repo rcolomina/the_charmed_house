@@ -5,8 +5,6 @@
 #include <string>
 #include "objeto.h"
 
-
-
 using namespace std;
 
 class Inventario{
@@ -19,8 +17,16 @@ class Inventario{
 	  Objeto extraer_objeto();
 	  string listar();
 
+	  bool posee_alcanzador();
+	  Objeto* tomar_alcanzador();
+
+	  bool posee_desatascador();
+	  Objeto* tomar_desatascador();
+
 	  //SETTERS
 	  void insertar_objeto(Objeto *objeto);
+ 	  void eliminar(string nombre);
+
 	private:
 	  map<string,Objeto*> objetos_inventario;
 };
