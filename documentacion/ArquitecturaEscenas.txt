@@ -1,0 +1,67 @@
+	 			
+--------------						
+||----------||																
+||Capitulo 1||
+||----------||
+--------------
+
+ARC Arco de arboles
+	 Palanca o palanqueta no alcanzable
+
+	 <alcanzar> <palanca> : Necesita de baston
+
+LAG Lago	
+	 Hueco para colocar la figurita del cementerio y dar acceso al centro del lago	 	 	
+	 <insertar> <figura> : Acceso a centro lago
+
+CEL Centro Lago
+	 Panel con tres palancas de 5 posiciones cada una.	
+
+	 <mover> <palanca1> <3>
+	 <mover> <palanca2> <3>
+	 <mover> <palanca3> <5>
+	 			Revela objeto llave (CL)
+						
+FAC Fachada Casa					
+	 Cerradura oculta tras ladrillo tirable atascado. 
+
+	 <tirar> <ladrillo>  : Revela cerradura
+	 <abrir> <cerradura> : Necesita llave (CL)
+
+CEM Cementerio					
+	 Figurita de piedra.	
+	 Pista para acceder a la casa
+
+	 <coger> <figurita>
+
+MPI Monumento con piedras							
+	 pista para abrir el panel con tres palancas del lago.
+
+	 <coger> <baston>
+
+LAB Laberinto
+
+	 Secuencia de entradas correcta para entra a la casa.
+
+	 <entrar> <izquierda>
+	 <entrar> <izquierda>
+	 <entrar> <izquierda>
+	 <entrar> <derecha>
+	 <entrar> <derecha>
+	 <entrar> <izquierda>
+	 <entrar> <derecha>
+	 			 Revela entrada a segundo capitulo
+
+Mapa Capitulo primero
+	 n
+   o e
+	 s												   													
+					CEL--LAG--ARC--MPI--FAC--CEM
+											   |
+											  LAB
+
+--------------						
+||----------||																
+||Capitulo 2||
+||----------||
+--------------
