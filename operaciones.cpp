@@ -67,11 +67,25 @@ void Cardinal::execute(){
 // Si es "tirable", se puede tirar del mismo.
 void Tirar::execute(){
 
-	  // Existe el objeto especificado en parametro 1
-	 if((*escenario)->get_existe_objeto_escenario(parametro))
+	 // Analisis sintactico parametros en entrada
+	 string objTirar;
+	 // parametro1 es una preposicion 
+	 bool param1Articulo=parametro=="de" or parametro=="del";
+	 // parametro2 no es vacio
+	 bool param2NotVoid=parametro2!="";
+
+	 if(param1Articulo and param2NotVoid)
+			objTirar=parametro2;
+	 else 
+			objTirar=parametro;
+			
+	 
+	 bool existeObjTirar=(*escenario)->get_existe_objeto_escenario(objTirar);
+	  // Existe el objeto especificado en objTirar
+	 if(existeObjTirar)
 		  {
-				Objeto *objeto=(*escenario)->get_objeto(parametro);
-				//Si se puede tirar del objeto pasado por parametro
+				 Objeto *objeto=(*escenario)->get_objeto(objTirar);
+				//Si se puede tirar del objeto pasado por objTirar
 				if(objeto->get_tirable())
 					 {
 						  if(objeto->get_atascado())
@@ -86,8 +100,8 @@ void Tirar::execute(){
 													  desatascador=objDesatascador->get_nombre();
 													  inventario.eliminar(desatascador);
 												}
-												//Determinar genero del objeto desatascador para poner "del" o "de la"
-												cout<<"Has conseguido tirar del "<<parametro<<" con ayuda de "<<objDesatascador->get_nombre()<<endl;
+												//TODO: Determinar genero del objeto desatascador para poner "del" o "de la"
+												cout<<"Has conseguido tirar del "<<objTirar<<" con ayuda de "<<objDesatascador->get_nombre()<<endl;
 
 												objeto->tirar();
 												(*escenario)->eliminar(objeto);					
@@ -104,12 +118,12 @@ void Tirar::execute(){
 								}
 					 }
 				else
-					 cout<<"No puedes tirar de "<<parametro<<endl;
+					 cout<<"No puedes tirar de "<<objTirar<<endl;
 		  }
 	 else
 		  {
-				if(parametro!="")
-					 cout<<"No puedo tirar de '"<<parametro<<"'."<<endl;
+				if(objTirar!="")
+					 cout<<"No puedo tirar de '"<<objTirar<<"'."<<endl;
 				else
 					 cout<<"Tirar de que?."<<endl;
 		  }
