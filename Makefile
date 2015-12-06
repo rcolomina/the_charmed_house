@@ -1,45 +1,34 @@
-CC= g++
-#CFLAGS = -g -Wall -std=gnu++0x
-CFLAGS = -g -Wall
-TARGET = miprograma
-MAIN = main
+# Fuentes: 
+# http://mrbook.org/blog/tutorials/make/
+# http://arco.esi.uclm.es/~david.villa/pensar_en_C++/vol1/ch03s11s03.html
+# http://stackoverflow.com/questions/16221805/why-isnt-make-detecting-changes-in-header-dependencies
 
-all: $(TARGET)
+CC=g++
+CFLAGS=-g -Wall
+LDFLAGS=-lpthread
+SOURCES := $(wildcard *.cpp)
+OBJECTS := $(SOURCES:.cpp=.o)
+DEPENDENCIES := $(OBJECTS:.o=.d)
+EXECUTABLE=miprograma
 
-$(TARGET) : main.o manager.o escenario.o jugador.o inventario.o objeto.o operaciones.o invocador.o
-	$(CC) -g objeto.o inventario.o jugador.o escenario.o manager.o operaciones.o invocador.o main.o -lpthread -o $(TARGET)
+all: $(SOURCES) $(EXECUTABLE)
+	@echo "Fin compilacion y linkado del programa"
 
-main.o : main.cpp manager.o
-	$(CC) $(CFLAGS) -c main.cpp
+$(EXECUTABLE): $(OBJECTS) 
+	@echo "Linkando los objetos " 
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 
-objeto.o : objeto.cpp objeto.h
-	$(CC) $(CFLAGS) -c objeto.cpp
+%.o: %.cpp %.h
+	@echo "Generando codigo objeto --> " $< 
+	$(CC) $(CFLAGS) -c $< -o $@ 
 
-inventario.o : inventario.cpp inventario.h objeto.o
-	$(CC) $(CFLAGS) -c inventario.cpp
-
-jugador.o : jugador.cpp jugador.h inventario.o escenario.o objeto.o
-	$(CC) $(CFLAGS) -c jugador.cpp
-
-escenario.o : escenario.cpp escenario.h objeto.o
-	$(CC) $(CFLAGS) -c escenario.cpp
-
-parametros.o : parametros.cpp parametros.h
-	$(CC) $(CFLAGS) -c parametros.cpp
-
-manager.o : manager.cpp manager.h invocador.o parametros.o
-	$(CC) $(CFLAGS) -c manager.cpp
-
-operaciones.o : operaciones.cpp operaciones.h parametros.o escenario.o
-	$(CC) $(CFLAGS) -c operaciones.cpp
-
-invocador.o : invocador.cpp invocador.h operaciones.o
-	$(CC) $(CFLAGS) -c invocador.cpp
+%.o: %.cpp
+	@echo "Generando codigo objeto --> " $<
+	$(CC) $(CFLAGS) -c $< -o $@ 
 
 
 clean:
+	@echo "Borrado de objetos"
 	rm -rf *.o *~ *.gch core
-	rm $(TARGET)
-
-
+	rm $(EXECUTABLE)
 
