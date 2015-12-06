@@ -5,18 +5,15 @@
 
 #include "operaciones.h"
 
-// This class gather all commands existing in game.
+// This class gathering all commands existing in game by a string command key
+// An exection method determine wheter the command exist or not.
 class Invocador{
 	public:
 	  Invocador(){}
-	  Invocador(map<string,ICommand*> mapComandos):mapComandos(mapComandos){}
+	  Invocador(map<string,ICommand*> mapComandos):
+			 mapComandos(mapComandos){}
 
-	  void salir();
-	  void ayuda_comandos();
-	  void ver_comando();
-	  void examinar_comando(string parametro);
-	  void set_command(ICommand *command);
-      void exec(string command);    
+	  void exec(string commandKey);    
  
 	private:
 	   map<string,ICommand*> mapComandos;
