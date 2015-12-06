@@ -1,0 +1,6 @@
+id nombre		fijo		 descripcion
+o1	baston		n 	  		 Es un baston alargado con una empuñadura en su extremo.
+o2	ladrillo		s 			 
+o3 llave			
+
+
