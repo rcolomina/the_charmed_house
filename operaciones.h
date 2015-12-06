@@ -17,7 +17,6 @@ using namespace parametros;
 class ICommand{
 	public:
 	  virtual void execute()=0;
-//	  virtual void execute(string coordenada)=0;
 };
 
 class Exit : public ICommand{
@@ -51,45 +50,105 @@ class Ver : public ICommand{
 //class Ver : public ICommand{};
 class Examinar: public ICommand{
 	public:
-	 Examinar(Escenario &escenario,Inventario &inventario,string &parametro):
-		  escenario(escenario),inventario(inventario),parametro(parametro){}	  
+	 Examinar(Escenario **escenario,
+				 Inventario &inventario,
+				 string &parametro):
+		  escenario(escenario),
+		  inventario(inventario),
+		  parametro(parametro){}	  
 	  void execute();
 	  string describir_objeto(Objeto *objeto);
 	private:
-	  Escenario &escenario;
+	  Escenario **escenario;
  	  Inventario &inventario;
 	  string &parametro;
 };
 
 class CommandInventario : public ICommand{
 	public:
-	  CommandInventario(Inventario &inventario):inventario(inventario){}
+	  CommandInventario(Inventario &inventario):
+			 inventario(inventario){}
 	  void execute();
 	private:
 	  Inventario &inventario;
 };
 
-/*class Norte : public ICommand{
-
+class Cardinal : public ICommand{
 	public:
-	  Norte(Escenario escenario):escenario(escenario){}
-
-	  void execute(){
-			 
-
-	  }
+	  Cardinal(Escenario **escenario,
+				  const string &cardinal,
+				  bool &primera_entrada):
+			 escena_actual(escenario),
+			 cardinal(cardinal),
+			 primera_entrada(primera_entrada)
+	  {}
+	  void execute();
 	private:
-	  Escenario &escenario;
+	  Escenario **escena_actual;
+	  const string &cardinal;
+	  bool &primera_entrada;
 };
-*/
 
-//class Sur : public ICommand{};
-//class Este : public ICommand{};
-//class Oeste : public ICommand{};
-//class Subir : public ICommand{};
-//class Bajar : public ICommand{};
+class Tirar : public ICommand{
+	public:
+	 Tirar(Escenario **escenario,
+			 Inventario &inventario,
+			 const string &parametro):
+		  escenario(escenario),
+		  inventario(inventario),
+		  parametro(parametro){}
+	  void execute();
+	private:
+	  Escenario **escenario;
+	 Inventario &inventario;
+	  const string &parametro;
+};
+
+class Coger : public ICommand{
+	public:
+	  Coger(Escenario **escenario,
+			  Inventario &inventario,
+			  const string &parametro):
+			 escenario(escenario),
+			 inventario(inventario),
+			 parametro(parametro){}
+	  void execute();
+	private:
+	  Escenario **escenario;
+	  Inventario &inventario;
+	  const string &parametro;
+};
+
+class Dejar : public ICommand{
+	public:
+	  Dejar(Escenario **escenario,
+			  Inventario &inventario,
+			  const string &parametro):
+			 escenario(escenario),
+			 inventario(inventario),
+			 parametro(parametro){}
+	  void execute();
+	private:
+	  Escenario **escenario;
+	  Inventario &inventario;
+	  const string &parametro;
+};
 
 
+class Alcanzar : public ICommand {
+	public:
+	  Alcanzar(Escenario **escenario,
+			  Inventario &inventario,
+			  const string &parametro):
+			 escenario(escenario),
+			 inventario(inventario),
+			 parametro(parametro){}
+	  void execute();
+	private:
+	  Escenario **escenario;
+	  Inventario &inventario;
+	  const string &parametro;
+};
 
 
 #endif
