@@ -93,15 +93,18 @@ class Tirar : public ICommand{
 	public:
 	 Tirar(Escenario **escenario,
 			 Inventario &inventario,
-			 const string &parametro):
+			 const string &parametro,
+			 const string &parametro2):
 		  escenario(escenario),
 		  inventario(inventario),
-		  parametro(parametro){}
+		  parametro(parametro),
+	     parametro2(parametro2){}
 	  void execute();
 	private:
 	  Escenario **escenario;
 	 Inventario &inventario;
 	  const string &parametro;
+	  const string &parametro2;
 };
 
 class Coger : public ICommand{
