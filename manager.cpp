@@ -121,7 +121,7 @@ Manager::Manager():dt(freq),
 	  ICommand *c_sur   = new Cardinal(&escena_actual,s_sur,primera_entrada);
 	  ICommand *c_oeste = new Cardinal(&escena_actual,s_oeste,primera_entrada);
 	  ICommand *c_este  = new Cardinal(&escena_actual,s_este,primera_entrada);
-	  ICommand *c_tirar = new Tirar(&escena_actual,inventario,parametro1);
+	  ICommand *c_tirar = new Tirar(&escena_actual,inventario,parametro1,parametro2);
 
 	  ICommand *c_coger = new Coger(&escena_actual,inventario,parametro1);
 
