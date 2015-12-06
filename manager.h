@@ -92,14 +92,17 @@ class Manager{
 	  int contador_mal_comportamiento;
 
 	  //referencia al escenario actual
-	  Escenario *escena_actual; //puntor al escenario
+	  Escenario *escena_actual; //puntero al escenario actual
+	  Escenario escena_actual1; //escenario actual
+
+
 	  bool primera_entrada; //para mostrar la imagen del escenario
 
 	  //string nombre;
 	  //string descripcion;
 
 	  Invocador invocador_comandos;	   //gestiona los comandos 
-	  map<string,ICommand*> mapComandos;
+//	  map<string,ICommand*> mapComandos;
 
 	  
 }; 

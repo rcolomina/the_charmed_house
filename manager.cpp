@@ -11,107 +11,147 @@ Manager::Manager():dt(freq),
 {
 	  //Crear vector de comandos
 	  comandos_disponibles="Comandos disponibles:";
-	  for(int i=0;i<10;++i)
+//	  int size=v_
+	  for(int i=0;i<13;++i)
 			 v_comandos.push_back(comandos[i]);
 
 	  //Continuar con el bucle principal del juego
 //	  continuar_loop=true;
-
-	  //configurar reloj
+//   configurar reloj
 //	  tiempo=0; //segundos	  
 	  //variables del jugador
 //	  contador_mal_comportamiento=0;
-	  int id_escena;
 
 	  //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero 
-	  string nombre="La entrada principal de la mansion";
-	  //string escena=nombre;
-     //creamos la escena 
-	  Escenario *escena=new Escenario(id_escena1,nombre1,descripcion1,observacion1);
+	  Escenario *esc1=new Escenario(id1,nombre1,descripcion1,observacion1);
+	  Escenario *esc2=new Escenario(id2,nombre2,descripcion2,observacion2);
+	  Escenario *esc3=new Escenario(id3,nombre3,descripcion3,observacion3);
+	  Escenario *esc4=new Escenario(id4,nombre4,descripcion4,observacion4);
+
+	  // Setear la escena de comienzo del juego
+	  escena_actual=esc1;
 
 	  //insertar escenario en mundo
-	  mundo[nombre1]=escena;
+	  mundo[nombre1]=esc1;
+	  mundo[nombre2]=esc2;
+	  mundo[nombre3]=esc3;
+	  mundo[nombre4]=esc4;
 
-	  //selecionamos la escena de arranque del juego. TODO: Cargar desde fichero de salvaguarda
-	  escena_actual=escena;
+	  // Enlaces entre escenas
+	  //Id: 1->[2(o),3(e)] ,2->[1(e),4(i)), 3->[1(o)], 4->[2(e)]
 
-	  //SEGUNDA ESCENA
-	  id_escena=2;
-	  nombre="El monumento de piedras";
-     string escena2=nombre;
-
-	  escena=new Escenario(2,nombre,descripcion2,observacion2);
-
-	  //insertar escenario en mundo
-	  mundo[nombre]=escena;
-
-	  //TERCENRA ESCENA: Lapida
-	  id_escena=3;
-	  nombre="EL cementerio";
-     string escena3=nombre;
-
-	  escena=new Escenario(3,nombre,descripcion3,observacion3);
-	  
-	  //insertar escenario en mundo
-	  mundo[nombre]=escena;
-
-	  //ENLAZAR ESCENARIOS ENTRE SI
-	  //Id: 1->(2,3) ,2<->1, 3<->1
 	  mundo[escena1]->set_salida(mundo[escena2],oeste);
 	  mundo[escena1]->set_salida(mundo[escena3],este);
-	  mundo[escena2]->set_salida(mundo[escena1],este);
-	  mundo[escena3]->set_salida(mundo[escena1],oeste);
+
+	  mundo[escena2]->set_salida(esc1,este);
+	  mundo[escena2]->set_salida(esc4,oeste);
+
+	  mundo[escena3]->set_salida(esc1,oeste);
+
+	  mundo[escena4]->set_salida(esc2,este);
 
 	  //CONSTRUIR OBJETOS
 	  int id_obj=1;
-	  string nombre_obj="bastón alargado";
-	  string descripcion_obj="Es un batón de madera bastante largo, con una empuñadura en su extremo.";
+	  string nombre_obj="baston";
+	  string descripcion_obj="Es un batón de madera alargado, con una empuñadura en su extremo.";
 	  Objeto *o_baston=new Objeto(id_obj,nombre_obj,descripcion_obj);
-	  o_baston->set_visible(true); o_baston->set_usado(false); o_baston->set_fijo(false);
+	  o_baston->set_visible(true); 
+	  o_baston->set_usado(false); 
+	  o_baston->set_fijo(false);
+	  o_baston->set_alcanzador(true);
 
 	  id_obj=2;
 	  nombre_obj="ladrillo";
-	  descripcion_obj="Ladrillo saliente en la pared de la casa. Es posible que se puede tirar de él.";
+	  descripcion_obj="Ladrillo desencajado en la pared de la casa. Podrias intentar tirar de el.";
 	  Objeto *o_ladrillo=new Objeto(id_obj,nombre_obj,descripcion_obj);
-	  o_ladrillo->set_visible(false);
+	  o_ladrillo->set_visible(true);
 	  o_ladrillo->set_fijo(true);
-
-	  id_obj=3;
-	  nombre_obj="llave dorada";
-	  descripcion_obj="Una llave dorada y antigua.";
-	  Objeto *o_llave=new Objeto(id_obj,nombre_obj,descripcion_obj);
-	  o_llave->set_visible(false);
-	  o_llave->set_fijo(false);
-
-
-	  //INSERTAR OBJETOS EN ESCENARIOS
+	  o_ladrillo->set_atascado(true);
 	  
-	  mundo[escena2]->set_objeto(o_baston);
+	  id_obj=3;
+	  nombre_obj="cerradura";
+	  descripcion_obj="Una cerradura dorada y antigua.";
+	  Objeto *o_cerradura=new Objeto(id_obj,nombre_obj,descripcion_obj);
+	  o_cerradura->set_visible(false);
+	  o_cerradura->set_usado(false);
+	  o_cerradura->set_fijo(true);
 
-	  //entrada de la mandion
+
+	  //Relacionar objetos: Ladrillo con llave
+	  string descrip_tirar_ladrillo="Tiras con fuerza del ladrillo de la pared, y parece que comienza a ceder. Una vez sacado el ladrillo, tras el, aparece una cerradura escondida.";
+	  o_ladrillo->set_tirable(o_cerradura,descrip_tirar_ladrillo);
+	  
+	  id_obj=4;
+	  nombre_obj="palanca";
+	  descripcion_obj="Es una palanca retorcida en uno de sus extremos. Permite forzar puertas o ventanas para desbloquearlas. Escencial en la maleta de herramientas de un ladron.";
+	  Objeto *o_palanca=new Objeto(id_obj,nombre_obj,descripcion_obj);
+	  o_palanca->set_visible(true);
+	  o_palanca->set_usado(false);
+	  o_palanca->set_fijo(false);
+	  o_palanca->set_alcanzable(false);
+	  o_palanca->set_desatascador(true);
+
+	  id_obj=5;
+	  nombre_obj="figurita";
+	  descripcion_obj="Es una figurita tallada en piedra en forma de angel. En su base posee una forma saliente que podria encajar en alguna oquedad."; 
+	  Objeto *o_figurita=new Objeto(id_obj,nombre_obj,descripcion_obj);
+	  o_figurita->set_visible(true);
+	  o_figurita->set_usado(false);
+	  o_figurita->set_fijo(false);
+
+	  
+	  //INSERTAR OBJETOS EN ESCENARIOS
 	  mundo[escena1]->set_objeto(o_ladrillo);
-	  mundo[escena1]->set_objeto(o_llave);
-
+	  mundo[escena1]->set_objeto(o_cerradura);
+	  mundo[escena2]->set_objeto(o_baston);
+	  mundo[escena3]->set_objeto(o_figurita);
+	  mundo[escena4]->set_objeto(o_palanca);
 	  //CONSTRUIR INVENTARIO
 	  //inventario.insertar_objeto(objeto);
 
+	  // CONSTRUIR COMMANDOS E INVOCADOR
 	  //Construir los comandos y conectarlos al invocador
-	  ICommand *c_exit=new Exit(continuar_loop);
-	  ICommand *c_ayuda=new Ayuda(v_comandos);
-	  ICommand *c_ver=new Ver(&escena_actual); //pasar direccion del puntor a una escena
-	  ICommand *c_examinar=new Examinar(*escena_actual,inventario,parametro1); //pasamos direccion al escenario actual y al inventario
+	  ICommand *c_exit  = new Exit(continuar_loop);
+	  ICommand *c_ayuda = new Ayuda(v_comandos);
+	  ICommand *c_ver   = new Ver(&escena_actual); //pasar direccion del puntor a una escena
+	  ICommand *c_examinar = new Examinar(&escena_actual,inventario,parametro1); //pasamos direccion al escenario actual y al inventario
+	  ICommand *c_inventario = new CommandInventario(inventario);
+//	  const Escena& escena_actual=escena_actual;
+	  ICommand *c_norte = new Cardinal(&escena_actual,s_norte,primera_entrada);
+	  ICommand *c_sur   = new Cardinal(&escena_actual,s_sur,primera_entrada);
+	  ICommand *c_oeste = new Cardinal(&escena_actual,s_oeste,primera_entrada);
+	  ICommand *c_este  = new Cardinal(&escena_actual,s_este,primera_entrada);
+	  ICommand *c_tirar = new Tirar(&escena_actual,inventario,parametro1);
 
-	  ICommand *c_inventario=new CommandInventario(inventario);
+	  ICommand *c_coger = new Coger(&escena_actual,inventario,parametro1);
 
+	  ICommand *c_dejar = new Dejar(&escena_actual,inventario,parametro1);
+	  ICommand *c_alcanzar = new Alcanzar(&escena_actual,inventario,parametro1);
+
+/*
+	  ICommand *c_sur=new Cardinal(&*escena_actual);
+	  ICommand *c_este=new Cardinal(&*escena_actual);
+	  ICommand *c_oeste=new Cardinal(&*escena_actual);
+*/			
+
+	  map<string,ICommand*> mapComandos;
 	  mapComandos[s_exit]=c_exit;
+	  mapComandos[s_salir]=c_exit;
 	  mapComandos[s_ayuda]=c_ayuda;
 	  mapComandos[s_ver]=c_ver;
 	  mapComandos[s_examinar]=c_examinar;
 	  mapComandos[s_inventario]=c_inventario;
-	  
-	  //construir invocador de comandos
-	  invocador_comandos=Invocador(mapComandos);
-	  
+	  mapComandos[s_norte]=c_norte;
+	  mapComandos[s_sur]=c_sur;
+	  mapComandos[s_este]=c_este;
+	  mapComandos[s_oeste]=c_oeste;
+	  mapComandos[s_tirar]=c_tirar;
+	  mapComandos[s_coger]=c_coger;
+	  mapComandos[s_dejar]=c_dejar;
+	  mapComandos[s_alcanzar]=c_alcanzar;
+
+	  // Construir invocador de comandos con mapComandos
+	  invocador_comandos=Invocador(mapComandos);	  
 }
 
 void Manager::prologo(){
@@ -166,7 +206,7 @@ void Manager::run(){
 				  }
 
 			 ///RECOGIDA DE COMMANDOS CONSOLA///
-//			 cout<<"[Escena: "<<escena_actual->get_nombre_escenario()<<"]"
+//			 cout<<"[Escena: "<<escena_actual->get_nombre()<<"]"
 //				  <<"[Objetos: "<<escena_actual->get_objetos_disponibles()<<"]"
 //				  <<"[Salidas: "<<escena_actual->
 //				  <<endl<<">>>";
@@ -254,97 +294,44 @@ string Manager::get_salidas_estado_actual(){
 }
 
 
-
-
-
 //Tratamiento de la línea de comandos 
 void Manager::tratamiento_comandos(string comando){
 
-     if(comando==s_exit or comando==s_ayuda or comando==s_ver or comando==s_inventario)
+	  //Tratamiento del comando mal deletrado
+	  //How to know that comando is in a list of strings
+     bool info=(comando==s_exit or comando==s_salir or comando==s_ayuda or comando==s_ver or comando==s_inventario or comando==s_examinar);
+	  bool norte=(comando=="norte" or comando=="n");
+	  bool sur  =(comando=="sur" or comando=="s");
+	  bool este =(comando=="este" or comando=="e");
+	  bool oeste=(comando=="oeste" or comando=="o");
+
+	  if(info)
           invocador_comandos.exec(comando);
+	  if(norte)
+			 invocador_comandos.exec(s_norte);
+	  if(sur)
+			 invocador_comandos.exec(s_sur);
+	  if(este)
+			 invocador_comandos.exec(s_este);
+	  if(oeste)
+			 invocador_comandos.exec(s_oeste);
 
-	  if(comando==s_examinar)
-			 invocador_comandos.examinar_comando(parametro1);
+	  bool tirar=comando==s_tirar;
+	  if(tirar)
+			 invocador_comandos.exec(s_tirar);
 
-//	  if(comando=="inventario" or comando=="i")
-//			 cout<<endl<<"Posees lo siguiente: "<<endl<<inventario.listar()<<endl;
+	  bool coger=comando==s_coger;
+	  if(coger)
+			 invocador_comandos.exec(s_coger);
 
-//			  if(comando==s_ver))
-//			  invocador_comandos.ver_descripcion();
-
-//			 if(comando=="exit")
-//					continuar_loop=false;
-
-//			 else if(comando=="ayuda")
-//					cout<<endl<<get_comandos_disponibles();
-
-//					cout<<endl<<get_descripcion_estado_actual();
-/*
-			 else if(comando=="examinar"){
-					if(parametro1=="")
-						  cout<<escena_actual->get_observacion()<<endl;
-					else 
-					   {
-						//OBJETO DEL MUNDO
-
-						//Si está en el inventario, lo describes
-						  if(inventario.get_existe_objeto(parametro1))
-								cout<<inventario.get_objeto(parametro1)->get_descripcion(); 			  		   	   
-						//Si está en el escenario actual, lo describes
-  					     else if(escena_actual->get_existe_objeto_escenario(parametro1))
-							  cout<<escena_actual->get_objeto(parametro1)->get_descripcion();
- 					   
-						  else
-							  cout<<"No se puede examinar eso.";
-						}
-						  
-			      }*/
+	  bool alcanzar=comando==s_alcanzar;
+	  if(alcanzar)
+			 invocador_comandos.exec(s_alcanzar);
 
 
-	  if(comando=="norte" or comando=="n")
-               {
-					  if(escena_actual->get_salida("norte"))
-					     {
-						  escena_actual=(escena_actual->get_salida("norte"));
-						  primera_entrada=true;
-				    	  } 
-					  else
-						  cout<<"No puedes ir al norte.";					
-               }
 
-	        else if(comando=="sur" or comando=="s")
-               {
-					if(escena_actual->get_salida("sur"))
-					     {
-						  escena_actual=(escena_actual->get_salida("sur"));
-						  primera_entrada=true;
-				    	  } 
-					else
-						  cout<<"No puedes ir al sur.";
-					
-              }
-
-			 else if(comando=="oeste" or comando=="o"){
-					if(escena_actual->get_salida("oeste"))
-					     {
-						  escena_actual=(escena_actual->get_salida("oeste"));
-						  primera_entrada=true;
-				    	  } 
-					else
-						  cout<<"No puedes ir al oeste.";
-					}
-
-			 else if(comando=="este" or comando=="e"){
-					if(escena_actual->get_salida("este"))
-					     {
-								 escena_actual=(escena_actual->get_salida("este"));
-						  primera_entrada=true;
-				    	  } 
-					else
-						  cout<<"No puedes ir al este.";
-					}
-			 
-			 else if(comando=="arriba");
+			 			 
+	 if(comando=="arriba");
 			 else if(comando=="abajo")	;			
 			 else if(comando=="entrar");
 			 else if(comando=="salir");					
@@ -435,7 +422,7 @@ void Manager::actualizar_objetos(){
 	  if(escena_actual->get_id()==id_escena1){
 			 //Chequear el ladrillo de la puerta
 /*			 Objeto *ladrillo=mundo[escena1]->get_objeto(o_ladrillo);
-			 Objeto *llave=mundo[escena1]->get_objeto(o_llave);
+			 Objeto *llave=mundo[escena1]->get_objeto(o_cerradura);
 			 if(llave!=NULL and ladrillo!=NULL)
 					if(not llave->get_visible() and ladrillo->get_usado()){
 						  cout<<"Una llave dorada aparece ante tu vista."<<endl;
@@ -473,6 +460,8 @@ void Manager::dibujar(){
 			 fileImagetext="./txt/cementery.txt";
 	  else if(id_esc==2)
 			 fileImagetext="./txt/stones.txt";
+	  else if(id_esc==4)
+			 fileImagetext="./txt/arcoarboles.txt";
 
 	  fs.open(fileImagetext.c_str(),fstream::in);
 	  string line;
