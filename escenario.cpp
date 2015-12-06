@@ -1,20 +1,19 @@
 #include "escenario.h"
-#include "objeto.h"
 
-Escenario::Escenario(int identificador,string nombre,string descripcion,string observacion):
-	  id(identificador),
-	  nombre_escenario(nombre),
-	  descripcion(descripcion),
-	  observacion(observacion){}
+Escenario::Escenario(int id,string nombre,string descripcion,string observacion):
+	  Entidad(id,nombre,descripcion),
+	  observacion(observacion){
+
+}
 
 
 bool Escenario::get_existe_objeto_escenario(string nombre){
 	  
 	  for(map<string,Objeto*>::iterator it=objetos.begin();
 			it!=objetos.end();
-			it++){
-	 		 if(it->first==nombre)
-						return true;
+			it++){			 
+	 		 if(it->first==nombre and it->second->get_visible())
+					return true;
 	  }
 	  return false;
 }
@@ -26,10 +25,25 @@ string Escenario::get_objetos_disponibles(){
 	  for(map<string,Objeto*>::iterator it=objetos.begin();
 			it!=objetos.end();it++){
 			 lista_objetos+=" ";
-			 lista_objetos+=it->first;
+			 if(it->second->get_visible())
+					lista_objetos+=it->first;
 	  }
 	  if(lista_objetos=="")
 			 return string("");
 	  else
 			 return lista_objetos;
 }
+
+void Escenario::eliminar(Objeto *obj){
+
+	  string keyObj=obj->get_nombre();
+  	  if(keyObj!="")
+			 objetos.erase(keyObj);
+}
+
+void Escenario::set_objeto(Objeto *obj)
+{
+	  string nombre=obj->get_nombre();
+	  objetos[nombre]=obj;
+}
+
