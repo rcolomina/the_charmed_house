@@ -1,20 +1,20 @@
 # The Charmed House
 
-Where nothing is as it seems .
+Where nothing is as it seems.
 
 # Introduction
 
-This is an old style convensational game based on a text line commander under Linux OS. The project pretens to be a framework that can be a machine for creating conversational games from text files or configuraiton files. 
+This is an old style convensational game based on CLI command line interface running under Linux OS. The project pretens to be as well a framework that could be be a machine for creating conversational games from text files or configuraiton files. 
 
 The player interacts with the word typing simple phrases formed by verbs and names. It has a simple command line interface: 
 
 \<command\> \<parameter1\> ... \<parameterN\>. 
 
-Usually, these comands or verbs will accept one parameter or two parameters. Rarelly a command will have 3 or more parameters, but it has been left open to get the possibility to build a more complex conversational game or framework. 
+Usually, these comands or verbs will accept one parameter or two parameters. Rarelly a command will have three or more parameters, but it has been opened to get the possibility to build a more complex conversational game or framework. 
 
-The world is divided into scenes. A player much use cardinal points to oriented himself in around. In the scenes, there are many objects available that can be used with others objets. All scenes and objects have descriptions that give clues to the player to solve the puzzles. This game will have an inventario allowing the player to pick up, drop or  bring objects between different scenes. Sometimes the game would be a little tricky to solve but descriptions will help the player.
+The world is divided into scenes. A player can navigate throughout the world using cardinal points to get oriented himself. In scenes, there are many objects available that can be used with others objets. All scenes and objects have descriptions that give clues to a player to solve the puzzles that struggle it. This game has an inventario allowing the player to pick up, drop or bring objects between different scenes. Sometimes the game would be a little tricky to solve, but descriptions will help player to avoid be stucked.
 
-The scenes have a mix of text and images that are shown in all of them as pure text converting from pictures. The game presents to the current player situations not only described with text, but ilustrated with old styple console primitive graphics.
+The scenes have a mix of text and images that are shown as pure text which have been taken from converting pictures to text. The game presents to a player situations not only described with text, but ilustrated with old style console primitive graphics.
 
 # Game argument
 
