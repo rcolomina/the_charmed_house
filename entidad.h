@@ -1,5 +1,5 @@
-#ifndef _DISPARADOR_H_
-#define _DISPARADOR_H_
+#ifndef _entidad_H_
+#define _entidad_H_
 
 #include <string>
 
@@ -22,7 +22,7 @@ class Entidad {
 	  string get_descripcion(){return descripcion;}
 	  void set_descripcion(string descripcion){this->descripcion=descripcion;}
 	protected:
-	  int id;  //identificador del escenario
+	  int id;  //identificador de la entidad
 	  string nombre;
 	  string descripcion;
 };

@@ -1,5 +1,13 @@
 #include "objeto.h"
 
+Objeto::Objeto()
+{
+	  usado=false;
+	  fijo=false;
+	  visible=true;
+	  tirable=false;
+	  alcanzable=true;
+}
 
 Objeto::Objeto(int id,
 					string nombre,

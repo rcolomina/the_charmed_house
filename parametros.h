@@ -3,7 +3,9 @@
     
 #include <string>
 #include <iostream>
- 
+
+#define NUMBER_COMMANDS 13
+
 using namespace std;
   
 namespace parametros{
@@ -51,7 +53,9 @@ namespace parametros{
 	  const string empujar="empujar";
 	  const string pulsar="pulsar";
 
-	  const string comandos[13]={s_exit,
+
+	  
+	  const string comandos[NUMBER_COMMANDS]={s_exit,
 										  s_salir,
 										  s_examinar,
 										  s_ver,

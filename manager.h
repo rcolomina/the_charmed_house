@@ -1,7 +1,6 @@
 
 #ifndef _MANAGER_
 #define _MANAGER_
-
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
@@ -20,6 +19,9 @@
 #include "jugador.h"
 #include "invocador.h"
 #include "parametros.h"
+
+#include "factory.h"
+#include "game.h"
 
 using namespace std;
 using namespace parametros;
@@ -77,7 +79,6 @@ class Manager{
 	  string parametro1;
 	  string parametro2;
 	  string parametro3;
-
 	  vector<string> v_comandos;
 
 	  //TODO: Construir escenarios y objetos del mundo
@@ -104,6 +105,7 @@ class Manager{
 	  Invocador invocador_comandos;	   //gestiona los comandos 
 //	  map<string,ICommand*> mapComandos;
 
+	  Game game;
 	  
 }; 
 

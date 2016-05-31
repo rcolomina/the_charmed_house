@@ -10,17 +10,16 @@ using namespace std;
 
 class Objeto : public Entidad{
 	public:
-	  Objeto(){}
+	  Objeto();
 	  Objeto(int id,string nombre,string descripcion);
 
 	  void usar_sobre(Objeto *objeto);
 
-	  //void eliminar(Objeto objeto); //si no está no hay nada que quitar
+	  // void eliminar(Objeto objeto); //si no está no hay nada que quitar
 	  // void incluir_objeto(Objeto *objeto);
-	  //void dejar_objeto();
+	  // void dejar_objeto();
 
 	  //GETTERS
-
 	  bool get_usado(){return usado;}
 	  bool get_visible(){return visible;}
 	  bool get_fijo(){return fijo;}
@@ -31,9 +30,9 @@ class Objeto : public Entidad{
 	  bool get_alcanzador(){return alcanzador;}
 
 	  //SETTERS
-	  void set_fijo(bool estado){fijo=estado;}
 	  void set_visible(bool estado){visible=estado;}
 	  void set_usado(bool estado){usado=estado;}
+	  void set_fijo(bool estado){fijo=estado;}
 	  void set_tirable(Objeto *objeto,string descrip_tirable);
 	  void set_atascado(bool estado){ atascado=estado;}
 	  void set_desatascador(bool estado){ desatascador=estado;}

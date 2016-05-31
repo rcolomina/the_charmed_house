@@ -11,8 +11,8 @@ Manager::Manager():dt(freq),
 {
     //Crear vector de comandos
     comandos_disponibles="Comandos disponibles:";
-//	  int size=v_
-    for(int i=0;i<13;++i)
+
+	 for(int i=0;i<NUMBER_COMMANDS;++i)
         v_comandos.push_back(comandos[i]);
 
     //Continuar con el bucle principal del juego
