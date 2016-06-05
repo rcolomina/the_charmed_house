@@ -8,7 +8,7 @@ string Inventario::listar(){
 	  for(map<string,Objeto*>::iterator it=objetos_inventario.begin();
 			it!=objetos_inventario.end();it++){
 			 lista_inventario+=" ";			
-			 lista_inventario+=it->second->get_nombre();
+			 lista_inventario+=it->second->Name();
 	  }
 	  if(lista_inventario=="")
 			 lista_inventario="Tu inventario está vacío.";
@@ -79,7 +79,7 @@ Objeto* Inventario::tomar_desatascador(){
 
 
 void Inventario::insertar_objeto(Objeto *objeto){	  
-	  string nombre=objeto->get_nombre();
+	  string nombre=objeto->Name();
   	  if(nombre!="")
 	    objetos_inventario[nombre]=objeto;
 }
