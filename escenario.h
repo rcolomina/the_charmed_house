@@ -10,6 +10,9 @@
 using namespace std;
 
 //class Objeto;
+class Escenario;
+typedef Escenario* pScene;
+typedef Escenario** ppScene;
 
 //Clase que describe un escenario: Salidas, Objetos, Descripción, Imagen
 class Escenario : public Entidad {
@@ -22,10 +25,10 @@ class Escenario : public Entidad {
 	  string get_observacion(){return observacion;}
 	  map<string,Escenario*> get_salidas(){return salidas;} //devuelve lista de escenarios salidas
 	  Escenario* get_salida(string coordenada){return salidas[coordenada];} //devuelve nulo si no existe
-	  map<string,Objeto*> get_objetos(){return objetos;} //que objetos hay disponible
+	  map<string,pItem> get_objetos(){return objetos;} //que objetos hay disponible
 	  string get_objetos_disponibles();
 	  
-	  Objeto* get_objeto(string nombre){return objetos[nombre];}
+	  pItem get_objeto(string nombre){return objetos[nombre];}
 	  bool get_existe_objeto_escenario(string nombre);
 
 	  //////setters/////
