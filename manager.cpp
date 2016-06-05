@@ -7,19 +7,22 @@ const double freq=1.0/60.0;
 Manager::Manager():dt(freq),
                    tiempo(0),
                    continuar_loop(true),
-                   contador_mal_comportamiento(0)
+                   contador_mal_comportamiento(0),
+						 fac("gamesInfo.xml")
 {
+	 
+
     //Crear vector de comandos
     comandos_disponibles="Comandos disponibles:";
 
 	 for(int i=0;i<NUMBER_COMMANDS;++i)
         v_comandos.push_back(comandos[i]);
 
-    //Continuar con el bucle principal del juego
+//Continuar con el bucle principal del juego
 //	  continuar_loop=true;
 //   configurar reloj
 //	  tiempo=0; //segundos	  
-    //variables del jugador
+//   variables del jugador
 //	  contador_mal_comportamiento=0;
 
     //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero 
@@ -50,42 +53,28 @@ Manager::Manager():dt(freq),
 
     mundo[escena4]->set_salida(esc2,este);
 
+	 int id_obj;
+	 string nombre_obj;
+    string descripcion_obj;
+	 
     //CONSTRUIR OBJETOS
-    int id_obj=1;
-    string nombre_obj="baston";
-    string descripcion_obj="Es un batón de madera alargado, con una empuñadura en su extremo.";
-    Objeto *o_baston=new Objeto(id_obj,nombre_obj,descripcion_obj);
+	 
+	 Objeto* o_baston = fac.buildItemById("item01");
     o_baston->set_visible(true); 
-    o_baston->set_usado(false); 
     o_baston->set_fijo(false);
     o_baston->set_alcanzador(true);
-
-    id_obj=2;
-    nombre_obj="ladrillo";
-    descripcion_obj="Ladrillo desencajado en la pared de la casa. Podrias intentar tirar de el.";
-    Objeto *o_ladrillo=new Objeto(id_obj,nombre_obj,descripcion_obj);
-    o_ladrillo->set_visible(true);
+	 
+	 Objeto *o_ladrillo = fac.buildItemById("item02");
+	 o_ladrillo->set_visible(true);
     o_ladrillo->set_fijo(true);
     o_ladrillo->set_atascado(true);
-	  
-    id_obj=3;
-    nombre_obj="cerradura";
-    descripcion_obj="Una cerradura dorada y antigua.";
-    Objeto *o_cerradura=new Objeto(id_obj,nombre_obj,descripcion_obj);
-    o_cerradura->set_visible(false);
-    o_cerradura->set_usado(false);
-    o_cerradura->set_fijo(true);
 
+	 Objeto *o_cerradura = fac.buildItemById("item03");
+	 o_cerradura->set_visible(false);
+    o_cerradura->set_fijo(true);	 
 
-    //Relacionar objetos: Ladrillo con llave
-    string descrip_tirar_ladrillo="Tiras con fuerza del ladrillo de la pared, y parece que comienza a ceder. Una vez sacado el ladrillo, tras el, aparece una cerradura escondida.";
-    o_ladrillo->set_tirable(o_cerradura,descrip_tirar_ladrillo);
-	  
-    id_obj=4;
-    nombre_obj="palanca";
-    descripcion_obj="Es una palanca retorcida en uno de sus extremos. Permite forzar puertas o ventanas para desbloquearlas. Escencial en la maleta de herramientas de un ladron.";
-    Objeto *o_palanca=new Objeto(id_obj,nombre_obj,descripcion_obj);
-    o_palanca->set_visible(true);
+	 Objeto *o_palanca = fac.buildItemById("item04");
+	 o_palanca->set_visible(true);
     o_palanca->set_usado(false);
     o_palanca->set_fijo(false);
     o_palanca->set_alcanzable(false);
@@ -99,7 +88,12 @@ Manager::Manager():dt(freq),
     o_figurita->set_usado(false);
     o_figurita->set_fijo(false);
 
-	  
+    //RELACIONAR OBJETOS
+	 // Ladrillo con llave
+    string descrip_tirar_ladrillo="Tiras con fuerza del ladrillo de la pared, y parece que comienza a ceder. Una vez sacado el ladrillo, tras el, aparece una cerradura escondida.";
+    o_ladrillo->set_tirable(o_cerradura,descrip_tirar_ladrillo);
+
+	 
     //INSERTAR OBJETOS EN ESCENARIOS
     mundo[escena1]->set_objeto(o_ladrillo);
     mundo[escena1]->set_objeto(o_cerradura);
@@ -178,7 +172,6 @@ void Manager::prologo(){
         cout<<*my_iter<<flush;
     }
 	  
-
     sleep(3);
     cout<<endl;
     cout<<textoComienzo<<endl;
@@ -266,7 +259,7 @@ string Manager::get_comandos_disponibles()
 }
 
 string Manager::get_descripcion_estado_actual(){
-    string descripcion=escena_actual->get_descripcion();
+    string descripcion=escena_actual->examine();
     descripcion+="\n";
     if(escena_actual->get_objetos_disponibles()!="")
     {
@@ -317,18 +310,19 @@ void Manager::tratamiento_comandos(string comando){
         invocador_comandos.exec(s_oeste);
 
     bool tirar=comando==s_tirar;
-    if(tirar)
+
+	 if(tirar)
         invocador_comandos.exec(s_tirar);
 
     bool coger=comando==s_coger;
-    if(coger)
+
+	 if(coger)
         invocador_comandos.exec(s_coger);
 
     bool alcanzar=comando==s_alcanzar;
+
     if(alcanzar)
         invocador_comandos.exec(s_alcanzar);
-
-
 
 			 			 
     if(comando=="arriba");
@@ -342,7 +336,8 @@ void Manager::tratamiento_comandos(string comando){
     else if(comando=="");
     else 
     {
-        //
+
+			// TODO: Use regular expresion instead/
         bool hijo=(comando=="hijo" or comando=="Hijo");
         bool puta=(parametro1=="puta" or parametro1=="Puta") or (parametro2=="puta" or parametro2=="Puta");
         bool idiota=(comando=="Idiota" or comando=="idiota") or 
@@ -352,6 +347,7 @@ void Manager::tratamiento_comandos(string comando){
         bool maricon=(comando=="maricón" or comando=="Maricón") or (comando=="maricon" or comando=="Maricon") or
             (parametro1=="maricón" or parametro1=="Maricón") or (parametro1=="maricon" or parametro1=="Maricon") or
             (parametro2=="maricón" or parametro2=="Maricón") or (parametro2=="maricon" or parametro2=="Maricon");
+
 
         bool cabron=(comando=="cabron" or comando=="Cabron") or (comando=="Cabrón" or comando=="cabrón") or
             (parametro1=="cabron" or parametro1=="Cabron") or (parametro1=="Cabrón" or parametro1=="cabrón") or
@@ -381,14 +377,15 @@ void Manager::tratamiento_comandos(string comando){
     }
 
 
-    if(contador_mal_comportamiento>3){
+    if(contador_mal_comportamiento>3)
+	 {
         cout<<endl<<endl<<"Eres una desgracia humana mentalmente o no tienes la sufiente madurez, así que vuelve tan sólo cuando hayas soluciodado ese asunto. ADIOS!.";				
         continuar_loop=false;
     }
 
 
     if(comando!="")
-        cout<<endl;
+			cout<<endl;
 			 
 }
 
@@ -396,10 +393,10 @@ void Manager::tratamiento_comandos(string comando){
 
 void Manager::clock(){
 
-    while(continuar_loop){
-
-        int itime=(int)tiempo;
-        if(itime%(5*60)==0)
+    while(continuar_loop)
+	 {
+        int itime = (int) tiempo;
+        if( itime % (5*60) == 0 )
         {
             cout<<"\nHan pasado "<<tiempo<<" segundos desde el inicio del juego\n"<<">>>";
         }
@@ -419,7 +416,8 @@ void Manager::actualizar_objetos(){
 //SEGURO??
 
 // Escenario 1: La entrada de la mansion
-    if(escena_actual->get_id()==id_escena1){
+    if(escena_actual->Id()==id_escena1)
+	 {
         //Chequear el ladrillo de la puerta
 /*			 Objeto *ladrillo=mundo[escena1]->get_objeto(o_ladrillo);
 			 Objeto *llave=mundo[escena1]->get_objeto(o_cerradura);
@@ -428,8 +426,8 @@ void Manager::actualizar_objetos(){
                          cout<<"Una llave dorada aparece ante tu vista."<<endl;
                          llave->set_visible(true);
                          }*/
-
         //
+			
     }
 
     //if(
@@ -449,7 +447,7 @@ void Manager::actualizar_salidas(){
 
 void Manager::dibujar(){
 
-    int id_esc=escena_actual->get_id();
+    int id_esc=escena_actual->Id();
 
     fstream fs;
     string fileImagetext;

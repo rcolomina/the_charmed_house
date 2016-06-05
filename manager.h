@@ -79,6 +79,7 @@ class Manager{
 	  string parametro1;
 	  string parametro2;
 	  string parametro3;
+	  vector<string> v_parameters;
 	  vector<string> v_comandos;
 
 	  //TODO: Construir escenarios y objetos del mundo
@@ -106,7 +107,9 @@ class Manager{
 //	  map<string,ICommand*> mapComandos;
 
 	  Game game;
-	  
+
+	  FactoryGame fac;
+ 
 }; 
 
 #endif
