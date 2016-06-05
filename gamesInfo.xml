@@ -1,48 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <games>
-  <game id="EjemploJuego" language="Spanish">
+  <game id="games.game_EjemploJuego" language="Spanish">
 	 <scenes>
-		<scene id="sce000" title="Preludio: La aventura comienza...">
+		<scene id="game.scenes.scene_sce000" title="Preludio: La aventura comienza...">
 		  <descriptions> 
-			 <description id="des001">En un pueblo lejos de la ciudad, había una casa ruinosa y antigua desde que tengo ojos para ver. Como aventurero que soy, he tenido en mente explorarla en todo momento, pero nunca me he atrevido. Existen carteles prohibiendo el paso en sus alrededores. Quien quiera que sea el dueño, desea que los intrusos permanezcan lejos.</description>
-			 <description id="des002">Durante noches había estado soñando con aquella casa en ruinas, imaginando que podría haber en su inferior. Una noche, en uno de mis sueños, vislumbré una figura humana irreconocible. Lo único que pude descifrar en aquel enigmático sueño, es la llamada de aquella entidad. Susurraba, -Ayuuudame!!, ayuudame!!-.  \n Desde aquel momento, no pude esperar más. Debía entrar en aquella casa abandonada,  a pesar de que las advertencias en los alrededores.</description>
+			 <description id="des001">En un pueblo lejos de la ciudad, había una casa ruinosa y antigua desde que tengo ojos para ver. Como aventurero que soy, he tenido en mente explorarla en todo momento, pero nunca me he atrevido. Existen carteles prohibiendo el paso en sus alrededores. Quien quiera que sea el dueño, desea que los intrusos permanezcan lejos.
+			 </description>
+			 <description id="des002">Durante noches había estado soñando con aquella casa en ruinas, imaginando que podría haber en su inferior. Una noche, en uno de mis sueños, vislumbré una figura humana irreconocible. Lo único que pude descifrar en aquel enigmático sueño, es la llamada de aquella entidad. Susurraba, -Ayuuudame!!, ayuudame!!-.  \n Desde aquel momento, no pude esperar más. Debía entrar en aquella casa abandonada,  a pesar de que las advertencias en los alrededores.
+			 </description>
 		  </descriptions>
 		</scene>
 		
-		<scene id="sce001" title="La Entrada a la Casa">
+		<scene id="game.scenes.scene.sce001" title="La Entrada a la Casa">
 		  <descriptions> 
-			 <description id="des001">Una casa antigua construída en piedra y madera se presenta ante tí. \nA duras penas se sostiene sobre sus\n cimientos.\nHay carteles de cortesia advirtiendo a los intrusos. \n¡ATENCION! NO PASAR, PELIGRO, FUERA!, A LA MIERDA, ¿NO TE HAS ENTERADO?.</description>
-			 <observation>Puedes ver una rama de árbol indicando ladrillo en la pared.</observation>
-		  </descriptions> 
+			 <description id="des001">
+				Una casa antigua construída en piedra y madera se presenta ante tí. \nA duras penas se sostiene sobre sus\n cimientos.\nHay carteles de cortesia advirtiendo a los intrusos. \n¡ATENCION! NO PASAR, PELIGRO, FUERA!, A LA MIERDA, ¿NO TE HAS ENTERADO?.
+			 </description>
+			 <observation>
+				Puedes ver una rama de árbol indicando ladrillo en la pared.
+			 </observation>
+		  </descriptions>
+		  <image>
+			 ./txt/fronthouse.txt
+		  </image>
 		</scene>
 		
-		<scene id="sce002" title="El monumento de piedras">
+		<scene id="game.scenes.scene.sce002" title="El monumento de piedras">
 		  <descriptions> 
-			 <description id="des001">Piedras amontonadas en tres grupos parecían representar algún tipo de monumento en otro tiempo.</description>	 
-			 <description id="des002">Las piedras están amontonadas en 3 grupos, cada uno con un número determinado. Es una combinación de 3 números.</description>
-		  </descriptions> 
+			 <description id="des001">
+				Piedras amontonadas en tres grupos parecían representar algún tipo de monumento en otro tiempo.
+			 </description>	 
+			 <description id="des002">
+				Las piedras están amontonadas en 3 grupos, cada uno con un número determinado. Es una combinación de 3 números.
+			 </description>
+		  </descriptions>
+		  <image>
+			 ./txt/stones.txt
+		  </image>
 		</scene>
 		
-		<scene id="sce003" title="Cementerio">
+		<scene id="game.scenes.scene.sce003" title="Cementerio">
 		  <descriptions> 
-			 <description>Piedras amontonadas en tres grupos parecían representar algún tipo de monumento en otro tiempo.</description>	 
+			 <description>
+				Piedras amontonadas en tres grupos parecían representar algún tipo de monumento en otro tiempo.
+			 </description>	 
 			 <observation>
 			 Mirando atentamente sobre una de las lápida, descubres una inscripción: I-D-I-I-D-D-I-D-I-D-D-D. ¿Podrían ser paso de baile?</observation>
 		  </descriptions> 
+		  <image>./txt/cementery.txt</image>
 		</scene>
 
-		<scene id="sce004" title="Arco de árboles">
+		<scene id="game.scenes.scene.sce004" title="Arco de árboles">
 		  <descriptions> 
 			 <description>
-			 Un arco de piedra se alza en tu camino. Puedes ver que un objeto metálico en su parte mas alta. No crees que puedas alcanzarlo con las manos desnudas.</description>
+				Un arco de piedra se alza en tu camino. Puedes ver que un objeto metálico en su parte mas alta. No crees que puedas alcanzarlo con las manos desnudas.
+			 </description>
 			 <observation>Puedes ver que el objeto es una palanca para tirar de cualquier cosa</observation>
-		  </descriptions> 
-		</scene>
-		
+		  </descriptions>
+		  <image>./txt/arcoarboles.txt</image>
+		</scene>		
 	 </scenes>
 	 
 	 <items>
-
 		<item id="item01">
 		  <names>
 			 <name id="nam01">bastón</name>
@@ -51,7 +70,12 @@
 			 <name id="nam04">baton</name>			 
 		   </names>
 		  <descriptions>
-			 <description id="des001">Es un batón de madera alargado, con una empuñadura en su extremo.</description>					  <description id="des002">Deteriorado por el paso del tiempo.</description>
+			 <description id="des001">
+				Es un batón de madera alargado, con una empuñadura en su extremo.
+			 </description>
+			 <description id="des002">
+				Deteriorado por el paso del tiempo.
+		  </description>
 		  </descriptions>
 		  <properties>
 			 <visibility>true</visibility>
@@ -68,7 +92,47 @@
 			 <name id="nam04">ladri</name>			 
 		   </names>
 		  <descriptions>
-			 <description id="des001">Ladrillo desencajado en la pared de la casa. Podrias intentar tirar de él.</description>		 
+			 <description id="des001">
+				Ladrillo desencajado en la pared de la casa. Podrias intentar tirar de él.
+			 </description>		 
+		  </descriptions>
+		  <properties>
+			 <visibility>true</visibility>
+			 <fix>true</fix>
+			 <stuck>true</stuck>
+		  </properties>
+		</item>
+
+		<item id="item03">
+		  <names> 
+			 <name id="nam01">cerradura</name>
+			 <name id="nam02">Cerradura</name>
+			 <name id="nam03">cerra</name>
+			 <name id="nam04">cerradura</name>			 
+		   </names>
+		  <descriptions>
+			 <description id="des001">
+				Una cerradura dorada y antigua.
+			 </description>		 
+		  </descriptions>
+		  <properties>
+			 <visibility>true</visibility>
+			 <fix>true</fix>
+			 <stuck>true</stuck>
+		  </properties>
+		</item>
+
+		<item id="item04">
+		  <names> 
+			 <name id="nam01">palanca</name>
+			 <name id="nam02">Palanca</name>
+			 <name id="nam03">palanc</name>
+			 <name id="nam04">palancan</name>
+		   </names>
+		  <descriptions>
+			 <description id="des001">
+				Es una palanca retorcida en uno de sus extremos. Permite forzar puertas o ventanas para desbloquearlas. Escencial en la maleta de herramientas de un ladron.
+			 </description>		 
 		  </descriptions>
 		  <properties>
 			 <visibility>true</visibility>
@@ -79,21 +143,26 @@
 
 		
 	 </items>
-	 
-	 <connections>
-		<cardinals>
-		  <cardinal id="car01">norte</cardinal>
-		  <cardinal id="car02">nordeste</cardinal>
-		  <cardinal id="car03">este</cardinal>
-		  <cardinal id="car04">surdeste</cardinal>
-		  <cardinal id="car05">sur</cardinal>
-		  <cardinal id="car06">suroeste</cardinal>
-		  <cardinal id="car07">oeste</cardinal>
-		  <cardinal id="car08">noroeste</cardinal>
-		</cardinals>
-		
+
+	 <cardinals>
+		<cardinal id="car01">norte</cardinal>
+		<cardinal id="car02">nordeste</cardinal>
+		<cardinal id="car03">este</cardinal>
+		<cardinal id="car04">surdeste</cardinal>
+		<cardinal id="car05">sur</cardinal>
+		<cardinal id="car06">suroeste</cardinal>
+		<cardinal id="car07">oeste</cardinal>
+		<cardinal id="car08">noroeste</cardinal>
+	 </cardinals>
+
+	 <connections>		
 		<connection id="c01" sceneIdOrigin="sce001" cardinalId="car01" sceneIdDestiny="sce002"></connection>
     </connections>
+	 
+  </game>
+
+  <game id="games.game_EjemploJuego" language="Spanish">
+	 void game
   </game>
 </games>
 
