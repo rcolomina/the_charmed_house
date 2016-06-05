@@ -17,5 +17,4 @@ int main(){
 	  fac.buildItemById("item01");
 	  
 	  
-	  //fac.searchForElementId			 	  
 }
