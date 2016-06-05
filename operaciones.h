@@ -5,13 +5,14 @@
 #include <vector>
 #include <list>
 
-
 #include "parametros.h"
 #include "escenario.h"
 #include "inventario.h"
 
 using namespace std;
 using namespace parametros;
+
+
 
 //Permite ejecutar comandos 
 class ICommand{
@@ -38,11 +39,11 @@ class Ayuda : public ICommand{
 
 class Ver : public ICommand{
 	public:
-	  Ver(Escenario **escena_actual):escena_actual(escena_actual){}	  
+	  Ver(ppScene escena_actual):escena_actual(escena_actual){}	  
 	  void execute();
 	  void set_escenario(){}
 	private:
-	  Escenario **escena_actual; //puntero a un puntor a un escenario
+	  ppScene escena_actual; //puntero a un puntor a un escenario
 };
 
 //class Coger : public ICommand{};
@@ -50,16 +51,16 @@ class Ver : public ICommand{
 //class Ver : public ICommand{};
 class Examinar: public ICommand{
 	public:
-	  Examinar(Escenario **escenario,
+	  Examinar(ppScene scene,
 				  Inventario &inventario,
 				  string &parametro):
-			 escenario(escenario),
+			 scene(scene),
 			 inventario(inventario),
 			 parametro(parametro){}	  
 	  void execute();
 	  string describir_objeto(Objeto *objeto);
 	private:
-	  Escenario **escenario;
+	  ppScene scene;
 	  Inventario &inventario;
 	  string &parametro;
 };
@@ -75,33 +76,33 @@ class CommandInventario : public ICommand{
 
 class Cardinal : public ICommand{
 	public:
-	  Cardinal(Escenario **escenario,
+	  Cardinal(ppScene scene,
 				  const string &cardinal,
 				  bool &primera_entrada):
-			 escena_actual(escenario),
+			 escena_actual(scene),
 			 cardinal(cardinal),
 			 primera_entrada(primera_entrada)
 	  {}
 	  void execute();
 	private:
-	  Escenario **escena_actual;
+	  ppScene escena_actual;
 	  const string &cardinal;
 	  bool &primera_entrada;
 };
 
 class Tirar : public ICommand{
 	public:
-	  Tirar(Escenario **escenario,
+	  Tirar(ppScene scene,
 			  Inventario &inventario,
 			  const string &parametro,
 			  const string &parametro2):
-			 escenario(escenario),
+			 scene(scene),
 			 inventario(inventario),
 			 parametro(parametro),
 			 parametro2(parametro2){}
 	  void execute();
 	private:
-	  Escenario **escenario;
+	  ppScene scene;
 	  Inventario &inventario;
 	  const string &parametro;
 	  const string &parametro2;
@@ -109,30 +110,30 @@ class Tirar : public ICommand{
 
 class Coger : public ICommand{
 	public:
-	  Coger(Escenario **escenario,
+	  Coger(ppScene scene,
 			  Inventario &inventario,
 			  const string &parametro):
-			 escenario(escenario),
+			 scene(scene),
 			 inventario(inventario),
 			 parametro(parametro){}
 	  void execute();
 	private:
-	  Escenario **escenario;
+	  ppScene scene;
 	  Inventario &inventario;
 	  const string &parametro;
 };
 
 class Dejar : public ICommand{
 	public:
-	  Dejar(Escenario **escenario,
+	  Dejar(ppScene scene,
 			  Inventario &inventario,
 			  const string &parametro):
-			 escenario(escenario),
+			 scene(scene),
 			 inventario(inventario),
 			 parametro(parametro){}
 	  void execute();
 	private:
-	  Escenario **escenario;
+	  ppScene scene;
 	  Inventario &inventario;
 	  const string &parametro;
 };
@@ -140,15 +141,15 @@ class Dejar : public ICommand{
 
 class Alcanzar : public ICommand {
 	public:
-	  Alcanzar(Escenario **escenario,
+	  Alcanzar(ppScene scene,
 				  Inventario &inventario,
 				  const string &parametro):
-			 escenario(escenario),
+			 scene(scene),
 			 inventario(inventario),
 			 parametro(parametro){}
 	  void execute();
 	private:
-	  Escenario **escenario;
+	  ppScene scene;
 	  Inventario &inventario;
 	  const string &parametro;
 };

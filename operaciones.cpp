@@ -1,5 +1,7 @@
 #include "operaciones.h"
 
+
+
 void Exit::execute(){
     continuar_loop=false;
 }
@@ -19,7 +21,7 @@ void Ayuda::execute(){
 
 void Ver::execute(){
 
-    string descripcion=(*escena_actual)->get_descripcion();
+    string descripcion=(*escena_actual)->examine();
     descripcion+="\n";
     if((*escena_actual)->get_objetos_disponibles()!="")
     {
@@ -32,13 +34,13 @@ void Ver::execute(){
 void Examinar::execute(){
 
     // This shows user a description of objects examinated
-    // recorrer objetos del escenario actual y del inventario
+    // recorrer objetos del scene actual y del inventario
     if(string(parametro)==string(""))
         cout<<"Examinar que?"<<endl;
     else if(inventario.get_existe_objeto(parametro))
-        cout<<(inventario.get_objeto(parametro))->get_descripcion()<<endl;
-    else if((*escenario)->get_existe_objeto_escenario(parametro))
-        cout<<((*escenario)->get_objeto(parametro))->get_descripcion()<<endl;		  
+        cout<<(inventario.get_objeto(parametro))->examine()<<endl;
+    else if((*scene)->get_existe_objeto_escenario(parametro))
+        cout<<((*scene)->get_objeto(parametro))->examine()<<endl;		  
     else 
         cout<<"No hay nada llamado '"<<parametro<<"'"<<endl;
 
@@ -80,11 +82,11 @@ void Tirar::execute(){
         objTirar=parametro;
 			
 	 
-    bool existeObjTirar=(*escenario)->get_existe_objeto_escenario(objTirar);
+    bool existeObjTirar=(*scene)->get_existe_objeto_escenario(objTirar);
     // Existe el objeto especificado en objTirar
     if(existeObjTirar)
     {
-        Objeto *objeto=(*escenario)->get_objeto(objTirar);
+        Objeto *objeto=(*scene)->get_objeto(objTirar);
         //Si se puede tirar del objeto pasado por objTirar
         if(objeto->get_tirable())
         {
@@ -97,14 +99,14 @@ void Tirar::execute(){
                     Objeto *objDesatascador=inventario.tomar_desatascador();											  
                     string desatascador;
                     if(objDesatascador!=0){
-                        desatascador=objDesatascador->get_nombre();
+                        desatascador=objDesatascador->Name();
                         inventario.eliminar(desatascador);
                     }
                     //TODO: Determinar genero del objeto desatascador para poner "del" o "de la"
-                    cout<<"Has conseguido tirar del "<<objTirar<<" con ayuda de "<<objDesatascador->get_nombre()<<endl;
+                    cout<<"Has conseguido tirar del "<<objTirar<<" con ayuda de "<<objDesatascador->Name()<<endl;
 
                     objeto->tirar();
-                    (*escenario)->eliminar(objeto);					
+                    (*scene)->eliminar(objeto);					
                 }
                 else
                 {
@@ -114,7 +116,7 @@ void Tirar::execute(){
             else
             {
                 objeto->tirar();
-                (*escenario)->eliminar(objeto);					
+                (*scene)->eliminar(objeto);					
             }
         }
         else
@@ -132,18 +134,18 @@ void Tirar::execute(){
 
 void Coger::execute(){
 
-//	  cout<<(*escenario)->get_nombre()<<endl;
+//	  cout<<(*escenario)->Name()<<endl;
 //	  cout<<"Parametro "<<parametro<<endl;
     // Existe el objeto especificado en parametro 1
-    if((*escenario)->get_existe_objeto_escenario(parametro))
+    if((*scene)->get_existe_objeto_escenario(parametro))
     {			 
-        Objeto *objeto=(*escenario)->get_objeto(parametro);
+        Objeto *objeto=(*scene)->get_objeto(parametro);
         //Si se puede tirar del objeto pasado por parametro
         if(!objeto->get_fijo())
         {
             if(objeto->get_alcanzable()){
                 inventario.insertar_objeto(objeto);
-                (*escenario)->eliminar(objeto);
+                (*scene)->eliminar(objeto);
                 cout<<"Has cogido "<<parametro<<endl;
             }
             else
@@ -163,7 +165,7 @@ void Coger::execute(){
 
 void Alcanzar::execute(){
     // Si tienes algo para alcanza	
-    if((*escenario)->get_existe_objeto_escenario(parametro))
+    if((*scene)->get_existe_objeto_escenario(parametro))
     {
         if(inventario.posee_alcanzador())
         {
@@ -172,16 +174,16 @@ void Alcanzar::execute(){
             string alcanzador;
             if(objAlcanzador!=0)
             {
-                alcanzador=objAlcanzador->get_nombre();
+                alcanzador=objAlcanzador->Name();
                 inventario.eliminar(alcanzador);
             }
 
             //Determinar genero del objeto alcanzador para poner "del" o "de la"
             cout<<"Has cogido "<<parametro<<" con ayuda del "<<alcanzador<<endl;			 
 
-            Objeto *objeto=(*escenario)->get_objeto(parametro);
+            Objeto *objeto=(*scene)->get_objeto(parametro);
             inventario.insertar_objeto(objeto);
-            (*escenario)->eliminar(objeto);
+            (*scene)->eliminar(objeto);
 
         }
         else
