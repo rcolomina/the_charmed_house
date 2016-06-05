@@ -6,36 +6,24 @@
 CC=g++
 CFLAGS=-g -Wall
 LDFLAGS=-lpthread
-
-#SOURCES := $(wildcard *.cpp | grep -v "test")
-#SOURCES := $(echo $(ls *.cpp | grep -v test))
-SOURCES :=$(shell ls *.cpp | grep -v "test" | xargs)
-
-
-OBJECTS := $(SOURCES:.cpp=.o)    
-DEPENDENCIES := $(OBJECTS:.o=.d)
-EXECUTABLE=game
-
 PATH_TINYXML := ./3rdParty/tinyxml
 OBJ_TINYXML := ${PATH_TINYXML}/tinystr.o ${PATH_TINYXML}/tinyxmlerror.o ${PATH_TINYXML}/tinyxml.o ${PATH_TINYXML}/tinyxmlparser.o
-
 INCS := -I${PATH_TINYXML}
+EXECUTABLE=main
 
-#TESTCPP := $(wildcard ./test/*.cpp)
-#TEST := $(TESTCPP:.cpp=)
+# Sources and objects to compile main program
+SOURCES :=$(shell ls *.cpp | grep -v "test" | xargs)
+OBJECTS := $(SOURCES:.cpp=.o)    
 
+# Sources and objets to compile test classes
 TESTCPP := $(wildcard *test.cpp)
-
 TEST := $(TESTCPP:.cpp=)
+SOURCETEST :=$(shell ls *.cpp | grep -v "test" | grep -v "main.cpp" | xargs)
+OBJECTSTEST := $(SOURCETEST:.cpp=.o)    
 
-#OBJTEST := $(shell TESTCPP:_test.cpp=.o)
-OBJTEST :=$(shell ls *.cpp | grep -v "test" | grep -v "main.cpp" | xargs)
-
-#TESTO := $(TESTCPP:_test.cpp=.o)
-#TESTO2 := $(TESTO:./test/=)
 
 all: $(EXECUTABLE)
-	@echo "Fin compilacion y linkado del programa"
+	@echo "End of compilation and program link"
 
 $(EXECUTABLE): $(OBJECTS)
 	@echo "================"
@@ -54,34 +42,29 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) -c ${INCS} $< -o $@ 
 
 clean:
-	@echo "Borrado de objetos"
-	rm -rf *.o *~ *.gch core $(EXECUTABLE)
-	rm -f *_test
-
-#test: $(TEST)
-#	@echo $(TEST)
-#	$(CC) $(CFLAGS) -c ${INCS} $< -o $@ 
-#	@echo "Fin compilacion y linkado de test"
+	@echo "Cleaning objects and executables"
+	rm -f *.o *.gch core $(EXECUTABLE) *_test
 
 test: $(TEST)
+	@echo "============="	
 	@echo "TESTCPP = " $(TESTCPP)
 	@echo "LIST GENERATED: TEST = " $(TEST)
 	@echo "Test built ended"
 
-$(TEST):	$(TESTCPP) $(OBJTEST)
-	$(CC) $@.cpp $(OBJTEST) $(OBJ_TINYXML) ${INCS} -I./ -o $@
+$(TEST):	$(TESTCPP) $(OBJECTSTEST) 
+	@echo "Building Test "
+	$(CC) $@.cpp $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} -I./ -o $@
+
+factory: factory_test.cpp factory.o objeto.o
+	$(CC) $@_test.cpp factory.o objeto.o $(OBJ_TINYXML) ${INCS} -I./ -o $@_test
+	@echo "Test built ended"
+
+distance: distance_test.cpp distance.o
+	$(CC) $@_test.cpp distance.o -o $@_test
+	@echo "Test built ended"
 
 
-#test%: 
 
-#%.o: %.o
-#	@echo "TEST="$(TEST)
-#	$(CC) $(TEST) ${INCS} -I./ -o factory_test
 
-#%_test: %_test.o
-#	$(CC) $(OBJECTS) -c $(OBJ_TINYXML) $(LDFLAGS) ${INCS} -o $@
 
-#%_test.o:  %_test.cpp
-#	@echo "Generando test --> " $<
-#	$(CC) $(CFLAGS) -c ${INCS} $< -o $@ 
 
