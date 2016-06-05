@@ -3,15 +3,29 @@
 
 #include <string>
 #include <iostream>
+#include <map>
+#include <vector>
 
+#include "property.h"
 #include "entidad.h"
 
 using namespace std;
+
+class Objeto;
+
+typedef Objeto* pItem;
+typedef Property<bool>* pBoolProperty;
 
 class Objeto : public Entidad{
 	public:
 	  Objeto();
 	  Objeto(int id,string nombre,string descripcion);
+
+	  Objeto(const Entidad &ent,
+				vector<string> names,
+				vector<string> descriptions,
+				vector<string> namesProperties,
+				vector<string> valueProperties);
 
 	  void usar_sobre(Objeto *objeto);
 
@@ -56,9 +70,10 @@ class Objeto : public Entidad{
 	  // Otra salida tras la accion
 //	  Escenario *escena_rel_abrir;
 //	  Escenario *escena_rel_insertar;
-
 	  
-
+	  map<string,pItem> relatedObjects;	  
+	  map<string,pBoolProperty> mapProperties;
+	  
 	  // Atributos del objeto
 	  bool fijo;         // True: No es posible cogerlo para el inventario.
 	  bool usado;        // True: Ya no tiene utilidad en el juego.

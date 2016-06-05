@@ -20,6 +20,23 @@ Objeto::Objeto(int id,
 	  alcanzable=true;
 }
 
+Objeto::Objeto(const Entidad &ent,
+				vector<string> names,
+				vector<string> descriptions,
+				vector<string> namesProperties,
+					vector<string> valueProperties):
+	  Entidad(ent){
+	  usado=false;
+	  fijo=false;
+	  visible=true;
+	  tirable=false;
+	  alcanzable=true;
+
+
+}
+
+
+
 void Objeto::tirar()
 {
 	  cout<<endl<<descripcion_tirar<<endl;
