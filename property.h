@@ -1,25 +1,17 @@
 
-class Property {
+#include <string>
+
+using namespace std;
+
+template<class T> class Property {
 	public:
+	  Property(){}
 	  Property(string name):name(name){}
+
+	  Property & operator=(const Property &rhs);
 	private:
 	  string name;
+	  T value;
 };
 
-class BoleanProperty : public Property{
-	public:
 
-	  BoleanProperty(string name,bool value):Property(name),value(value){}
-	  bool get_value();
-	  void set_value();
-	private:
-	  bool value;	  
-};
-
-class IntegerProperty : public Property {
-
-};
-
-class RealProperty : public Property {
-
-};
