@@ -7,24 +7,31 @@ using namespace std;
 
 class Entidad {
 	public:
-	  Entidad():id(0){}
-	  Entidad(int id,string nombre,string descripcion):
+	  Entidad():
+			 id(0){}
+	  Entidad(const int id,const string name,const string description):
 			 id(id),
-			 nombre(nombre),
-	       descripcion(descripcion){}
+			 name(name),
+	       description(description){}
 
-	  int get_id(){return id;}
-	  void set_id(int id){this->id=id;}
+/*	  Entidad(const Entidad& other):id(other.id),
+											  name(other.name),
+											  description(other.description){}*/
 
-	  string get_nombre(){return nombre;}
-	  void set_nombre(string nombre){this->nombre=nombre;}
 
-	  string get_descripcion(){return descripcion;}
-	  void set_descripcion(string descripcion){this->descripcion=descripcion;}
+	  Entidad(const Entidad &other):id(other.id),
+											  name(other.name),
+											  description(other.description){}
+
+	  
+	  const int Id(){return id;}
+	  const string Name(){return name;}
+	  const string examine(){return description;}
+
 	protected:
-	  int id;  //identificador de la entidad
-	  string nombre;
-	  string descripcion;
+	  const int id; 
+	  const string name;
+	  const string description;
 };
 
 
