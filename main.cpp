@@ -50,7 +50,7 @@ int main(int argc,char **n_args){
 		}
       */
 
-	  exit(1);
+//	  exit(1);
 				
 	  Manager *manager=new Manager();
 
