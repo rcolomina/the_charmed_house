@@ -36,14 +36,14 @@ string Escenario::get_objetos_disponibles(){
 
 void Escenario::eliminar(Objeto *obj){
 
-	  string keyObj=obj->get_nombre();
+	  string keyObj=obj->Name();
   	  if(keyObj!="")
 			 objetos.erase(keyObj);
 }
 
 void Escenario::set_objeto(Objeto *obj)
 {
-	  string nombre=obj->get_nombre();
+	  string nombre=obj->Name();
 	  objetos[nombre]=obj;
 }
 
