@@ -129,6 +129,7 @@ pItem FactoryGame::buildItemById(string itemId){
 
 	  cout<<"names:"<<names[0]<<endl;
 	  cout<<"descrip:"<<descrip[0]<<endl;
+
 	  
 	  const Entidad& ent =  Entidad(1,names[0],descrip[0]);
 	  	  
@@ -137,9 +138,8 @@ pItem FactoryGame::buildItemById(string itemId){
 								 descrip,
 								 prop,
 								 propN);
-
-	  cout<<"Id:"<<item->Name();
-	  
+	
+	  cout<<"Id:"<<item->Name();  
 	  return item;
 }
 
