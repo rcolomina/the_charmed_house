@@ -2,6 +2,7 @@
 <games>
   <game id="games.game_EjemploJuego" language="Spanish">
 	 <scenes>
+		
 		<scene id="game.scenes.scene_sce000" title="Preludio: La aventura comienza...">
 		  <descriptions> 
 			 <description id="des001">En un pueblo lejos de la ciudad, había una casa ruinosa y antigua desde que tengo ojos para ver. Como aventurero que soy, he tenido en mente explorarla en todo momento, pero nunca me he atrevido. Existen carteles prohibiendo el paso en sus alrededores. Quien quiera que sea el dueño, desea que los intrusos permanezcan lejos.
@@ -20,9 +21,7 @@
 				Puedes ver una rama de árbol indicando ladrillo en la pared.
 			 </observation>
 		  </descriptions>
-		  <image>
-			 ./txt/fronthouse.txt
-		  </image>
+		  <image>./txt/fronthouse.txt</image>
 		</scene>
 		
 		<scene id="game.scenes.scene.sce002" title="El monumento de piedras">
@@ -34,9 +33,7 @@
 				Las piedras están amontonadas en 3 grupos, cada uno con un número determinado. Es una combinación de 3 números.
 			 </description>
 		  </descriptions>
-		  <image>
-			 ./txt/stones.txt
-		  </image>
+		  <image>./txt/stones.txt</image>
 		</scene>
 		
 		<scene id="game.scenes.scene.sce003" title="Cementerio">
@@ -141,6 +138,21 @@
 		  </properties>
 		</item>
 
+		<item id="item05">
+		  <names> 
+			 <name id="nam01">figurita</name>
+		   </names>
+		  <descriptions>
+			 <description id="des001">
+				Es una figurita tallada en piedra en forma de angel. En su base posee una forma saliente que podria encajar en alguna oquedad.				
+			 </description>		 
+		  </descriptions>
+		  <properties>
+			 <visibility>true</visibility>
+			 <fix>true</fix>
+			 <stuck>true</stuck>
+		  </properties>
+		</item>
 		
 	 </items>
 
@@ -156,7 +168,7 @@
 	 </cardinals>
 
 	 <connections>		
-		<connection id="c01" sceneIdOrigin="sce001" cardinalId="car01" sceneIdDestiny="sce002"></connection>
+		<connection id="con01" sceneIdOrigin="sce001" cardinalId="car01" sceneIdDestiny="sce002"></connection>
     </connections>
 	 
   </game>
@@ -164,6 +176,7 @@
   <game id="games.game_EjemploJuego" language="Spanish">
 	 void game
   </game>
+  
 </games>
 
   
