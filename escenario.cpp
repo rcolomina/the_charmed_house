@@ -3,6 +3,14 @@
 Escenario::Escenario(int id,string nombre,string descripcion,string observacion):
 	  Entidad(id,nombre,descripcion),
 	  observacion(observacion){
+}
+
+
+Escenario::Escenario(const Entidad &ent,const string &observacion,const string &path):
+	  Entidad(ent),
+	  observacion(observacion),
+	  pathFileImageText(path)
+{
 
 }
 
@@ -47,3 +55,18 @@ void Escenario::set_objeto(Objeto *obj)
 	  objetos[nombre]=obj;
 }
 
+
+void Escenario::pintar(){
+
+	  fstream fs;
+	  string fileImagetext=pathFileImageText;
+	  fs.open(fileImagetext.c_str(),fstream::in);
+	  string line;
+	  if(fs.is_open()){
+			 while(getline(fs,line)){
+					cout<<line<<endl;
+			 }
+			 fs.close(); 
+	  }
+
+}

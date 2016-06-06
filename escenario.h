@@ -1,6 +1,7 @@
 #ifndef _escenario_
 #define _escenerio_
 
+#include <fstream> 
 #include <string>
 #include <map>
 
@@ -21,10 +22,13 @@ class Escenario : public Entidad {
 	  Escenario(){}
 	  Escenario(int id,string nombre,string descripcion,string observacion);
 
+	  Escenario(const Entidad &ent,const string &observacion,const string &path);
+
+	  
 	  //////getters//////
 	  string get_observacion(){return observacion;}
-	  map<string,Escenario*> get_salidas(){return salidas;} //devuelve lista de escenarios salidas
-	  Escenario* get_salida(string coordenada){return salidas[coordenada];} //devuelve nulo si no existe
+	  map<string,pScene> get_salidas(){return salidas;} //devuelve lista de escenarios salidas
+	  pScene get_salida(string coordenada){return salidas[coordenada];} //devuelve nulo si no existe
 	  map<string,pItem> get_objetos(){return objetos;} //que objetos hay disponible
 	  string get_objetos_disponibles();
 	  
@@ -32,21 +36,23 @@ class Escenario : public Entidad {
 	  bool get_existe_objeto_escenario(string nombre);
 
 	  //////setters/////
-	  void set_salidas(map<string,Escenario*> salidas); //se invocará en la construcción del mundo
-	  void set_salida(Escenario* escenario,string coordenada){
+	  void set_salidas(map<string,pScene> salidas); //se invocará en la construcción del mundo
+	  void set_salida(pScene escenario,string coordenada){
 			 salidas[coordenada]=escenario;
 	  }
 
-	  void set_objeto(Objeto* objeto);
+	  void set_objeto(pItem objeto);
 	  void eliminar(Objeto *obj);
 
 	  //procedimientos
-	  void pintado(); //permite pintar el escenario
+	  void pintar(); //permite pintar el escenario
 
 	private:	
 	  string observacion;
-	  map<string,Escenario*> salidas; //guarda par (coordenada, Escenario*)
-	  map<string,Objeto*> objetos;    //nombre y referenca a objeto
+	  map<string,pScene> salidas; //guarda par (coordenada, pScene)
+	  map<string,pItem> objetos;    //nombre y referenca a objeto
+
+	  const string pathFileImageText;
 };
 
 /*
