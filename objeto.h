@@ -59,7 +59,15 @@ class Objeto : public Entidad{
 	  void insertar();
 
 	private:
-	  //const string nombre_alternativo;
+
+	  const vector<string> descriptions;
+	  const vector<string> names;
+
+	  map<string,pItem> relatedObjects;	  
+	  map<string,pBoolProperty> mapProperties;
+
+	  
+//const string nombre_alternativo;
 	  string descripcion_secundaria;
 	  string descripcion_tirar;
 
@@ -71,8 +79,6 @@ class Objeto : public Entidad{
 //	  Escenario *escena_rel_abrir;
 //	  Escenario *escena_rel_insertar;
 	  
-	  map<string,pItem> relatedObjects;	  
-	  map<string,pBoolProperty> mapProperties;
 	  
 	  // Atributos del objeto
 	  bool fijo;         // True: No es posible cogerlo para el inventario.

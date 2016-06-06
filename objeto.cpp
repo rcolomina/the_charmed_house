@@ -20,12 +20,12 @@ Objeto::Objeto(int id,
 	  alcanzable=true;
 }
 
-Objeto::Objeto(const Entidad &ent,
+Objeto::Objeto(const Entidad &entity,
 				vector<string> names,
 				vector<string> descriptions,
 				vector<string> namesProperties,
 					vector<string> valueProperties):
-	  Entidad(ent){
+	  Entidad(entity){
 	  usado=false;
 	  fijo=false;
 	  visible=true;
