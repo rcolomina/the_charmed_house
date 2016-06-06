@@ -26,7 +26,7 @@ FAC Fachada Casa
 	 Cerradura oculta tras ladrillo tirable atascado. 
 									 
 	 <tirar> <ladrillo>  : Revela cerradura
-	 <abrir> <cerradura> : Necesita llave (CL)
+	 <abrir> <cerradura> : Necesita llave (CL), revela conexión.
 									 
 CEM Cementerio					 
 	 Figurita de piedra.		 
@@ -76,7 +76,7 @@ Map first chapter
 
 
 					  
-                 |------------------||
+                ||------------------||
 					 ||------------------||
 					 ||						||				
 					 ||   Capitulo 2		||
