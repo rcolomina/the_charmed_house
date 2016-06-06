@@ -11,7 +11,6 @@ Manager::Manager():dt(freq),
 						 fac("gamesInfo.xml")
 {
 	 
-
     //Crear vector de comandos
     comandos_disponibles="Comandos disponibles:";
 
@@ -26,10 +25,10 @@ Manager::Manager():dt(freq),
 //	  contador_mal_comportamiento=0;
 
     //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero 
-    Escenario *esc1=new Escenario(id1,nombre1,descripcion1,observacion1);
-    Escenario *esc2=new Escenario(id2,nombre2,descripcion2,observacion2);
-    Escenario *esc3=new Escenario(id3,nombre3,descripcion3,observacion3);
-    Escenario *esc4=new Escenario(id4,nombre4,descripcion4,observacion4);
+    Escenario *esc1=new Escenario(Entidad(id1,nombre1,descripcion1),observacion1,string("./txt/fronthouse.txt"));
+    Escenario *esc2=new Escenario(Entidad(id2,nombre2,descripcion2),observacion2,string("./txt/stones.txt"));
+	 Escenario *esc3=new Escenario(Entidad(id3,nombre3,descripcion3),observacion3,string("./txt/cementery.txt"));
+	 Escenario *esc4=new Escenario(Entidad(id4,nombre4,descripcion4),observacion4,string("./txt/arcoarboles.txt"));
 
     // Setear la escena de comienzo del juego
     escena_actual=esc1;
@@ -40,7 +39,7 @@ Manager::Manager():dt(freq),
     mundo[nombre3]=esc3;
     mundo[nombre4]=esc4;
 
-    // Enlaces entre escenas
+iii    // Enlaces entre escenas
     //Id: 1->[2(o),3(e)] ,2->[1(e),4(i)), 3->[1(o)], 4->[2(e)]
 
     mundo[escena1]->set_salida(mundo[escena2],oeste);
@@ -53,19 +52,12 @@ Manager::Manager():dt(freq),
 
     mundo[escena4]->set_salida(esc2,este);
 
-	 int id_obj;
-	 string nombre_obj;
-    string descripcion_obj;
-	 
     //CONSTRUIR OBJETOS
 	 
 	 Objeto* o_baston = fac.buildItemById("item01");
-    o_baston->set_visible(true); 
-    o_baston->set_fijo(false);
     o_baston->set_alcanzador(true);
 	 
 	 Objeto *o_ladrillo = fac.buildItemById("item02");
-	 o_ladrillo->set_visible(true);
     o_ladrillo->set_fijo(true);
     o_ladrillo->set_atascado(true);
 
@@ -74,25 +66,17 @@ Manager::Manager():dt(freq),
     o_cerradura->set_fijo(true);	 
 
 	 Objeto *o_palanca = fac.buildItemById("item04");
-	 o_palanca->set_visible(true);
-    o_palanca->set_usado(false);
-    o_palanca->set_fijo(false);
     o_palanca->set_alcanzable(false);
     o_palanca->set_desatascador(true);
 
-    id_obj=5;
-    nombre_obj="figurita";
-    descripcion_obj="Es una figurita tallada en piedra en forma de angel. En su base posee una forma saliente que podria encajar en alguna oquedad."; 
-    Objeto *o_figurita=new Objeto(id_obj,nombre_obj,descripcion_obj);
-    o_figurita->set_visible(true);
-    o_figurita->set_usado(false);
-    o_figurita->set_fijo(false);
+	 Objeto *o_figurita = fac.buildItemById("item05");
+    o_figurita->set_alcanzable(true);
 
+	 
     //RELACIONAR OBJETOS
 	 // Ladrillo con llave
     string descrip_tirar_ladrillo="Tiras con fuerza del ladrillo de la pared, y parece que comienza a ceder. Una vez sacado el ladrillo, tras el, aparece una cerradura escondida.";
     o_ladrillo->set_tirable(o_cerradura,descrip_tirar_ladrillo);
-
 	 
     //INSERTAR OBJETOS EN ESCENARIOS
     mundo[escena1]->set_objeto(o_ladrillo);
@@ -185,8 +169,7 @@ void Manager::run(){
     //Marcar la primera entrada al metodo
     primera_entrada=true;
 
-//	  prologo();
-
+	  prologo();
 
     while(continuar_loop){
 
@@ -199,10 +182,11 @@ void Manager::run(){
         }
 
         ///RECOGIDA DE COMMANDOS CONSOLA///
-//			 cout<<"[Escena: "<<escena_actual->get_nombre()<<"]"
+//	     cout<<"[Escena: "<<escena_actual->get_nombre()<<"]"
 //				  <<"[Objetos: "<<escena_actual->get_objetos_disponibles()<<"]"
 //				  <<"[Salidas: "<<escena_actual->
 //				  <<endl<<">>>";
+
         cout<<">>>";
 
         //EXTRACCION DEL COMANDOS Y LOS PARAMETROS
@@ -326,7 +310,7 @@ void Manager::tratamiento_comandos(string comando){
 
 			 			 
     if(comando=="arriba");
-    else if(comando=="abajo")	;			
+    else if(comando=="abajo");			
     else if(comando=="entrar");
     else if(comando=="salir");					
     else	if(comando=="salidas")
@@ -372,6 +356,7 @@ void Manager::tratamiento_comandos(string comando){
         }
         else 
         {
+				 
             ;}		
         //cout<<endl<<"Comando inválido, escribe (ayuda)";}
     }
@@ -383,13 +368,12 @@ void Manager::tratamiento_comandos(string comando){
         continuar_loop=false;
     }
 
-
-    if(comando!="")
+	 if(comando!="")
 			cout<<endl;
+
+
 			 
 }
-
-
 
 void Manager::clock(){
 
@@ -405,8 +389,6 @@ void Manager::clock(){
         tiempo++;
     }
 }
-
-
 
 //Actualizar atributos de objetos
 //Definir las reglas y relaciones entre objetos
@@ -429,44 +411,13 @@ void Manager::actualizar_objetos(){
         //
 			
     }
-
-    //if(
-
-
-
 }
 
 //Actualizar salidas del escenario
 void Manager::actualizar_salidas(){
-
     //Establecer reglas de activacion de salidas
-
 }
 
-
-
 void Manager::dibujar(){
-
-    int id_esc=escena_actual->Id();
-
-    fstream fs;
-    string fileImagetext;
-
-    if(id_esc==1)
-        fileImagetext="./txt/fronthouse.txt";
-    else if(id_esc==3)
-        fileImagetext="./txt/cementery.txt";
-    else if(id_esc==2)
-        fileImagetext="./txt/stones.txt";
-    else if(id_esc==4)
-        fileImagetext="./txt/arcoarboles.txt";
-
-    fs.open(fileImagetext.c_str(),fstream::in);
-    string line;
-    if(fs.is_open()){
-        while(getline(fs,line)){
-            cout<<line<<endl;
-        }
-        fs.close(); 
-    }
+	 escena_actual->pintar();
 }
