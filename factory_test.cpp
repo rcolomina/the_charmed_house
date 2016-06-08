@@ -12,7 +12,6 @@ int main(){
 	  string xmlSpecs("gamesInfo.xml");
 	  FactoryGame fac(xmlSpecs);
 	  
-	  cout<<"Building Items"<<endl;
 	  cout<<"Building Item item01"<<endl;
 	  fac.buildItemById("item01");
 	  
