@@ -21,7 +21,6 @@ class Escenario : public Entidad {
 	  //constructores
 	  Escenario(){}
 	  Escenario(int id,string nombre,string descripcion,string observacion);
-
 	  Escenario(const Entidad &ent,const string &observacion,const string &path);
 
 	  
