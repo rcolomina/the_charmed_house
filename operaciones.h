@@ -13,7 +13,6 @@ using namespace std;
 using namespace parametros;
 
 
-
 //Permite ejecutar comandos 
 class ICommand{
 	public:

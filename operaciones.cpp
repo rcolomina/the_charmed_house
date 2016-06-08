@@ -63,7 +63,6 @@ void Cardinal::execute(){
     else
         cout<<"No puedes ir al "<<cardinal;					
 
-
 }
 
 // Si es "tirable", se puede tirar del mismo.
@@ -132,7 +131,8 @@ void Tirar::execute(){
 }
 
 
-void Coger::execute(){
+void Coger::execute()
+{
 
 //	  cout<<(*escenario)->Name()<<endl;
 //	  cout<<"Parametro "<<parametro<<endl;
@@ -143,7 +143,8 @@ void Coger::execute(){
         //Si se puede tirar del objeto pasado por parametro
         if(!objeto->get_fijo())
         {
-            if(objeto->get_alcanzable()){
+            if(objeto->get_alcanzable())
+				{
                 inventario.insertar_objeto(objeto);
                 (*scene)->eliminar(objeto);
                 cout<<"Has cogido "<<parametro<<endl;
@@ -163,7 +164,8 @@ void Coger::execute(){
     }
 }
 
-void Alcanzar::execute(){
+void Alcanzar::execute()
+{
     // Si tienes algo para alcanza	
     if((*scene)->get_existe_objeto_escenario(parametro))
     {
