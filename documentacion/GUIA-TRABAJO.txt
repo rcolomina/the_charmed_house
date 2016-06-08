@@ -24,3 +24,12 @@ TODO:
 -Crear cargador de ficheros txt y método para dibujarlo
 -Alternativa: Colocarlos todos en escenario.cpp (chapuza)
 -Parece que la clase Jugador no tiene uso de momento. 
+
+
+
+08/06/2016
+Since this point, English is the languages.
+
+Documentation is something sacred which deserves its respect, therefore why do not use latex to write it?.
+
+In fact, Latex text processor could do more things for you that imagine helping a lot. 
