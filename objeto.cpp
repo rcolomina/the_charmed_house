@@ -25,14 +25,13 @@ Objeto::Objeto(const Entidad &entity,
 				vector<string> descriptions,
 				vector<string> namesProperties,
 					vector<string> valueProperties):
-	  Entidad(entity){
+	  Entidad(entity)
+{
 	  usado=false;
 	  fijo=false;
 	  visible=true;
 	  tirable=false;
 	  alcanzable=true;
-
-
 }
 
 
