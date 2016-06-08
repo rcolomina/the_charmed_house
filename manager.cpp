@@ -39,7 +39,7 @@ Manager::Manager():dt(freq),
     mundo[nombre3]=esc3;
     mundo[nombre4]=esc4;
 
-iii    // Enlaces entre escenas
+    // Enlaces entre escenas
     //Id: 1->[2(o),3(e)] ,2->[1(e),4(i)), 3->[1(o)], 4->[2(e)]
 
     mundo[escena1]->set_salida(mundo[escena2],oeste);
