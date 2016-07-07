@@ -58,11 +58,11 @@ Map first chapter
   	  	  	  	  	  								 
 					  								 
 		 CEL ----- LAG ----- ARC ----- MPI ---- FAC ---- CEM
-  	  	 			  							  	  	  	  	  	  	  	 
-				  	  	  	  	  	  	  	  	  | 
-  	  	  	  	  	  	  	  	  	  	  	  	  |  	  																  
+  	  	 			  							           |  	  	  	  	  	  	  	 
+				  	  	  	  	  	  	  	  	           | 
+  	  	  	  	  	  	  	  	  	  	  	  	           |  	  																  
   	  	  	  	  	  	  	  	  	  	  	  	 	 
-					  							 LAB
+					  							          LAB
 				 N	  							  	 
 				  	  	  	  	  			  	  	 
 				 |	  								 
