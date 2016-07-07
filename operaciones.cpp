@@ -1,5 +1,8 @@
-#include "operaciones.h"
+#include <cassert>
 
+#include "operaciones.h"
+#include "logger.h"
+#include "colormod.h"
 
 
 void Exit::execute(){
@@ -28,7 +31,7 @@ void Ver::execute(){
         descripcion+="Puedes ver los siguiente: ";
         descripcion+=(*escena_actual)->get_objetos_disponibles();
     }
-    cout<<descripcion;	 
+    cout<<Color::cyan<<descripcion<<Color::def;	 
 }
 
 void Examinar::execute(){
@@ -42,32 +45,42 @@ void Examinar::execute(){
     else if((*scene)->get_existe_objeto_escenario(parametro))
         cout<<((*scene)->get_objeto(parametro))->examine()<<endl;		  
     else 
-        cout<<"No hay nada llamado '"<<parametro<<"'"<<endl;
-
+		  cout<<Color::red<<"No hay nada llamado '"<<parametro<<"'"<<Color::def<<endl;
 }
 
 
 void CommandInventario::execute(){
-    cout<<endl<<"En tu inventario posees lo siguiente: "<<endl<<inventario.listar()<<endl;
+	  cout<<endl<<Color::cyan<<"En tu inventario posees lo siguiente: "<<Color::def<<endl;
+	  cout<<Color::yellow<<inventario.listar()<<Color::def<<endl;
 }
 
 
 void Cardinal::execute(){
 
-    if((*escena_actual)->get_salida(cardinal))
-    {
-        *escena_actual = (*escena_actual)->get_salida(cardinal);
-        primera_entrada=true;
-        // cout<<"cambiando de escena"<<endl;
-    } 
-    else
-        cout<<"No puedes ir al "<<cardinal;					
+	  //Logger::instance().log("Entering into Cardinal::execute() method ", Logger::kLogLevelInfo);
+	  
+	  pScene psce=*escena_actual;
+	  
+	  bool existeSalida=(psce->get_salida(cardinal)!=NULL);
+	  bool estadoSalida=psce->get_estado_salida(cardinal);
+	  	  
+	  if(existeSalida and estadoSalida)
+	  {			
+			 *escena_actual = (*escena_actual)->get_salida(cardinal);
+			 primera_entrada=true;
+			 // cout<<"cambiando de escena"<<endl;
+	  } 
+	  else
+			 cout<<Color::red<<"No puedes ir: "<<cardinal<<Color::def<<endl;					
 
 }
 
 // Si es "tirable", se puede tirar del mismo.
 void Tirar::execute(){
 
+	  Logger::instance().log("Entering into Tirar::execute() method ", Logger::kLogLevelInfo);
+
+	  
     // Analisis sintactico parametros en entrada
     string objTirar;
     // parametro1 es una preposicion 
@@ -87,29 +100,37 @@ void Tirar::execute(){
     {
         Objeto *objeto=(*scene)->get_objeto(objTirar);
         //Si se puede tirar del objeto pasado por objTirar
-        if(objeto->get_tirable())
+		  		  
+        if(objeto->get_value<bool>("tirable"))
         {
-            if(objeto->get_atascado())
-            {
-                bool desatascador=inventario.posee_desatascador();
-									 
+				if(objeto->get_value<bool>("stucked"))
+            {					
+					  bool desatascador=false;
+					  desatascador=inventario.posee_desatascador();
+
+
                 if(desatascador)
                 {
+						  Logger::instance().log("Bool desatascador es true", Logger::kLogLevelDebug);
                     Objeto *objDesatascador=inventario.tomar_desatascador();											  
                     string desatascador;
                     if(objDesatascador!=0){
+								 Logger::instance().log("Existe objeto desatascador", Logger::kLogLevelDebug);
+								 
                         desatascador=objDesatascador->Name();
                         inventario.eliminar(desatascador);
                     }
-                    //TODO: Determinar genero del objeto desatascador para poner "del" o "de la"
-                    cout<<"Has conseguido tirar del "<<objTirar<<" con ayuda de "<<objDesatascador->Name()<<endl;
+                    //TODO: Determinar genero del objeto desatascador para poner "del" o "de la" (determinar genero de la palabra)
+
+
+                    cout<<Color::yellow<<"Has conseguido tirar del "<<objTirar<<" con ayuda de "<<objDesatascador->Name()<<Color::def<<endl;
 
                     objeto->tirar();
                     (*scene)->eliminar(objeto);					
                 }
                 else
                 {
-                    cout<<"Esta atascado"<<endl;
+                    cout<<Color::magenta<<"Esta atascado"<<Color::def<<endl;
                 }
             }						
             else
@@ -119,14 +140,14 @@ void Tirar::execute(){
             }
         }
         else
-            cout<<"No puedes tirar de "<<objTirar<<endl;
+            cout<<Color::red<<"No puedes tirar de "<<objTirar<<Color::def<<endl;
     }
     else
     {
         if(objTirar!="")
-            cout<<"No puedo tirar de '"<<objTirar<<"'."<<endl;
+            cout<<Color::red<<"No puedo tirar de '"<<objTirar<<"'."<<Color::def<<endl;
         else
-            cout<<"Tirar de que?."<<endl;
+            cout<<Color::magenta<<"Tirar de que?."<<Color::def<<endl;
     }
 }
 
@@ -141,66 +162,71 @@ void Coger::execute()
     {			 
         Objeto *objeto=(*scene)->get_objeto(parametro);
         //Si se puede tirar del objeto pasado por parametro
-        if(!objeto->get_fijo())
+        if(!objeto->get_value<bool>("fix"))
         {
-            if(objeto->get_alcanzable())
-				{
-                inventario.insertar_objeto(objeto);
-                (*scene)->eliminar(objeto);
-                cout<<"Has cogido "<<parametro<<endl;
-            }
-            else
-                cout<<"No se puedes coger porque no es alcanzable "<<endl;
+				 if(objeto->get_value<bool>("alcanzable"))
+				 {
+						inventario.insertar_objeto(objeto);
+						(*scene)->eliminar(objeto);
+						cout<<Color::yellow<<"Has cogido "<<parametro<<Color::def<<endl;
+				 }
+				 else
+						cout<<Color::red<<"No se puedes coger porque no es alcanzable "<<Color::def<<endl;
         }
         else
-            cout<<"No puedes cogerlo porque esta fijado."<<parametro<<endl;			 
+				 cout<<Color::red<<"No puedes cogerlo porque esta fijado."<<parametro<<Color::def<<endl;			 
     }
     else
     {
-        if(parametro!="")
-            cout<<""<<parametro<<" no se puede coger."<<endl;
-        else
-            cout<<"Coger que?"<<endl;
+			if(parametro!="")
+				  cout<<""<<parametro<<" no se puede coger."<<endl;
+			else
+				  cout<<Color::magenta<<"Coger que?"<<Color::def<<endl;
     }
 }
 
 void Alcanzar::execute()
 {
-    // Si tienes algo para alcanza	
-    if((*scene)->get_existe_objeto_escenario(parametro))
-    {
-        if(inventario.posee_alcanzador())
-        {
-            Objeto *objAlcanzador=inventario.tomar_alcanzador();
+	  Logger::instance().log("Entering into Alcanzar::execute() method ", Logger::kLogLevelInfo);
+	  
+	  // Si tienes algo para alcanza	
+	  if((*scene)->get_existe_objeto_escenario(parametro))
+	  {
+			 Objeto *objeto=(*scene)->get_objeto(parametro);
+//		  if(objeto->get_value<bool>(""))
+			 //TODO: There is an error, this code should avoid that items "alcanzables" may be disappear
+			 
+			 if(inventario.posee_alcanzador() )
+			 {
+					Objeto *objAlcanzador=inventario.tomar_alcanzador();
+					
+					string alcanzador;
+					if(objAlcanzador!=0)
+					{
+						  alcanzador=objAlcanzador->Name();
+						  inventario.eliminar(alcanzador);
+					}
 
-            string alcanzador;
-            if(objAlcanzador!=0)
-            {
-                alcanzador=objAlcanzador->Name();
-                inventario.eliminar(alcanzador);
-            }
+					//Determinar genero del objeto alcanzador para poner "del" o "de la"
+					cout<<Color::yellow<<"Has cogido "<<parametro<<" con ayuda del "<<alcanzador<<Color::def<<endl;			 
 
-            //Determinar genero del objeto alcanzador para poner "del" o "de la"
-            cout<<"Has cogido "<<parametro<<" con ayuda del "<<alcanzador<<endl;			 
+					inventario.insertar_objeto(objeto);
+					(*scene)->eliminar(objeto);
 
-            Objeto *objeto=(*scene)->get_objeto(parametro);
-            inventario.insertar_objeto(objeto);
-            (*scene)->eliminar(objeto);
+			 }
+			 else
+					cout<<Color::red<<"No tienes nada con que alcanzar eso."<<Color::def<<endl;
+	  }
+	  else
+	  {
+			 if(parametro!="")
+					cout<<Color::red<<""<<parametro<<" no se puede alcanzar."<<Color::def<<endl;
+			 else
+					cout<<Color::magenta<<"Alcanzar que?"<<Color::def<<endl;
+	  }
 
-        }
-        else
-            cout<<"No tienes nada con que alcanzar eso."<<endl;
-    }
-    else
-    {
-        if(parametro!="")
-            cout<<""<<parametro<<" no se puede alcanzar."<<endl;
-        else
-            cout<<"Alcanzar que?"<<endl;
-    }
-
-    // y quieres coger algo no alcanzable
-    // puedes cogerlo
+	  // y quieres coger algo no alcanzable
+	  // puedes cogerlo
 
 }
 
@@ -208,6 +234,7 @@ void Alcanzar::execute()
 
 
 void Dejar::execute(){
+	  
 /*
 // Existe el objeto especificado en parametro 1
 if((*escenario)->get_existe_objeto_escenario(parametro))
@@ -229,4 +256,86 @@ cout<<"Coger que?."<<endl;
 }
 */
 
+}
+
+// This operation uses two parameters and determine whether
+// the first can be 'inserted' over the second.
+// In that case, check out whether an action must be trigger or not
+// e.g. a key and a lock should have same codes to trigger the action
+// to open a door or a gate
+void Colocar::execute(){
+
+	  bool existOrigin  = inventory.get_existe_objeto(parametro);	 
+	  bool existDestiny = (*scene)->get_existe_objeto_escenario(parametro2);
+	  bool p1void = (parametro=="");
+	  bool p2void = (parametro2=="");
+
+	  if(p1void)
+	  {
+			 // TODO: Parametrise this phrase
+			 cout<<Color::magenta<<"Colocar que?"<<Color::def<<endl;
+	  }
+
+	  if(not p1void and p2void)
+	  {
+			 // TODO: Parametrise this phrase
+			 cout<<Color::magenta<<"Colocar "<<parametro<<" sobre que?"<<Color::def<<endl;
+	  }
+
+	  if(not p1void and not p2void)
+	  {
+			 if(existOrigin)
+			 {			 
+					if(existDestiny)
+					{
+						  Objeto *obj1=inventory.get_objeto(parametro);
+						  Objeto *obj2=(*scene)->get_objeto(parametro2);
+
+						  assert(obj1!=NULL);
+						  assert(obj2!=NULL);								 
+						  
+						  bool isKey  =  true;//obj1->get_value<bool>("key");
+						  bool isLock =  true;//obj2->get_value<bool>("lock");
+						  if(isKey and isLock)
+						  {								
+								 int code1 = obj1->get_value<int>("code");
+								 int code2 = obj2->get_value<int>("code");
+								 if(code1==code2)
+								 {
+										// TODO: Parametrise this phrase										
+										cout<<Color::yellow<<"Has colocado "<<parametro<<" sobre "<<parametro2;
+										cout<<". Un mecanismo se ha activado."<<Color::def<<endl;			
+										IEvent* event=obj2->activate_event();	
+										if(event!=NULL)
+											  eventsQueue.push(event);
+								 }
+								 else
+								 {
+										// TODO: Parametrise this phrase
+										cout<<Color::magenta<<"Has colocado "<<parametro<<" sobre "<<parametro2;
+										cout<<Color::magenta<<", pero nada sucede."<<Color::def<<endl;
+								 }
+										
+						  }						  
+						  else
+						  {
+								 // TODO: Parametrise this phrase								 
+								 cout<<Color::red<<"No puedes hacer eso."<<Color::def<<endl;
+						  }
+								 
+						  
+					}
+					else
+					{
+
+						  // TODO: Parametrise this phrase								 
+						  cout<<Color::red<<"No hay nada parecido a "<<parametro2<<Color::def<<endl;
+					}
+			 }
+			 else
+			 {
+					// TODO: Parametrise this phrase								 
+					cout<<Color::red<<"No puedes colocar "<<parametro<<" sobre "<<parametro2<<Color::def<<endl;
+			 }
+	  }
 }
