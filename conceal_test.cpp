@@ -12,6 +12,15 @@ int main(){
 	  cout<<"ConcealItem examine() "<<cItem->examine()<<endl;	  	  
 	  cout<<"ConcealItem discover() "<<cItem->discover()<<endl;
 	  cout<<"ConcealItem examine() "<<cItem->examine()<<endl;
-	  
+
+	  delete cItem;
+
+	  cout<<"Hi, my object name is '"<<visible->Name()<<"', and I am still living after ConcealItem has been deleted"<<endl;
+			 
+	  delete hidden;
+	  delete visible;
+
+
+
 
 }

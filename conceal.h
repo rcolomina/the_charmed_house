@@ -17,6 +17,9 @@ class ConcealItem{
 	  {
 	  }
 
+	  ~ConcealItem(){
+	  }
+
 	  pItem ItemActive(){return active;}
 	  	  
 	  string examine(){
