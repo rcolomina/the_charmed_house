@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <games>
-  <game id="games.game_EjemploJuego" language="Spanish">
+
+  <pathimages>
+	 ./txt
+  </pathimages>
+  
+  <game id="games.game_EjemploJuego" language="Spanish">	 
 	 <scenes>
 		
-		<scene id="game.scenes.scene_sce000" title="Preludio: La aventura comienza...">
+		<scene id="game.scenes.scene.sce000" title="Preludio: La aventura comienza...">
 		  <descriptions> 
-			 <description id="des001">En un pueblo lejos de la ciudad, había una casa ruinosa y antigua desde que tengo ojos para ver. Como aventurero que soy, he tenido en mente explorarla en todo momento, pero nunca me he atrevido. Existen carteles prohibiendo el paso en sus alrededores. Quien quiera que sea el dueño, desea que los intrusos permanezcan lejos.
+			 <description id="des001">En un pueblo lejos de la ciudad, había una casa ruinosa y antigua desde que tengo ojos para ver. Como aventurero que soy, he tenido en mente explorarla en todo momento, pero nunca me he atrevido. Existen carteles prohibiendo el paso en sus alrededores. Quien quiera que sea el dueño, quiere que los intrusos permanezcan lejos.
 			 </description>
 			 <description id="des002">Durante noches había estado soñando con aquella casa en ruinas, imaginando que podría haber en su inferior. Una noche, en uno de mis sueños, vislumbré una figura humana irreconocible. Lo único que pude descifrar en aquel enigmático sueño, es la llamada de aquella entidad. Susurraba, -Ayuuudame!!, ayuudame!!-.  \n Desde aquel momento, no pude esperar más. Debía entrar en aquella casa abandonada,  a pesar de que las advertencias en los alrededores.
 			 </description>
 		  </descriptions>
+		  <image>
+			 ./txt/scenes/fronthouse.txt
+		  </image>
 		</scene>
 		
 		<scene id="game.scenes.scene.sce001" title="La Entrada a la Casa">
@@ -17,11 +25,11 @@
 			 <description id="des001">
 				Una casa antigua construída en piedra y madera se presenta ante tí. \nA duras penas se sostiene sobre sus\n cimientos.\nHay carteles de cortesia advirtiendo a los intrusos. \n¡ATENCION! NO PASAR, PELIGRO, FUERA!, A LA MIERDA, ¿NO TE HAS ENTERADO?.
 			 </description>
-			 <observation>
+			 <description>
 				Puedes ver una rama de árbol indicando ladrillo en la pared.
-			 </observation>
+			 </description>
 		  </descriptions>
-		  <image>./txt/fronthouse.txt</image>
+		  <image>./txt/scenes/fronthouse.txt</image>
 		</scene>
 		
 		<scene id="game.scenes.scene.sce002" title="El monumento de piedras">
@@ -33,7 +41,7 @@
 				Las piedras están amontonadas en 3 grupos, cada uno con un número determinado. Es una combinación de 3 números.
 			 </description>
 		  </descriptions>
-		  <image>./txt/stones.txt</image>
+		  <image>./txt/scenes/stones.txt</image>
 		</scene>
 		
 		<scene id="game.scenes.scene.sce003" title="Cementerio">
@@ -42,9 +50,12 @@
 				Piedras amontonadas en tres grupos parecían representar algún tipo de monumento en otro tiempo.
 			 </description>	 
 			 <observation>
-			 Mirando atentamente sobre una de las lápida, descubres una inscripción: I-D-I-I-D-D-I-D-I-D-D-D. ¿Podrían ser paso de baile?</observation>
+				Mirando atentamente sobre una de las lápida, descubres una inscripción: I-D-I-I-D-D-I-D-I-D-D-D. ¿Podrían ser paso de baile?
+			 </observation>
 		  </descriptions> 
-		  <image>./txt/cementery.txt</image>
+		  <image>
+			 ./txt/scenes/cementery.txt
+		  </image>
 		</scene>
 
 		<scene id="game.scenes.scene.sce004" title="Arco de árboles">
@@ -52,19 +63,51 @@
 			 <description>
 				Un arco de piedra se alza en tu camino. Puedes ver que un objeto metálico en su parte mas alta. No crees que puedas alcanzarlo con las manos desnudas.
 			 </description>
-			 <observation>Puedes ver que el objeto es una palanca para tirar de cualquier cosa</observation>
+			 <observation>
+				Puedes ver que el objeto es una palanca para tirar de cualquier cosa
+			 </observation>
 		  </descriptions>
-		  <image>./txt/arcoarboles.txt</image>
-		</scene>		
+		  <image>
+			 ./txt/scenes/arcoarboles.txt
+		  </image>
+		</scene>
+
+		<scene id="game.scenes.scene.sce005" title="El Lago">
+		  <descriptions> 
+			 <description>
+				Un paraje idílico se presenta ante tí. Un lago te corta el camino, aunque puedes ver una pequeña isla en su centro, poblada de árboles. 
+			 </description>
+			 <observation>
+				Una pequeña oquedad parece indicar que en otro tiempo pudo ser algún tipo de llave.
+			 </observation>
+		  </descriptions>
+		  <image>
+			 ./txt/scenes/island.txt
+		  </image>
+		</scene>
+
+		<scene id="game.scenes.scene.sce006" title="Ruinas de la isla del lago">
+		  <descriptions> 
+			 <description>
+				Estás en una pequeña isla poblada de árboles. Una casa ruinosa hecha de piedra se preseneta ante ti. La vegetación la ha invadido con el paso de los años.
+			 </description>
+			 <observation>
+				Examinando en el interior de la casa, puedes encontrar un mecanismo en piedra que podría contener alguna cosa.
+			 </observation>
+		  </descriptions>
+		  <image>
+			 ./txt/scenes/ruimsLake.txt
+		  </image>
+		</scene>
+		
 	 </scenes>
 	 
 	 <items>
-		<item id="item01">
+		
+		<item id="game.items.item.item01">
 		  <names>
 			 <name id="nam01">bastón</name>
 			 <name id="nam02">baston</name>
-			 <name id="nam03">basto</name>
-			 <name id="nam04">baton</name>			 
 		   </names>
 		  <descriptions>
 			 <description id="des001">
@@ -75,18 +118,15 @@
 		  </description>
 		  </descriptions>
 		  <properties>
-			 <visibility>true</visibility>
-			 <fix>false</fix>
-			 <telescope>true</telescope>
+			 <reacher type="boolean">true</reacher>
 		  </properties>
+		  <image>./txt/items</image>
 		</item>
 		
-		<item id="item02">
+		<item id="game.items.item.item02">
 		  <names>
 			 <name id="nam01">ladrillo</name>
 			 <name id="nam02">ladril</name>
-			 <name id="nam03">ladrill</name>
-			 <name id="nam04">ladri</name>			 
 		   </names>
 		  <descriptions>
 			 <description id="des001">
@@ -94,18 +134,20 @@
 			 </description>		 
 		  </descriptions>
 		  <properties>
-			 <visibility>true</visibility>
-			 <fix>true</fix>
-			 <stuck>true</stuck>
+			 <fix type="boolean">true</fix>
+			 <stucked type="boolean">true</stucked>
+			 <tirable type="boolean">true</tirable>
 		  </properties>
+		  <images>
+			 <path>./txt/items</path>
+		  </images>
+		  <image> ./txt/items</image>
 		</item>
 
-		<item id="item03">
+		<item id="game.items.item.item03">
 		  <names> 
 			 <name id="nam01">cerradura</name>
 			 <name id="nam02">Cerradura</name>
-			 <name id="nam03">cerra</name>
-			 <name id="nam04">cerradura</name>			 
 		   </names>
 		  <descriptions>
 			 <description id="des001">
@@ -113,45 +155,64 @@
 			 </description>		 
 		  </descriptions>
 		  <properties>
-			 <visibility>true</visibility>
+			 <visibility>false</visibility>
 			 <fix>true</fix>
-			 <stuck>true</stuck>
 		  </properties>
+		  <image>./txt/items</image>
 		</item>
 
-		<item id="item04">
+		<item id="game.items.item.item04">
 		  <names> 
 			 <name id="nam01">palanca</name>
 			 <name id="nam02">Palanca</name>
-			 <name id="nam03">palanc</name>
-			 <name id="nam04">palancan</name>
 		   </names>
 		  <descriptions>
 			 <description id="des001">
-				Es una palanca retorcida en uno de sus extremos. Permite forzar puertas o ventanas para desbloquearlas. Escencial en la maleta de herramientas de un ladron.
+				Es una palanca metálica forjadad en acero y alargada, retorcida en uno de sus extremos, y terminando en una cuña plana. Permite forzar puertas, ventanas o mecanismos, algo escencial en la maleta de herramientas de cualquier  ladrón.
 			 </description>		 
 		  </descriptions>
 		  <properties>
-			 <visibility>true</visibility>
-			 <fix>true</fix>
-			 <stuck>true</stuck>
+			 <visibility type="boolean">true</visibility>
+			 <stuck type="boolean">true</stuck>
+			 <stucked type="boolean">true</stucked>
 		  </properties>
+		  <image>./txt/items</image>
 		</item>
 
-		<item id="item05">
+		<item id="game.items.item.item05">
 		  <names> 
-			 <name id="nam01">figurita</name>
-		   </names>
+			 <name id="nam01">figurita </name>
+		  </names>
 		  <descriptions>
 			 <description id="des001">
-				Es una figurita tallada en piedra en forma de angel. En su base posee una forma saliente que podria encajar en alguna oquedad.				
+				Es una figurita tallada en piedra en forma de ángel. En su base posee una forma saliente que podria encajar en alguna oquedad.	
 			 </description>		 
 		  </descriptions>
 		  <properties>
-			 <visibility>true</visibility>
-			 <fix>true</fix>
-			 <stuck>true</stuck>
+			 <stuck type="boolean">true</stuck>
+			 <plug type="boolean">true</plug>
+			 <key type="boolean">true</key>
+			 <code type="integer">12345</code>
 		  </properties>
+		  <image>./txt/items</image>
+		</item>
+
+		<item id="game.items.item.item06">
+		  <names> 
+			 <name id="nam01">hueco</name>
+		  </names>
+		  <descriptions>
+			 <description id="des001">
+				Es un hueco tallado en la roca, hecho claramente por una mano humana, especialmente diseñado para albergar o encajar algo sobre él.
+			 </description>		 
+		  </descriptions>
+		  <properties>
+			 <fix type="boolean">true</fix>
+			 <socket type="boolean">true</socket>
+			 <lock type="boolean">true</lock>
+			 <code type="integer">12345</code>
+		  </properties>
+		  <image>./txt/items </image>		  
 		</item>
 		
 	 </items>
@@ -168,8 +229,12 @@
 	 </cardinals>
 
 	 <connections>		
-		<connection id="con01" sceneIdOrigin="sce001" cardinalId="car01" sceneIdDestiny="sce002"></connection>
+		<connection id="con01" sceneIdOrigin="sce001" carIdOrig="car01" sceneIdDestiny="sce002" carIdDest="car05"></connection>
     </connections>
+
+	 <events>
+		
+	 </events>
 	 
   </game>
 
@@ -180,5 +245,6 @@
 </games>
 
   
+
 
 
