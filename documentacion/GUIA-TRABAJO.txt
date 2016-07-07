@@ -1,35 +1,70 @@
 ABOUT THIS DOCUMENT:
 -Este documento es utilizado como diario y gestor de tareas del proyecto.
 
-ESTILO DEL JUEGO Y REQUISITOS
+REQUISITES AND GAME STYLE
 -"La casa encantada" es un juego que pretende ser de tipo conversacional pero finalmente click and play 
 -Las escenas serán imágenes estáticas, con objetos simples.
 -El jugador podrá moverse entre escenas, pulsando las flechas del borde la pantalla, indicando salidas.
 -El jugador dispondrá de slots para su inventarios. Podrá usarlos, ampliarlo e intentar aplicarlos sobre la escena.
 
-ASPECTOS TECNICOS
+TECHNICAL ASPECTS
 -Programado en C++, con vista a exportarse a Java.
 -Interface comandos de texto. 
 
-LOGICA DEL JUEGO:
+GAME LOGIC
 -Guardar estados de los eventos.
 
 GUI:
 -Esqueleto de la lógica se compila enn g++ (futuro en Java).
 
 TODO:
--Migrar a libGDX
+-Migrar a libGDX  (this is a might be)
 -Interface final un touch con acelerómetro.
--Las imágenes de cada escenario deberían estar en ficheros txt. Así que cada escenario debería cargar su fichero txt correspondiente para que la función pintado pinte el gráfico que le toque. 
--Crear cargador de ficheros txt y método para dibujarlo
--Alternativa: Colocarlos todos en escenario.cpp (chapuza)
--Parece que la clase Jugador no tiene uso de momento. 
+-Las imágenes de cada escenario deberían estar en ficheros txt. Así que cada escenario debería cargar su fichero txt correspondiente para que la función pintado pinta el gráfico que le toque. DONE!! 
+-Crear cargador de ficheros txt y método para dibujarlo DONE!!
+-Alternativa: Colocarlos todos en escenario.cpp (chapuza) DISMISS
+-Parece que la clase Jugador no tiene uso de momento.  UNUSEFUL
 
-
+DIARY
 
 08/06/2016
-Since this point, English is the languages.
+-From this point, the English is the languages to be used.
 
-Documentation is something sacred which deserves its respect, therefore why do not use latex to write it?.
+-Documentation is something sacred which deserves its respect, therefore why do not use latex to write it?.
 
-In fact, Latex text processor could do more things for you that imagine helping a lot. 
+-In fact, Latex text processor could do more things for you that imagine helping a lot. 
+
+20/06/2016
+
+-The prologue can be seen as a scene with special treatment. Descriptions will be shown to the
+user iterating over them, with sleep times.
+
+-Whether descriptions text be iterate or not, and whether there are or not sleeps times
+should be added to specifications using the XML game file.
+
+-The objective at short term is try to specify as most as possible aspects on the XML game file,
+since connection amount scenes, complex objects and triggers, as hidden objects, or mecanisims. 
+
+02/07/2016
+
+-It will be great to store all commads written, even more, all things that are being done by the software by level,
+a logger system. This is covered by logger files.
+
+-IDEA: Do not forget to use UUID (universal identifiers) for all item's identification. This is the best thing to do in order to not have collisions amount instances.
+
+03/07/2016
+
+-IDEA: Build a whole test functional without interface. This will be a synthetic player writing operation to pass the game chapter after chapter. All the traces could be seen on the logger.
+
+
+07/07/2016
+
+-IDEA: When player misspelling a command, the system may suggest the closest one to the user. This could help to the player so far.
+
+
+
+
+
+
+
+
