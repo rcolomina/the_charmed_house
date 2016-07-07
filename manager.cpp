@@ -1,4 +1,6 @@
 #include "manager.h"
+#include "logger.h"
+
 
 using namespace parametros;
 
@@ -9,85 +11,88 @@ Manager::Manager():dt(freq),
                    continuar_loop(true),
                    contador_mal_comportamiento(0),
 						 fac("gamesInfo.xml")
-{
+{	  
+	  //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero
+	  // TODO: Build automatically all these objects running over its ids.
+	  pScene esc1 = fac.buildScenarioById("game.scenes.scene.sce001");
+	  pScene esc2 = fac.buildScenarioById("game.scenes.scene.sce002");
+	  pScene esc3 = fac.buildScenarioById("game.scenes.scene.sce003");
+	  pScene esc4 = fac.buildScenarioById("game.scenes.scene.sce004");
+	  pScene esc5 = fac.buildScenarioById("game.scenes.scene.sce005");
+	  pScene esc6 = fac.buildScenarioById("game.scenes.scene.sce006");
+	  
+	  //CONSTRUIR OBJETOS
+	  // TODO: Build automatically all these objects running over its ids.	  
+	  pItem o_baston    = fac.buildItemById("game.items.item.item01");
+	  pItem o_ladrillo  = fac.buildItemById("game.items.item.item02");
+	  pItem o_cerradura = fac.buildItemById("game.items.item.item03");
+	  pItem o_palanca   = fac.buildItemById("game.items.item.item04");
+	  pItem o_figurita  = fac.buildItemById("game.items.item.item05");
+	  pItem o_hueco     = fac.buildItemById("game.items.item.item06");
 	 
-    //Crear vector de comandos
-    comandos_disponibles="Comandos disponibles:";
-
-	 for(int i=0;i<NUMBER_COMMANDS;++i)
-        v_comandos.push_back(comandos[i]);
-
 //Continuar con el bucle principal del juego
 //	  continuar_loop=true;
 //   configurar reloj
 //	  tiempo=0; //segundos	  
 //   variables del jugador
 //	  contador_mal_comportamiento=0;
-
-    //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero 
-    Escenario *esc1=new Escenario(Entidad(id1,nombre1,descripcion1),observacion1,string("./txt/fronthouse.txt"));
-    Escenario *esc2=new Escenario(Entidad(id2,nombre2,descripcion2),observacion2,string("./txt/stones.txt"));
-	 Escenario *esc3=new Escenario(Entidad(id3,nombre3,descripcion3),observacion3,string("./txt/cementery.txt"));
-	 Escenario *esc4=new Escenario(Entidad(id4,nombre4,descripcion4),observacion4,string("./txt/arcoarboles.txt"));
-
+  	 	  	  	 
     // Setear la escena de comienzo del juego
     escena_actual=esc1;
 
     //insertar escenario en mundo
-    mundo[nombre1]=esc1;
+/*    mundo[nombre1]=esc1;
     mundo[nombre2]=esc2;
     mundo[nombre3]=esc3;
-    mundo[nombre4]=esc4;
-
+    mundo[nombre4]=esc4;*/
+	 
     // Enlaces entre escenas
     //Id: 1->[2(o),3(e)] ,2->[1(e),4(i)), 3->[1(o)], 4->[2(e)]
+	 connect(esc1,west,esc2,east);
+	 connect(esc1,east,esc3,west);
+	 connect(esc2,west,esc4,east);
 
-    mundo[escena1]->set_salida(mundo[escena2],oeste);
-    mundo[escena1]->set_salida(mundo[escena3],este);
-
-    mundo[escena2]->set_salida(esc1,este);
-    mundo[escena2]->set_salida(esc4,oeste);
-
-    mundo[escena3]->set_salida(esc1,oeste);
-
-    mundo[escena4]->set_salida(esc2,este);
-
-    //CONSTRUIR OBJETOS
 	 
-	 Objeto* o_baston = fac.buildItemById("item01");
-    o_baston->set_alcanzador(true);
+    esc1->set_salida(esc2,oeste,true);	 
+	 esc2->set_salida(esc1,este,true);
+		  
+    esc1->set_salida(esc3,este,true);
+    esc3->set_salida(esc1,oeste,true);
 	 
-	 Objeto *o_ladrillo = fac.buildItemById("item02");
-    o_ladrillo->set_fijo(true);
-    o_ladrillo->set_atascado(true);
+    esc2->set_salida(esc4,oeste,true);
+	 esc4->set_salida(esc2,este,true);
 
-	 Objeto *o_cerradura = fac.buildItemById("item03");
-	 o_cerradura->set_visible(false);
-    o_cerradura->set_fijo(true);	 
+	 esc4->set_salida(esc5,oeste,true);
+	 esc5->set_salida(esc4,este,true);
 
-	 Objeto *o_palanca = fac.buildItemById("item04");
-    o_palanca->set_alcanzable(false);
-    o_palanca->set_desatascador(true);
-
-	 Objeto *o_figurita = fac.buildItemById("item05");
-    o_figurita->set_alcanzable(true);
-
+	 esc5->set_salida(esc6,oeste,false);
+	 esc6->set_salida(esc5,este,true);
 	 
     //RELACIONAR OBJETOS
 	 // Ladrillo con llave
     string descrip_tirar_ladrillo="Tiras con fuerza del ladrillo de la pared, y parece que comienza a ceder. Una vez sacado el ladrillo, tras el, aparece una cerradura escondida.";
     o_ladrillo->set_tirable(o_cerradura,descrip_tirar_ladrillo);
+
+	 //o_hueco->subscribed(
 	 
     //INSERTAR OBJETOS EN ESCENARIOS
-    mundo[escena1]->set_objeto(o_ladrillo);
-    mundo[escena1]->set_objeto(o_cerradura);
-    mundo[escena2]->set_objeto(o_baston);
-    mundo[escena3]->set_objeto(o_figurita);
-    mundo[escena4]->set_objeto(o_palanca);
+    esc1->set_objeto(o_ladrillo);
+    esc1->set_objeto(o_cerradura);
+    esc2->set_objeto(o_baston);
+    esc3->set_objeto(o_figurita);
+    esc4->set_objeto(o_palanca);
+	 esc5->set_objeto(o_hueco);
     //CONSTRUIR INVENTARIO
     //inventario.insertar_objeto(objeto);
-
+	 
     // CONSTRUIR COMMANDOS E INVOCADOR
+	 //Crear vector de comandos
+	
+	 // TODO: Create ICommands from a list automatically
+    comandos_disponibles="Comandos disponibles:";
+	 for(int i=0;i<NUMBER_COMMANDS;++i)
+        v_comandos.push_back(comandos[i]);
+
     //Construir los comandos y conectarlos al invocador
     ICommand *c_exit  = new Exit(continuar_loop);
     ICommand *c_ayuda = new Ayuda(v_comandos);
@@ -100,19 +105,14 @@ Manager::Manager():dt(freq),
     ICommand *c_oeste = new Cardinal(&escena_actual,s_oeste,primera_entrada);
     ICommand *c_este  = new Cardinal(&escena_actual,s_este,primera_entrada);
     ICommand *c_tirar = new Tirar(&escena_actual,inventario,parametro1,parametro2);
-
     ICommand *c_coger = new Coger(&escena_actual,inventario,parametro1);
-
     ICommand *c_dejar = new Dejar(&escena_actual,inventario,parametro1);
     ICommand *c_alcanzar = new Alcanzar(&escena_actual,inventario,parametro1);
+	 ICommand *c_colocar = new Colocar(&escena_actual,inventario,eventsQueue,parametro1,parametro2);
 
-/*
-  ICommand *c_sur=new Cardinal(&*escena_actual);
-  ICommand *c_este=new Cardinal(&*escena_actual);
-  ICommand *c_oeste=new Cardinal(&*escena_actual);
-*/			
-
+	 
     map<string,ICommand*> mapComandos;
+	 
     mapComandos[s_exit]=c_exit;
     mapComandos[s_salir]=c_exit;
     mapComandos[s_ayuda]=c_ayuda;
@@ -127,14 +127,26 @@ Manager::Manager():dt(freq),
     mapComandos[s_coger]=c_coger;
     mapComandos[s_dejar]=c_dejar;
     mapComandos[s_alcanzar]=c_alcanzar;
+	 mapComandos[s_colocar]=c_colocar;
 
     // Construir invocador de comandos con mapComandos
-    invocador_comandos=Invocador(mapComandos);	  
+    invocador_comandos=Invocador(mapComandos);
+
+
+	 // Events on objects
+	 IEvent *eventOpenConnection1 = new EventOpenConnection(esc5,
+																			  s_oeste,
+																			  postMessageActivationToEventOpenConnection1);
+
+	 o_hueco->insert_event(eventOpenConnection1);
+	 
 }
 
 void Manager::prologo(){
 
-    cout<<endl<<"¡BIENVENIDO QUERIDO JUGADOR! \n\nLA CASA ENVANTADA v1.0"<<endl<<endl;
+	  // TODO: Get data from sceneario object
+	  
+    cout<<endl<<"¡BIENVENIDO QUERIDO JUGADOR! \n\nLA CASA ENCANTADA v1.0"<<endl<<endl;
     cout<<tituloPreludio<<endl;
 
     string my_string=textoPreludio1;
@@ -169,14 +181,16 @@ void Manager::run(){
     //Marcar la primera entrada al metodo
     primera_entrada=true;
 
-	  prologo();
+//	 prologo();
 
     while(continuar_loop){
 
         ///DIBUJAR ESCENARIO///
         if(primera_entrada)
         {
-            cout<<endl;dibujar();cout<<endl;
+            cout<<endl;
+				dibujar();
+				cout<<endl;
             cout<<get_descripcion_estado_actual()<<endl;
             primera_entrada=false;
         }
@@ -203,7 +217,8 @@ void Manager::run(){
 
         if(!lista_comandos.empty()){
             comando=lista_comandos.front();
-            lista_comandos.pop_front();}
+            lista_comandos.pop_front();
+		  }
 
         if(!lista_comandos.empty()){
             parametro1=lista_comandos.front();
@@ -214,7 +229,6 @@ void Manager::run(){
             parametro2=lista_comandos.front();
             lista_comandos.pop_front();
         }
-
 
         ///TRATAMIENTO DE COMANDOS
         tratamiento_comandos(comando);
@@ -229,12 +243,10 @@ void Manager::run(){
     //TODO: GUARDAR LA PARTIDA CON TODOS SUS ESTADOS
 
     //SALIDA DEL JUEGO
-    if(contador_mal_comportamiento<3)
+    if(contador_mal_comportamiento < 3 )
         cout<<endl<<"GRACIAS POR JUGAR! :),TE ESPERO PRONTO DE VUELTA."<<endl<<endl;
     else
         cout<<endl<<"ERES UN MALEDUCADO, NECESITAS CLASES DE MODALES."<<endl<<endl;
-
-
 }
 
 string Manager::get_comandos_disponibles()
@@ -251,37 +263,46 @@ string Manager::get_descripcion_estado_actual(){
         descripcion+=escena_actual->get_objetos_disponibles();
     }
     return descripcion;
-
 }
 
 string Manager::get_salidas_estado_actual(){
 	  
     string lista_salidas;
-    map<string,Escenario*> salidas=escena_actual->get_salidas();
 
-    for(map<string,Escenario*>::iterator it=salidas.begin();
+    //map<string,Escenario*> salidas=escena_actual->get_salidas();
+
+	 map<string,pScene> salidas=escena_actual->get_salidas();
+
+    for(map<string,pScene>::iterator it=salidas.begin();
         it!=salidas.end();it++)
     {
         lista_salidas+=it->first;
         lista_salidas+=" ";
     }
-
     return lista_salidas;
-
 }
 
 
 //Tratamiento de la línea de comandos 
 void Manager::tratamiento_comandos(string comando){
 
+	  //TODO: Create string command's preprocessor to select which comand to invoke by command invoker
+	  
     //Tratamiento del comando mal deletrado
     //How to know that comando is in a list of strings
-    bool info=(comando==s_exit or comando==s_salir or comando==s_ayuda or comando==s_ver or comando==s_inventario or comando==s_examinar);
+    bool info=(comando==s_exit or
+					comando==s_salir or
+					comando==s_ayuda or
+					comando==s_ver or
+					comando==s_inventario or
+					comando==s_examinar);
     bool norte=(comando=="norte" or comando=="n");
     bool sur  =(comando=="sur" or comando=="s");
     bool este =(comando=="este" or comando=="e");
     bool oeste=(comando=="oeste" or comando=="o");
 
+	 bool colocar=(comando=="colocar");
+	 
     if(info)
         invocador_comandos.exec(comando);
     if(norte)
@@ -308,22 +329,26 @@ void Manager::tratamiento_comandos(string comando){
     if(alcanzar)
         invocador_comandos.exec(s_alcanzar);
 
+	 if(colocar)
+			invocador_comandos.exec("colocar");
+	 
 			 			 
     if(comando=="arriba");
     else if(comando=="abajo");			
     else if(comando=="entrar");
     else if(comando=="salir");					
     else	if(comando=="salidas")
-        cout<<endl<<"Las salidas disponibles son:"<<get_salidas_estado_actual()<<endl;
+			cout<<endl<<"Las salidas disponibles son:"<<escena_actual->salidasDisponibles()<<endl;
     else if(comando=="tiempo")
         cout<<endl<<"Han pasado "<<tiempo<<" segundos desde que comenzó la partida."<<endl;
     else if(comando=="");
     else 
     {
-
 			// TODO: Use regular expresion instead/
         bool hijo=(comando=="hijo" or comando=="Hijo");
+
         bool puta=(parametro1=="puta" or parametro1=="Puta") or (parametro2=="puta" or parametro2=="Puta");
+
         bool idiota=(comando=="Idiota" or comando=="idiota") or 
             (parametro1=="Idiota" or parametro1=="idiota") or 
             (parametro2=="Idiota" or parametro2=="idiota");
@@ -368,12 +393,11 @@ void Manager::tratamiento_comandos(string comando){
         continuar_loop=false;
     }
 
+	 	 
 	 if(comando!="")
 			cout<<endl;
-
-
 			 
-}
+} //
 
 void Manager::clock(){
 
@@ -394,12 +418,32 @@ void Manager::clock(){
 //Definir las reglas y relaciones entre objetos
 void Manager::actualizar_objetos(){
 
+	  // Compsume events
+	  eventsQueue.fire();
+
+/*	  IEvent *event;
+	  if(!eventsQueue.empty())
+	  {
+			 cout<<"Size eventsQueue:"<<eventsQueue.size()<<endl;
+			 event=eventsQueue.front();
+  	
+			 cout<<"Size eventsQueue:"<<eventsQueue.size()<<endl;
+			 assert(event!=NULL);
+			 Logger::instance().log("actualizar_objetos", Logger::kLogLevelInfo);
+			 //cout<<event->message()<<endl;
+			 cout<<event->activate()<<endl;
+			 eventsQueue.pop();
+	  }*/
+	  
+}
+	  
+	  
 //Genericos: Si un objeto esta usado, hacerlo invisible, para que no se liste en su escenario
 //SEGURO??
 
 // Escenario 1: La entrada de la mansion
-    if(escena_actual->Id()==id_escena1)
-	 {
+//    if(escena_actual->Id()==id_escena1)
+//	 {
         //Chequear el ladrillo de la puerta
 /*			 Objeto *ladrillo=mundo[escena1]->get_objeto(o_ladrillo);
 			 Objeto *llave=mundo[escena1]->get_objeto(o_cerradura);
@@ -410,8 +454,8 @@ void Manager::actualizar_objetos(){
                          }*/
         //
 			
-    }
-}
+//    }
+//}
 
 //Actualizar salidas del escenario
 void Manager::actualizar_salidas(){
@@ -419,5 +463,5 @@ void Manager::actualizar_salidas(){
 }
 
 void Manager::dibujar(){
-	 escena_actual->pintar();
+	  escena_actual->pintar();
 }

@@ -1,30 +1,31 @@
 
 #ifndef _MANAGER_
 #define _MANAGER_
+
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
 #include <string>
 #include <map>
 #include <list>
+#include <fstream> 
 
 //#include <thread>         // std::this_thread::sleep_for
 //#include <chrono>         // std::chrono::seconds
-
-#include <fstream> 
-
-#include "inventario.h"
+//#include "inventario.h"
 //#include "escenario.h"
-#include "objeto.h"
+//#include "objeto.h"
 #include "jugador.h"
 #include "invocador.h"
-#include "parametros.h"
+//#include "parametros.h"
 
 #include "factory.h"
 #include "game.h"
 
+
 using namespace std;
 using namespace parametros;
+
 
 class Manager{
 //Crea los escenarios, los objetos, el jugador en estado incial.
@@ -74,7 +75,7 @@ class Manager{
 	  string comandos_disponibles;
 	  bool continuar_loop;
 
-	  // user inputs
+	  // user inputs. TODO: Commands and parameters should be stored into a vector
 	  string comando;
 	  string parametro1;
 	  string parametro2;
@@ -97,19 +98,14 @@ class Manager{
 	  Escenario *escena_actual; //puntero al escenario actual
 	  Escenario escena_actual1; //escenario actual
 
-
 	  bool primera_entrada; //para mostrar la imagen del escenario
-
-	  //string nombre;
-	  //string descripcion;
-
 	  Invocador invocador_comandos;	   //gestiona los comandos 
-//	  map<string,ICommand*> mapComandos;
-
 	  Game game;
-
 	  FactoryGame fac;
- 
+
+	  EventsQueue eventsQueue;
+
+//	  EventsQueuet*> eventsQueue;
 }; 
 
 #endif
