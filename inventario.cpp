@@ -36,8 +36,7 @@ bool Inventario::posee_alcanzador(){
 	  map<string,Objeto*>::iterator it;
 	  for(it=objetos_inventario.begin();it!=objetos_inventario.end();it++)
 	  {
-			//			 cout<<it->second->get_alcanzador()<<endl;
-			 if(it->second->get_alcanzador())
+			 if(it->second->get_value<bool>("reacher"))
 					return true;
 	  }
 	  return false;
@@ -48,7 +47,7 @@ Objeto* Inventario::tomar_alcanzador(){
 	  map<string,Objeto*>::iterator it;
 	  for(it=objetos_inventario.begin();it!=objetos_inventario.end();it++)
 	  {
-			 if(it->second->get_alcanzador())
+			 if(it->second->get_value<bool>("reacher"))
 					return it->second;
 	  }
 	  return 0;
@@ -60,7 +59,7 @@ bool Inventario::posee_desatascador(){
 	  map<string,Objeto*>::iterator it;
 	  for(it=objetos_inventario.begin();it!=objetos_inventario.end();it++)
 	  {
-			 if(it->second->get_desatascador())
+			 if(it->second->get_value<bool>("desatascador"))
 					return true;
 	  }
 	  return false;
@@ -70,10 +69,10 @@ Objeto* Inventario::tomar_desatascador(){
 	  map<string,Objeto*>::iterator it;
 	  for(it=objetos_inventario.begin();it!=objetos_inventario.end();it++)
 	  {
-			 if(it->second->get_desatascador())
+			 if(it->second->get_value<bool>("desatascador"))
 					return it->second;
 	  }
-	  return 0;
+	  return NULL;
 }
 
 
