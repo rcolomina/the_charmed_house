@@ -4,7 +4,7 @@
 # http://stackoverflow.com/questions/16221805/why-isnt-make-detecting-changes-in-header-dependencies
 
 CC=g++
-CFLAGS=-g -Wall
+CFLAGS=-g -Wall -std=c++11
 LDFLAGS=-lpthread
 PATH_TINYXML := ./3rdParty/tinyxml
 OBJ_TINYXML := ${PATH_TINYXML}/tinystr.o ${PATH_TINYXML}/tinyxmlerror.o ${PATH_TINYXML}/tinyxml.o ${PATH_TINYXML}/tinyxmlparser.o
@@ -43,7 +43,7 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	@echo "Cleaning objects and executables"
-	rm -f *.o *.gch core $(EXECUTABLE) *_test
+	rm -f *.o *.gch core $(EXECUTABLE) *_test log.out
 
 test: $(TEST)
 	@echo "============="	
@@ -53,14 +53,14 @@ test: $(TEST)
 
 $(TEST):	$(TESTCPP) $(OBJECTSTEST) 
 	@echo "Building Test "
-	$(CC) $@.cpp $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} -I./ -o $@
+	$(CC) $(CFLAGS) $@.cpp $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} -I./ -o $@
 
 factory: factory_test.cpp factory.o objeto.o
-	$(CC) $@_test.cpp factory.o objeto.o $(OBJ_TINYXML) ${INCS} -I./ -o $@_test
+	$(CC) $(CFLAGS) $@_test.cpp factory.o objeto.o $(OBJ_TINYXML) ${INCS} -I./ -o $@_test
 	@echo "Test built ended"
 
 distance: distance_test.cpp distance.o
-	$(CC) $@_test.cpp distance.o -o $@_test
+	$(CC) $(CFLAGS) $@_test.cpp distance.o -o $@_test
 	@echo "Test built ended"
 
 
