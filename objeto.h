@@ -5,99 +5,94 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <queue>
 
 #include "property.h"
 #include "entidad.h"
+#include "parametros.h"
 
+//#define DEBUG
 using namespace std;
 
 class Objeto;
+class IEvent;
 
 typedef Objeto* pItem;
-typedef Property<bool>* pBoolProperty;
+typedef Objeto Item;
+//typedef Property<bool>* pBool;
 
 class Objeto : public Entidad{
 	public:
-	  Objeto();
-	  Objeto(int id,string nombre,string descripcion);
-
+	  Objeto(int id,const string &name,const string& description):
+			 Entidad(id,name,description){}	  
 	  Objeto(const Entidad &ent,
 				vector<string> names,
 				vector<string> descriptions,
-				vector<string> namesProperties,
-				vector<string> valueProperties);
+				vector<pair<string,string> > nameValues,
+				string pathFileText
+			 );	  
+	  Objeto(const Entidad &ent,
+				vector<string> names,
+				vector<string> descriptions,
+				vector<pBool> properties);
 
-	  void usar_sobre(Objeto *objeto);
+	  // This methods allows getting a generic property from this object
+	  template <typename T>
+	  T get_value(const char* pro);
 
+	  //void usar_sobre(pItem objeto);
 	  // void eliminar(Objeto objeto); //si no está no hay nada que quitar
-	  // void incluir_objeto(Objeto *objeto);
+	  // void incluir_objeto(pItem objeto);
 	  // void dejar_objeto();
 
 	  //GETTERS
-	  bool get_usado(){return usado;}
-	  bool get_visible(){return visible;}
-	  bool get_fijo(){return fijo;}
-	  bool get_tirable(){return tirable;}
-	  bool get_atascado(){return atascado;}
-	  bool get_desatascador(){return desatascador;}
-	  bool get_alcanzable(){return alcanzable;}
-	  bool get_alcanzador(){return alcanzador;}
+	  //pBool get_property(const string &name);
 
+	  
 	  //SETTERS
-	  void set_visible(bool estado){visible=estado;}
-	  void set_usado(bool estado){usado=estado;}
-	  void set_fijo(bool estado){fijo=estado;}
+	  void set_value(string prop,bool value);
 	  void set_tirable(Objeto *objeto,string descrip_tirable);
-	  void set_atascado(bool estado){ atascado=estado;}
-	  void set_desatascador(bool estado){ desatascador=estado;}
-	  void set_alcanzable(bool estado){ alcanzable=estado;}
-	  void set_alcanzador(bool estado){ alcanzador=estado;}
 
+//	  void set_event(IEvent *event);
+	  
 	  // Operaciones
 	  void tirar();
 	  void alcanzar();
 	  void insertar();
 
-	private:
 
+	  void insert_event(IEvent* event);
+	  IEvent* activate_event();
+	private:
 	  const vector<string> descriptions;
 	  const vector<string> names;
-
+	  
 	  map<string,pItem> relatedObjects;	  
-	  map<string,pBoolProperty> mapProperties;
 
+	  // storage for booleans properties
+	  map<string,pBool> map_pBools;
+	  map<string,bool> mapBool;
+	  // storage for integer properties
+	  map<string,pInt> map_pInts;
 	  
 //const string nombre_alternativo;
 	  string descripcion_secundaria;
 	  string descripcion_tirar;
-
 	  // Hacer visible y/o alcanzable tras la accion
-	  Objeto *objeto_rel_tirar;
-	  Objeto *objeto_rel_alcanzar;
+	  pItem objeto_rel_tirar;
+	  pItem objeto_rel_alcanzar;
 
 	  // Otra salida tras la accion
 //	  Escenario *escena_rel_abrir;
 //	  Escenario *escena_rel_insertar;
-	  
-	  
-	  // Atributos del objeto
-	  bool fijo;         // True: No es posible cogerlo para el inventario.
-	  bool usado;        // True: Ya no tiene utilidad en el juego.
-	  bool visible;      // True: No es visible a simple vista.
-	  bool visualizador; // True: Permite examinar en detalle.
-	  bool tirable;      // True: Se puede tirar para desbloquearlo.
-	  bool atascado;     // True: Necesita ser desatascado.
-	  bool desatascador; // True: Permite desatascar otros objetos.
-	  bool alcanzable;   // True: Se puede alcanzar facil.
-	  bool alcanzador;   // True: Permite coger objeto no alcanzables
-	  bool movible;      // True: Puede cambiarse de posicion
-	  bool movedor;      // True: Sirve para mover otros objetos
-	  bool abrible;      // True: Permite ser abierto  (id 
-	  bool abridor;      // True: Sirve para abrir.
-	  bool insertable;   // True: Permite ser insertado
 
-	  //list<Objeto*> subscriptores; //los subcriptores estan pendientes de cambios del estado del objeto subscrito
+	  // Path File text
+	  string pathFileText;
+
+	  // Events asociated to this object
+	  queue<IEvent*> eventsToFire;
 };
+
 
 #endif
 
