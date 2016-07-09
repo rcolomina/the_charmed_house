@@ -17,7 +17,7 @@ GAME LOGIC
 GUI:
 -Esqueleto de la lógica se compila enn g++ (futuro en Java).
 
-TODO:
+TODO (potenciales):
 -Migrar a libGDX  (this is a might be)
 -Interface final un touch con acelerómetro.
 -Las imágenes de cada escenario deberían estar en ficheros txt. Así que cada escenario debería cargar su fichero txt correspondiente para que la función pintado pinta el gráfico que le toque. DONE!! 
@@ -25,7 +25,6 @@ TODO:
 -Alternativa: Colocarlos todos en escenario.cpp (chapuza) DISMISS
 -Parece que la clase Jugador no tiene uso de momento.  UNUSEFUL
 
-DIARY
 
 08/06/2016
 -From this point, the English is the languages to be used.
@@ -53,13 +52,11 @@ a logger system. This is covered by logger files.
 -IDEA: Do not forget to use UUID (universal identifiers) for all item's identification. This is the best thing to do in order to not have collisions amount instances.
 
 03/07/2016
-
 -IDEA: Build a whole test functional without interface. This will be a synthetic player writing operation to pass the game chapter after chapter. All the traces could be seen on the logger.
-
 
 07/07/2016
 
--IDEA: When player misspelling a command, the system may suggest the closest one to the user. This could help to the player so far.
+-IDEA: When player make a misspelling for a command, the system may suggest the closest one to the user. This could help to the player so far with commands .
 
 
 
