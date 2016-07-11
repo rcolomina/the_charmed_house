@@ -3,3 +3,5 @@
 *.o
 *~
 miprograma
+*_test
+main
