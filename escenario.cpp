@@ -89,7 +89,7 @@ void Escenario::pintar(){
      fstream fs;
      string fileImagetext=pathFileImageText;
      fs.open(fileImagetext.c_str(),fstream::in);
-     p	  string line;
+     string line;
      if(fs.is_open()){
 	  while(getline(fs,line)){
 	       cout<<line<<endl;
