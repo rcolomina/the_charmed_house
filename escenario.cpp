@@ -140,7 +140,7 @@ string Escenario::get_description(){
      return descripcion;	  
 }
 
-strings Escenario::salidas(){
+string Escenario::salidas(){
      string lista_salidas;
      map<string,pScene> salidas=this->get_salidas();
      for(map<string,pScene>::iterator it=salidas.begin();
