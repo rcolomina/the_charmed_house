@@ -34,11 +34,11 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) $(OBJ_TINYXML) $(LDFLAGS) ${INCS} -o $@
 
 %.o: %.cpp %.h
-	@echo "Generando codigo objeto --> " $< 
+	@echo "Generating object code --> " $< 
 	$(CC) $(CFLAGS) -c ${INCS} $< -o $@ 
 
 %.o: %.cpp
-	@echo "Generando codigo objeto --> " $<
+	@echo "Generating object code --> " $<
 	$(CC) $(CFLAGS) -c ${INCS} $< -o $@ 
 
 clean:
