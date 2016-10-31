@@ -1,0 +1,13 @@
+
+[id][-|X| ]
+
+[001][ ] Misspelling when user make a mistake.
+This functionality will present to user a suggestion of the nearest command existing to the one typed by the user. The implementation will be done using the special distance Levenshtein.
+
+[002][ ] Automatic functional test across the game.
+This is a debug tool that will show quickly all steps over the program done by a synthetic player. It may be interesting how that player will follow automatically the games. This might be the starting point to build and intelligence agent that learn to solve the game.
+
+
+[003][] Big task making all strings parametric.
+This means creating a XML containing all phrases and loaded them from it.
+
