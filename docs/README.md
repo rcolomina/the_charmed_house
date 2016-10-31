@@ -4,15 +4,17 @@ Where nothing is as it seems.
 
 # Introduction
 
-This is an old style convensational game based on CLI command line interface running under Linux OS. The project pretens to be as well a framework that could be be a machine for creating conversational games from text files or configuraiton files. 
+This is an old style convensational game based on command line interface (CLI) running under Linux OS. The project pretens to be a framework for creating conversational games aventures directly from configuration text files. 
 
-The player interacts with the word typing simple phrases formed by verbs and names. It has a simple command line interface: 
+The player may interacts with the word typing simple phrases formed by a single verb followed by one or more names as it is expresed as follow: 
 
 \<command\> \<parameter1\> ... \<parameterN\>. 
 
-Usually, these comands or verbs will accept one parameter or two parameters. Rarelly a command will have three or more parameters, but it has been opened to get the possibility to build a more complex conversational game or framework. 
+Usually, these commands will accept a single command followed by one or more parameters. Rarelly a command will need more than two parameters, but anyway, it has been left opened to get the possibility to the engine to build more complex conversational game.
 
-The world is divided into scenes. A player can navigate throughout the world using cardinal points to get oriented himself. In scenes, there are many objects available that can be used with others objets. All scenes and objects have descriptions that give clues to a player to solve the puzzles that struggle it. This game has an inventario allowing the player to pick up, drop or bring objects between different scenes. Sometimes the game would be a little tricky to solve, but descriptions will help player to avoid be stucked.
+In this engine, the world has been divided on scenes. Once these scenes and its connection are defined, a player could navigate throughout the world using cardinal points. On the scenes, objects can be defined for the scenes, which a player can interat. 
+
+All scenes and objects have its own descriptions, which give clues to a player to solve a proposal puzzle to struggle him. A player hava an inventory allowing the player bringing with him objects. A player can pick up, drop or bring objects between different scenes. Sometimes, if a game may be tricky to solve, if good descriptions have been defined, they will help to the player to avoid be stucked on the game moving forward on it.
 
 The scenes have a mix of text and images that are shown as pure text which have been taken from converting pictures to text. The game presents to a player situations not only described with text, but ilustrated with old style console primitive graphics.
 
