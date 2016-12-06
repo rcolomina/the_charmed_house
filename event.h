@@ -6,22 +6,22 @@
 
 // Event that open a scene connection on a cardinal point
 class EventOpenConnection : public IEvent {
-	public:
-	  // It should have the scene and the coordenate to be open
-	  EventOpenConnection(Escenario *scene,
-								 const std::string cardinal,
-								 const std::string postMessage):
-			 scene(scene),
-			 cardinal(cardinal),
-			 postMessage(postMessage){}
+   public:
+     // It should have the scene and the coordenate to be open
+     EventOpenConnection(Escenario *scene,
+			 const std::string cardinal,
+			 const std::string postMessage):
+	  scene(scene),
+	  cardinal(cardinal),
+	  postMessage(postMessage){}
 			 
-	  const string activate();
-	  const string message();
+     const string activate();
+     const string message();
 
-	private:
-	  Escenario *scene;
-	  const std::string cardinal;
-	  const std::string postMessage;
+   private:
+     Escenario *scene;
+     const std::string cardinal;
+     const std::string postMessage;
 };
 
 #endif
