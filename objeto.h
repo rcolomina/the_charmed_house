@@ -30,7 +30,17 @@ class Objeto : public Entidad{
 	    vector<string> descriptions,
 	    vector<pair<string,string> > nameValues,
 	    string pathFileText
-	  );	  
+	  );
+
+     Objeto(const Entidad &ent,
+	    vector<string> names,
+	    vector<string> descriptions,
+	    vector<pair<string,string> > nameValues,
+	    string pathFileText,
+	    vector<string> oidChildren,
+	    string typeObject
+	  );
+     
      Objeto(const Entidad &ent,
 	    vector<string> names,
 	    vector<string> descriptions,
@@ -74,15 +84,20 @@ class Objeto : public Entidad{
      pItem objeto_rel_tirar;
      pItem objeto_rel_alcanzar;
 
-     // Otra salida tras la accion
-     // Escenario *escena_rel_abrir;
-     // Escenario *escena_rel_insertar;
-
      // Path File text
      string pathFileText;
 
      // Events asociated to this object
      queue<IEvent*> eventsToFire;
+
+     // Father
+     string oidFather;
+     
+     // Children
+     vector<string> oidChildren;
+
+     // Type
+     string typeObject;
 };
 
 
