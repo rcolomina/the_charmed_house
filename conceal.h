@@ -7,43 +7,46 @@
 
 class ConcealItem{
 
-	public:
-	  ConcealItem(pItem visible,pItem hidden,string message):
-			 discovered(false),
-			 active(visible),
-			 visible(visible),
-			 hidden(hidden),
-			 message(message)
-	  {
-	  }
-
-	  ~ConcealItem(){
-	  }
-
-	  pItem ItemActive(){return active;}
-	  	  
-	  string examine(){
-			 return active->examine();
-	  }
-
-	  string discover(){
-			 if(discovered==false){
-					discovered=true;
-					active=hidden;
-					return message;
-			 }
-
-			 string mesg;
-			 mesg.append(active->Name());
-			 return mesg;
-	  }
-
+   public:
+     ConcealItem(pItem visible,pItem hidden,string message):
+	  discovered(false),
+	  active(visible),
+	  visible(visible),
+	  hidden(hidden),
+	  message(message)
+     {
 	  
-  private:
-	  bool discovered;
-	  pItem active;
-	  pItem visible,hidden;
-	  string message;
+     }
+
+     ~ConcealItem()
+     {
+     }
+
+     pItem ItemActive(){
+	  return active;
+     }
+	  	  
+     string examine(){
+	  return active->examine();
+     }
+
+     string discover(){
+	  if(discovered==false){
+	       discovered=true;
+	       active=hidden;
+	       return message;
+	  }
+
+	  string mesg;
+	  mesg.append(active->Name());
+	  return mesg;
+     }
+	  
+   private:
+     bool discovered;
+     pItem active;
+     pItem visible,hidden;
+     string message;
 
 };
 
