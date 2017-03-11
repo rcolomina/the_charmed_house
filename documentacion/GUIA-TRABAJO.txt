@@ -59,6 +59,15 @@ a logger system. This is covered by logger files.
 -IDEA: When player make a misspelling for a command, the system may suggest the closest one to the user. This could help to the player so far with commands .
 
 
+21/07/2016
+It can be useful use XML to define a list string values, as follow
+
+    <FieldValue>
+      <Field xlink:title="aivpFullAddrList"/>
+      <Value xsi:type="Types:StringValue">
+                <Value>em1,em2,em3,mkernel,raid,oat1,oat2,Workstation,crt</Value>
+      </Value>
+    </FieldValue>
 
 
 
