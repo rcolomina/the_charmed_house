@@ -24,7 +24,8 @@ Escenario::Escenario(const Entidad &ent,const string &observacion,const string &
 {	  
 }
 
-pScene Escenario::conexion(cardinal car){
+pScene Escenario::conexion(cardinal car)
+{
      if(conexions[car]!=NULL)
 	  return conexions[car];
      return NULL;
@@ -89,7 +90,7 @@ void Escenario::pintar(){
      fstream fs;
      string fileImagetext=pathFileImageText;
      fs.open(fileImagetext.c_str(),fstream::in);
-     p	  string line;
+     string line;
      if(fs.is_open()){
 	  while(getline(fs,line)){
 	       cout<<line<<endl;
@@ -140,7 +141,7 @@ string Escenario::get_description(){
      return descripcion;	  
 }
 
-strings Escenario::salidas(){
+string Escenario::salidas(){
      string lista_salidas;
      map<string,pScene> salidas=this->get_salidas();
      for(map<string,pScene>::iterator it=salidas.begin();
