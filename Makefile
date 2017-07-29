@@ -25,13 +25,16 @@ OBJECTSTEST := $(SOURCETEST:.cpp=.o)
 all: $(EXECUTABLE)
 	@echo "End of compilation and program link"
 
-$(EXECUTABLE): $(OBJECTS)
+$(EXECUTABLE): $(OBJECTS) $(OBJ_TINYXML)
 	@echo "================"
 	@echo "Linking objects "
 	@echo "================"	
 	@echo "OBJECT LIST = " $(OBJECTS)
 	@echo "EXECUTABLE NAME = " $(EXECUTABLE)
 	$(CC) $(OBJECTS) $(OBJ_TINYXML) $(LDFLAGS) ${INCS} -o $@
+
+$(OBJ_TINYXML):
+	cd 3rdParty/tinyxml && make
 
 %.o: %.cpp %.h
 	@echo "Generating object code --> " $< 
@@ -44,6 +47,7 @@ $(EXECUTABLE): $(OBJECTS)
 clean:
 	@echo "Cleaning objects and executables"
 	rm -f *.o *.gch core $(EXECUTABLE) *_test log.out
+	cd 3rdParty/tinyxml && make clean
 
 test: $(TEST)
 	@echo "============="	
@@ -54,6 +58,8 @@ test: $(TEST)
 $(TEST):	$(TESTCPP) $(OBJECTSTEST) 
 	@echo "Building Test "
 	$(CC) $(CFLAGS) $@.cpp $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} -I./ -o $@
+
+
 
 factory: factory_test.cpp factory.o objeto.o
 	$(CC) $(CFLAGS) $@_test.cpp factory.o objeto.o $(OBJ_TINYXML) ${INCS} -I./ -o $@_test
