@@ -91,16 +91,14 @@ int main(int argc,char **n_args){
 
 void *main_thread( void *ptr )
 {
-	  Manager *manager;
-	  manager = (Manager *) ptr;
+	  Manager *manager = (Manager *) ptr;
 	  manager->run();
 	  return 0;
 }
 
 void *events_thread( void *ptr )
 {
-	  Manager *manager;
-	  manager = (Manager *) ptr;
+	  Manager *manager = (Manager *) ptr;
 	  manager->clock();
 	  return 0;
 }
