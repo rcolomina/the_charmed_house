@@ -5,8 +5,8 @@
 
 #include "operaciones.h"
 
-// This class gathering all commands existing in game by a string command key
-// An exection method determine wheter the command exist or not.
+// This class gathers all existing commands in game by a string command key
+// Exxection method determines wheter the command exist or not.
 class Invocador{
 	public:
 	  Invocador(){}
