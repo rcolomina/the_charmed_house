@@ -11,9 +11,9 @@ class Invocador{
 	public:
 	  Invocador(){}
 	  Invocador(map<string,ICommand*> mapComandos):
-			 mapComandos(mapComandos){}
+	  mapComandos(mapComandos){}
 
-	  void exec(string commandKey);    
+	  void exec(string commandKey,string parametro1,string parametro2);    
  
 	private:
 	   map<string,ICommand*> mapComandos;
