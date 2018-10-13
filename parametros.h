@@ -89,23 +89,22 @@ const map<string,pair<string,TYPE_VAR> >  listDefaultProperties =
      static const string pulsar="pulsar";
 	  
      static const string comandos[NUMBER_COMMANDS]={s_exit,
-					     s_salir,
-					     s_examinar,
-					     s_ver,
-					     s_inventario, 
-					     s_salidas,
-					     s_norte,
-					     s_sur,
-					     s_este,
-					     s_oeste,
-					     s_tiempo,
-					     s_tirar,
-					     s_alcanzar,
-					     s_colocar};
+						    s_salir,
+						    s_examinar,
+						    s_ver,
+						    s_inventario, 
+						    s_salidas,
+						    s_norte,
+						    s_sur,
+						    s_este,
+						    s_oeste,
+						    s_tiempo,
+						    s_tirar,
+						    s_alcanzar,
+						    s_colocar};
 
 
-     enum cardinal{
-	  north, northwest,west,southwest, south, southeast, east,northeast};
+     enum cardinal{north, northwest,west,southwest, south, southeast, east,northeast};
 			 
 
      static const string tituloPreludio="PRELUDIO:";
@@ -115,9 +114,7 @@ const map<string,pair<string,TYPE_VAR> >  listDefaultProperties =
      static const string nombre3="Cementerio"; 
 	  
      //DESCRIPCIONES ESCENARIOS: TODO ¿Cómo organizar las descripciones y observaciones de un escenario?
-
      // static const int id_escena1=1;
-
      // static const string tituloPreludio="PRELUDIO:";
 
      static const string textoPreludio1="En un pueblo lejos de la ciudad, había una casa ruinosa y antigua desde que tengo ojos para ver. Como aventurero que soy, he tenido en mente explorarla en todo momento, pero nunca me he atrevido. Existen carteles prohibiendo el paso en sus alrededores. Quien quiera que sea el dueño, desea que los intrusos permanezcan lejos.";
