@@ -23,9 +23,10 @@ class FactoryGame{
 	public:
 	  FactoryGame(string xmlGameSpecifications);
 
-	  pGame buildGameById(string gameId);
+	  pScene buildGameById(string gameId);
 	  pScene buildScenarioById(string scenarioId);
 	  pItem buildItemById(string itemId);
+
 	  
 	private:
 	  
