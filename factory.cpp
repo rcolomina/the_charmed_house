@@ -12,6 +12,92 @@ FactoryGame::FactoryGame(string xmlGameSpecifications)
      }
 }
 
+pScene FactoryGame::buildGameById(string gameId){
+
+
+     //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero
+     // TODO: Build automatically all these objects running over its ids.
+     pScene esc1 = this->buildScenarioById("game.scenes.scene.sce001");
+     pScene esc2 = this->buildScenarioById("game.scenes.scene.sce002");
+     pScene esc3 = this->buildScenarioById("game.scenes.scene.sce003");
+     pScene esc4 = this->buildScenarioById("game.scenes.scene.sce004");
+     pScene esc5 = this->buildScenarioById("game.scenes.scene.sce005");
+     pScene esc6 = this->buildScenarioById("game.scenes.scene.sce006");
+	  
+     //CONSTRUIR OBJETOS
+     // TODO: Build automatically all these objects running over its ids.	  
+     pItem o_baston    = this->buildItemById("game.items.item.item01");
+     pItem o_ladrillo  = this->buildItemById("game.items.item.item02");
+     pItem o_cerradura = this->buildItemById("game.items.item.item03");
+     pItem o_palanca   = this->buildItemById("game.items.item.item04");
+     pItem o_figurita  = this->buildItemById("game.items.item.item05");
+     pItem o_hueco     = this->buildItemById("game.items.item.item06");
+
+     // Events on objects
+     IEvent *eventOpenConnection1 = new EventOpenConnection(esc5,
+							    s_oeste,
+							    postMessageActivationToEventOpenConnection1);
+
+     o_hueco->insert_event(eventOpenConnection1);
+
+//Continuar con el bucle principal del juego
+//	  continuar_loop=true;
+//   configurar reloj
+//	  tiempo=0; //segundos	  
+//   variables del jugador
+//	  contador_mal_comportamiento=0;
+  	 	  	  	 
+
+     //insertar escenario en mundo
+/*    mundo[nombre1]=esc1;
+      mundo[nombre2]=esc2;
+      mundo[nombre3]=esc3;
+      mundo[nombre4]=esc4;*/
+	 
+     // Enlaces entre escenas
+     //Id: 1->[2(o),3(e)] ,2->[1(e),4(i)), 3->[1(o)], 4->[2(e)]
+     connect(esc1,west,esc2,east);
+     connect(esc1,east,esc3,west);
+     connect(esc2,west,esc4,east);
+
+	 
+     esc1->set_salida(esc2,oeste,true);	 
+     esc2->set_salida(esc1,este,true);
+		  
+     esc1->set_salida(esc3,este,true);
+     esc3->set_salida(esc1,oeste,true);
+	 
+     esc2->set_salida(esc4,oeste,true);
+     esc4->set_salida(esc2,este,true);
+
+     esc4->set_salida(esc5,oeste,true);
+     esc5->set_salida(esc4,este,true);
+
+     esc5->set_salida(esc6,oeste,false);
+     esc6->set_salida(esc5,este,true);
+
+     //RELACIONAR OBJETOS
+     // Ladrillo con llave
+     string descrip_tirar_ladrillo="Tiras con fuerza del ladrillo de la pared, y parece que comienza a ceder. Una vez sacado el ladrillo, tras el, aparece una cerradura escondida.";
+     o_ladrillo->set_tirable(o_cerradura,descrip_tirar_ladrillo);
+
+     //o_hueco->subscribed(
+	 
+     //INSERTAR OBJETOS EN ESCENARIOS
+     esc1->set_objeto(o_ladrillo);
+     esc1->set_objeto(o_cerradura);
+     esc2->set_objeto(o_baston);
+     esc3->set_objeto(o_figurita);
+     esc4->set_objeto(o_palanca);
+     esc5->set_objeto(o_hueco);
+     //CONSTRUIR INVENTARIO
+     //inventario.insertar_objeto(objeto);
+
+     
+          // Setear la escena de comienzo del juego
+     return esc1;
+}
+
 vector<string> FactoryGame::getNameListFromNode(pNode parent){
 
      vector<string> output;
