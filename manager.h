@@ -39,7 +39,6 @@ class Manager{
 	  void run();
 	  void update();
 	  void dibujar();
-     void tratamiento_comandos(string comando);
 
 	  void prologo();
 
@@ -79,9 +78,9 @@ class Manager{
 	  string comando;
 	  string parametro1;
 	  string parametro2;
-	  string parametro3;
+	  //string parametro3;
 	  vector<string> v_parameters;
-	  vector<string> v_comandos;
+	  //vector<string> v_comandos;
 
 	  //TODO: Construir escenarios y objetos del mundo
 	  map<string,Escenario*> mundo;
@@ -98,10 +97,9 @@ class Manager{
 	  Escenario *escena_actual; //puntero al escenario actual
 	  Escenario escena_actual1; //escenario actual
 
-	  bool primera_entrada; //para mostrar la imagen del escenario
+	  bool primera_entrada;   //para mostrar la imagen del escenario une vez
 	  Invocador invocador_comandos;	   //gestiona los comandos 
 	  Game game;
-	  FactoryGame fac;
 
 	  EventsQueue eventsQueue;
 
