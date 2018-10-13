@@ -41,10 +41,6 @@ int main(){
     item=fac.buildItemById(prefix.append(postfix));
     cout<<"lock:"<<item->get_value<bool>("lock")<<endl;	  
     cout<<"code:"<<item->get_value<int>("code")<<endl;
-
-
-
-
 	  
     cout<<"--------------------------------"<<endl;
 
@@ -58,6 +54,18 @@ int main(){
     cout<<"Scenario Description:"<<scene->examine()<<endl;
     cout<<"Scenario Observation:"<<scene->get_observacion()<<endl;
     cout<<"Scenario Path File:"<<scene->get_path_image()<<endl;
-	  
+
+
+    cout<<"Building Game by Id"<<endl;
+    scene = fac.buildGameById("idgame");
+
+    cout<<"Scenario Id:"<<scene->sId()<<endl;
+    cout<<"Scenario Name:"<<scene->Name()<<endl;
+    cout<<"Scenario Description:"<<scene->examine()<<endl;
+    cout<<"Scenario Observation:"<<scene->get_observacion()<<endl;
+    cout<<"Scenario Path File:"<<scene->get_path_image()<<endl;
+
+
+    
 }
  
