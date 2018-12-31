@@ -1,4 +1,4 @@
-# Fuentes: 
+# Docs:
 # http://mrbook.org/blog/tutorials/make/
 # http://arco.esi.uclm.es/~david.villa/pensar_en_C++/vol1/ch03s11s03.html
 # http://stackoverflow.com/questions/16221805/why-isnt-make-detecting-changes-in-header-dependencies
@@ -29,7 +29,8 @@ $(EXECUTABLE): $(OBJECTS) $(OBJ_TINYXML)
 	@echo "================"
 	@echo "Linking objects "
 	@echo "================"	
-	@echo "OBJECT LIST = " $(OBJECTS)
+	@echo "OBJECTS LIST = " $(OBJECTS)
+	@echo "OBJECTS TINYXML = " $(OBJ_TINYXML)
 	@echo "EXECUTABLE NAME = " $(EXECUTABLE)
 	$(CC) $(OBJECTS) $(OBJ_TINYXML) $(LDFLAGS) ${INCS} -o $@
 
@@ -47,18 +48,21 @@ $(OBJ_TINYXML):
 clean:
 	@echo "Cleaning objects and executables"
 	rm -f *.o *.gch core $(EXECUTABLE) *_test log.out
+
+cleanall:
+	@echo "Cleaning objects and executables and 3rd parties"
+	rm -f *.o *.gch core $(EXECUTABLE) *_test log.out
 	cd 3rdParty/tinyxml && make clean
 
-test: $(TEST)
+test: $(OBJECTSTEST) $(TESTCPP) $(TEST)
 	@echo "============="	
 	@echo "TESTCPP = " $(TESTCPP)
 	@echo "LIST GENERATED: TEST = " $(TEST)
 	@echo "Test built ended"
 
-$(TEST):	$(TESTCPP) $(OBJECTSTEST) 
+$(TEST): $(OBJECTSTEST) $(TESTCPP) 
 	@echo "Building Test "
 	$(CC) $(CFLAGS) $@.cpp $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} -I./ -o $@
-
 
 
 factory: factory_test.cpp factory.o objeto.o
@@ -69,8 +73,9 @@ distance: distance_test.cpp distance.o
 	$(CC) $(CFLAGS) $@_test.cpp distance.o -o $@_test
 	@echo "Test built ended"
 
+invocador: invocador_test.cpp invocador.o objecto.o
+	$(CC) $(CFLAGS) $@.cpp abstract_creator.o activador.o colormod.o conceal.o distance.o entidad.o escenario.o event.o eventsqueue.o factory.o game.o ICommand.o ievent.o inventario.o invocador.o item_creator.o jugador.o logger.o manager.o objeto.o operaciones.o parametros.o property.o $(OBJ_TINYXML) ${INCS} -I./ -o $@_test
+	@echo "Test built ended"
 
 
-
-
-
+#g++ -g -Wall -std=c++11 invocador_test.cpp abstract_creator.o activador.o colormod.o conceal.o distance.o entidad.o escenario.o event.o eventsqueue.o factory.o game.o ICommand.o ievent.o inventario.o invocador.o item_creator.o jugador.o logger.o manager.o objeto.o operaciones.o parametros.o property.o     ./3rdParty/tinyxml/tinystr.o ./3rdParty/tinyxml/tinyxmlerror.o ./3rdParty/tinyxml/tinyxml.o ./3rdParty/tinyxml/tinyxmlparser.o -I./3rdParty/tinyxml -I./ -o invocador_test
