@@ -2,21 +2,26 @@
 #define _INVOCADOR_
 
 #include <map>
-
 #include "operaciones.h"
 
 // This class gathers all existing commands in game by a string command key
-// Exxection method determines wheter the command exist or not.
+// Exection method determines wheter the command exist or not.
 class Invocador{
-	public:
-	  Invocador(){}
-	  Invocador(map<string,ICommand*> mapComandos):
-	  mapComandos(mapComandos){}
+public:
+    Invocador(){}
+    Invocador(map<string,ICommand*> mapCommands):
+        mapCommands(mapCommands){}
 
-	  void exec(string commandKey,string parametro1,string parametro2);    
- 
-	private:
-	   map<string,ICommand*> mapComandos;
+    int exec(string commandKey,string parametro1,string parametro2);    
+    
+    list<string> get_commands(){
+        list<string> keysCommands;
+        // TODO; run keys of map of commands        
+        return keysCommands;
+    }
+    
+private:
+    map<string,ICommand*> mapCommands;
 };
 
 #endif
