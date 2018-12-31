@@ -14,7 +14,6 @@ FactoryGame::FactoryGame(string xmlGameSpecifications)
 
 pScene FactoryGame::buildGameById(string gameId){
 
-
      //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero
      // TODO: Build automatically all these objects running over its ids.
      pScene esc1 = this->buildScenarioById("game.scenes.scene.sce001");
