@@ -57,10 +57,10 @@ int main(int argc,char **n_args){
 	  Manager *manager=new Manager();
 
 	  pthread_create(&thread1, NULL, main_thread, (void*)manager);  //inteface de usuario
-	  pthread_create(&thread2, NULL, events_thread, (void*)manager);    //eventos del juego
+	  //pthread_create(&thread2, NULL, events_thread, (void*)manager);    //eventos del juego
 	  
 	  pthread_join( thread1, NULL); //espera haeeesta que acabe el hilo 1
-	  pthread_join( thread2, NULL); //espera hasta que acabe el hilo 2
+	  //pthread_join( thread2, NULL); //espera hasta que acabe el hilo 2
 
 	  //Trying to save manager object.
 /*	  std::ofstream file("./saved.bin");
