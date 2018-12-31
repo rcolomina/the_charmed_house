@@ -24,6 +24,12 @@ void Ayuda::execute(){
 
 void Ver::execute(){
 
+    Logger::instance().log("Entering into Ver::execute() method ", Logger::kLogLevelInfo);
+
+    cout<<"escenario actual address: "<<escena_actual<<endl;
+    //cout<<escena_actual->
+        
+        
      string descripcion=(*escena_actual)->examine();
      descripcion+="\n";
      if((*escena_actual)->get_objetos_disponibles()!="")
@@ -56,14 +62,17 @@ void CommandInventario::execute(){
 
 
 void Cardinal::execute(){
-
-     //Logger::instance().log("Entering into Cardinal::execute() method ", Logger::kLogLevelInfo);
+    //cout<<"existeSalida "<<existeSalida<<endl;
+     Logger::instance().log("Entering into Cardinal::execute() method ", Logger::kLogLevelInfo);
 	  
      pScene psce=*escena_actual;
-	  
+     
+
+     
      bool existeSalida=(psce->get_salida(cardinal)!=NULL);
      bool estadoSalida=psce->get_estado_salida(cardinal);
-	  	  
+
+
      if(existeSalida and estadoSalida)
      {			
 	  *escena_actual = (*escena_actual)->get_salida(cardinal);
@@ -338,3 +347,9 @@ void Colocar::execute(){
 	  }
      }
 }
+
+
+
+
+
+
