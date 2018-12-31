@@ -103,6 +103,7 @@ class Manager{
 
 	  EventsQueue eventsQueue;
 
+	  FactoryGame fac;
 //	  EventsQueuet*> eventsQueue;
 }; 
 

@@ -1,33 +1,66 @@
 #include "manager.h"
 #include "logger.h"
+#include "operaciones.h"
 
 using namespace parametros;
 
 const double freq=1.0/60.0; 
+
 Manager::Manager():dt(freq),
                    tiempo(0),
                    continuar_loop(true),
                    contador_mal_comportamiento(0),
 		   fac("gamesInfo.xml")
-{	  
-	 
-     string gameId="";
+{
+    string gameId="";
+    //scene using id
+    escena_actual = fac.buildGameById(gameId);
+    cout<<"manager() escena_actual address: "<<escena_actual<<endl;
+     
+    //CommandBuilder *commandBuilder    = new CommandBuilder();
+    //map<string,ICommand*> mapComandos = commandBuilder->buildCommands(continuar_loop,
+    //                                                                  escena_actual,
+    //                                                                  inventario,
+    //                                                                  parametro1,
+    //                                                                  parametro2,
+    //                                                                  primera_entrada,
+    //                                                                  eventsQueue);
+     
+    //Construir los comandos y conectarlos al invocador
+    string comandos_disponibles="Comandos disponibles: ";
+    vector<string> v_comandos;
+    for(int i=0;i<NUMBER_COMMANDS;++i)
+        v_comandos.push_back(comandos[i]);
 
-     // Build game scene using id
-     escena_actual = fac.buildGameById(gameId);
-     
-     // Build Map of commands
-     CommandBuilder *commandBuilder = new CommandBuilder();
-     mapComandos = commandBuilder.buildCommands(continuar_loop,
-						escena_actual,
-						inventario,
-						parametro1,
-						parametro2,
-						primera_entrada,
-						eventsQueue);
-     
-     // Build command trigger
-     invocador_comandos=Invocador(mapComandos);
+    list<ICommand*> mycommands;
+    
+    mycommands.push_back(new Exit(continuar_loop));
+    mycommands.push_back(new Ayuda(v_comandos));
+    mycommands.push_back(new Ver(&escena_actual));
+    mycommands.push_back(new Examinar(&escena_actual,inventario,parametro1));
+    mycommands.push_back(new CommandInventario(inventario));
+    mycommands.push_back(new Cardinal(&escena_actual,s_norte,primera_entrada));
+    mycommands.push_back(new Cardinal(&escena_actual,s_sur,primera_entrada));
+    mycommands.push_back(new Cardinal(&escena_actual,s_oeste,primera_entrada));
+    mycommands.push_back(new Cardinal(&escena_actual,s_este,primera_entrada));
+    mycommands.push_back(new Tirar(&escena_actual,inventario,parametro1,parametro2));
+    mycommands.push_back(new Coger(&escena_actual,inventario,parametro1));
+    mycommands.push_back(new Dejar(&escena_actual,inventario,parametro1));
+    mycommands.push_back(new Alcanzar(&escena_actual,inventario,parametro1));
+    mycommands.push_back(new Colocar(&escena_actual,inventario,eventsQueue,parametro1,parametro2));    
+    
+    map<string,ICommand*> mapComandos; // = new map<string,ICommand*>;
+
+    for(auto it=mycommands.begin();
+        it!=mycommands.end();
+        ++it){
+        string key=(*it)->get_command_id();
+        mapComandos[key]=*it;
+        //cout<<"Added key "<<key<<endl;
+    }
+    
+    // Build command trigger
+    invocador_comandos = Invocador(mapComandos);
 	 
 }
 
@@ -50,7 +83,9 @@ void Manager::prologo(){
      sleep(2);
 
      my_string=textoPreludio2;
-     for(my_iter = my_string.begin(); my_iter != my_string.end(); my_iter++)
+     for(my_iter = my_string.begin();
+         my_iter != my_string.end();
+         my_iter++)
      {
 	  usleep(50000);
 	  cout<<*my_iter<<flush;
@@ -69,13 +104,12 @@ void Manager::run(){
      //Marcar la primera entrada al metodo
      primera_entrada=true;
 
-//	 prologo();
-
      while(continuar_loop){
 
 	  ///DIBUJAR ESCENARIO///
 	  if(primera_entrada)
 	  {
+              //prologo();
 	       cout<<endl;
 	       dibujar();
 	       cout<<endl;
@@ -169,7 +203,7 @@ string Manager::get_descripcion_estado_actual(){
      return descripcion;
 }
 
-string Manager::get_salidas_estado_actual(){
+/*string Manager::get_salidas_estado_actual(){
 	  
      string lista_salidas;
 
@@ -184,7 +218,7 @@ string Manager::get_salidas_estado_actual(){
 	  lista_salidas+=" ";
      }
      return lista_salidas;
-}
+}*/
 
 
 void Manager::clock(){
@@ -251,5 +285,5 @@ void Manager::actualizar_salidas(){
 }
 
 void Manager::dibujar(){
-     escena_actual->pintar();
+    escena_actual->pintar();
 }
