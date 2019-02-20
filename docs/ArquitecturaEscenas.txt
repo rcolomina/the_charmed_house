@@ -1,9 +1,9 @@
-					 ||------------------||
-					 ||------------------||
-					 ||						||				
-					 ||   CAPITULO 1		||
-  	  	  	  	  	 ||------------------||
- 	  	  	  	  	 ||------------------||
+||------------------||
+||------------------||
+||     		    ||				
+||   CAPITULO 1     ||
+||------------------||
+||------------------||
  					 				 					  		 
 ARC Arco de arboles			 
 	 Palanca o palanqueta no alcanzable
@@ -52,19 +52,11 @@ LAB Laberinto
 	 <entrar> <derecha>		 
 	 			 Revela entrada a segundo capitulo
 					  				 
-Map first chapter		 
-     							  	  	  	  	  	 
-      											 
-  	  	  	  	  	  								 
-					  								 
+Map first chapter		      							  	  	  	  	  	 
 		 CEL ----- LAG ----- ARC ----- MPI ---- FAC ---- CEM
-  	  	 			  							           |  	  	  	  	  	  	  	 
-				  	  	  	  	  	  	  	  	           | 
-  	  	  	  	  	  	  	  	  	  	  	  	           |  	  																  
-  	  	  	  	  	  	  	  	  	  	  	  	 	 
-					  							          LAB
-				 N	  							  	 
-				  	  	  	  	  			  	  	 
+LAB
+ N	  							  	 
+	  	  	  			  	  	 
 				 |	  								 
 				 |	  								 
 		  w ------- E				 

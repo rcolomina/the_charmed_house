@@ -69,7 +69,6 @@ It can be useful use XML to define a list string values, as follow
       </Value>
     </FieldValue>
 
-
 20/02/2018
 Tabbing source code using emacs.
 
