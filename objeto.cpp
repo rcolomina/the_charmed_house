@@ -83,50 +83,50 @@ U Objeto::get_value(const char* pro){
 template<>
 bool Objeto::get_value<bool>(const char* pro)
 {			 
-     pBool pb=map_pBools[string(pro)];
-     bool value=false; // TODO: Return false value by default 
-     if(pb!=NULL)
-     {
-	  value=pb->Value();
-     }
+    pBool pb=map_pBools[string(pro)];
+    bool value=false; // TODO: Return false value by default 
+    if(pb!=NULL)
+    {
+        value=pb->Value();
+    }
 #ifdef _DEBUG
-     cout<<"get_value:"<<pro<<" valueProp:"<<value<<endl;
-     cout<<"get_value:"<<pro<<" valueBool:"<<mapBool[string(pro)]<<endl;
+    cout<<"get_value:"<<pro<<" valueProp:"<<value<<endl;
+    cout<<"get_value:"<<pro<<" valueBool:"<<mapBool[string(pro)]<<endl;
 #endif			 
-     return value;
+    return value;
 }
 
 
 template<>
 int Objeto::get_value<int>(const char* pro)
 {			 
-     pInt pI=map_pInts[string(pro)];
-     int value=0; 
-     if(pI!=NULL)
-     {
-	  value=pI->Value();
-     }
+    pInt pI=map_pInts[string(pro)];
+    int value=0; 
+    if(pI!=NULL)
+    {
+        value=pI->Value();
+    }
 #ifdef _DEBUG
-     cout<<"get_value:"<<pro<<" valueProp:"<<value<<endl;
-     cout<<"get_value:"<<pro<<" valueInts:"<<map_pInts[string(pro)]<<endl;
+    cout<<"get_value:"<<pro<<" valueProp:"<<value<<endl;
+    cout<<"get_value:"<<pro<<" valueInts:"<<map_pInts[string(pro)]<<endl;
 #endif			 
-     return value;
+    return value;
 }
 
 
 void Objeto::insert_event(IEvent *event)
 {
-     eventsToFire.push(event);
+    eventsToFire.push(event);
 }
 
 
 IEvent* Objeto::activate_event()
 {
-     if(!eventsToFire.empty())
-     {
-	  IEvent *event=eventsToFire.front();
-	  eventsToFire.pop();
-	  return event;					
-     }
-     return NULL;
+    if(!eventsToFire.empty())
+    {
+        IEvent *event=eventsToFire.front();
+        eventsToFire.pop();
+        return event;					
+    }
+    return NULL;
 }

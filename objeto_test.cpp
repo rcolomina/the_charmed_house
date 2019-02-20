@@ -44,7 +44,6 @@ int main(){
 	  
     Objeto item(entity,names,descr,props,fileNameText);
 
-
     cout<<"TESTING GET VALUE METHOD "<<endl;
     cout<<"Is "<<item.Name()<<" visible? : "<<"get_value<bool>(\"visibility\") is " <<item.get_value<bool>("visibility")<<endl;
     assert(item.get_value<bool>("visibility")==true);
@@ -62,9 +61,7 @@ int main(){
     assert(item.get_value<bool>("reacher")==true);
     cout<<"Test PASS"<<endl;
 
-
     cout<<"TESTING RELATED OBJECTS"<<endl;
-
 
     Entidad ent2(2,"hidden","hidden object");
     Objeto item2(ent2,names,descr,props,fileNameText);
@@ -74,8 +71,7 @@ int main(){
 
     cout<<"We attach item2 to item as a hidden object"<<endl;
     item.set_tirable(&item2,"A hidden object appears");
-    
-	  
+    	  
     cout<<"Exec the action 'tirar' of item"<<endl;
     item.tirar();
 

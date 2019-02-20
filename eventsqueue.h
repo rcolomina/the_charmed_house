@@ -6,13 +6,13 @@
 #include <queue>
 
 class EventsQueue {
-	public:
-	  EventsQueue(){}
+public:
+    EventsQueue(){}
 
-	  void push(IEvent *event);
-	  void fire();
-	private:
-	  std::queue<IEvent*> eventsQueue;
+    void push(IEvent *event);
+    void fire();
+private:
+    std::queue<IEvent*> eventsQueue;
 };
 
 #endif
