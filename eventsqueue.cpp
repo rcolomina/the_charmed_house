@@ -5,16 +5,16 @@
 
 void EventsQueue::push(IEvent *event)
 {
-	  eventsQueue.push(event);	 
+    eventsQueue.push(event);	 
 }
 
 void EventsQueue::fire(){
-	  if(!eventsQueue.empty())
-	  {
-			 IEvent *event=eventsQueue.front();
-			 assert(event!=NULL);
+    if(!eventsQueue.empty())
+    {
+        IEvent *event=eventsQueue.front();
+        assert(event!=NULL);
 //			 cout<<event->message()<<endl;
-			 cout<<event->activate()<<std::endl;
-			 eventsQueue.pop();
-	  }	  
+        cout<<event->activate()<<std::endl;
+        eventsQueue.pop();
+    }	  
 }

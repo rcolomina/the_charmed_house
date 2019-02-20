@@ -60,188 +60,188 @@ Manager::Manager():dt(freq),
     }
     
     // Build command trigger
-    invocador_comandos = Invocador(mapComandos);
+    this->invocador_comandos = Invocador(mapComandos);
 	 
 }
 
 void Manager::prologo(){
 
-     // TODO: Get data from sceneario object	  
-     cout<<endl<<"¡BIENVENIDO QUERIDO JUGADOR! \n\nLA CASA ENCANTADA v1.0"<<endl<<endl;
-     cout<<tituloPreludio<<endl;
+    // TODO: Get data from sceneario object	  
+    cout<<endl<<"¡BIENVENIDO QUERIDO JUGADOR! \n\nLA CASA ENCANTADA v1.0"<<endl<<endl;
+    cout<<tituloPreludio<<endl;
 
-     string my_string=textoPreludio1;
-     string::iterator my_iter;
-     for(my_iter = my_string.begin(); my_iter != my_string.end(); my_iter++)
-     {
-	  usleep(50000);
-	  cout<<*my_iter<<flush;
-     }
+    string my_string=textoPreludio1;
+    string::iterator my_iter;
+    for(my_iter = my_string.begin(); my_iter != my_string.end(); my_iter++)
+    {
+        usleep(50000);
+        cout<<*my_iter<<flush;
+    }
 
-     cout<<endl;
+    cout<<endl;
 //	  cout<<textoPreludio1<<endl;
-     sleep(2);
+    sleep(2);
 
-     my_string=textoPreludio2;
-     for(my_iter = my_string.begin();
-         my_iter != my_string.end();
-         my_iter++)
-     {
-	  usleep(50000);
-	  cout<<*my_iter<<flush;
-     }
+    my_string=textoPreludio2;
+    for(my_iter = my_string.begin();
+        my_iter != my_string.end();
+        my_iter++)
+    {
+        usleep(50000);
+        cout<<*my_iter<<flush;
+    }
 	  
-     sleep(3);
-     cout<<endl;
-     cout<<textoComienzo<<endl;
-     cout<<endl;
-     sleep(4);
+    sleep(3);
+    cout<<endl;
+    cout<<textoComienzo<<endl;
+    cout<<endl;
+    sleep(4);
 
 }
 
 void Manager::run(){
 
-     //Marcar la primera entrada al metodo
-     primera_entrada=true;
+    //Marcar la primera entrada al metodo
+    primera_entrada=true;
 
-     while(continuar_loop){
+    while(continuar_loop){
 
-	  ///DIBUJAR ESCENARIO///
-	  if(primera_entrada)
-	  {
-              //prologo();
-	       cout<<endl;
-	       dibujar();
-	       cout<<endl;
-	       cout<<get_descripcion_estado_actual()<<endl;
-	       primera_entrada=false;
-	  }
+        ///DIBUJAR ESCENARIO///
+        if(primera_entrada)
+        {
+            //prologo();
+            cout<<endl;
+            dibujar();
+            cout<<endl;
+            cout<<get_descripcion_estado_actual()<<endl;
+            primera_entrada=false;
+        }
 
-	  ///RECOGIDA DE COMMANDOS CONSOLA///
+        ///RECOGIDA DE COMMANDOS CONSOLA///
 //	     cout<<"[Escena: "<<escena_actual->get_nombre()<<"]"
 //				  <<"[Objetos: "<<escena_actual->get_objetos_disponibles()<<"]"
 //				  <<"[Salidas: "<<escena_actual->
 //				  <<endl<<">>>";
 
-	  cout<<">>>";
+        cout<<">>>";
 
-	  //EXTRACCION DEL COMANDOS Y LOS PARAMETROS
-	  string entrada_consola;
-	  getline(cin,entrada_consola);
-	  //cout<<"Se ha introducido: "<<comando;
-	  list<string> lista_comandos;
-	  istringstream iss(entrada_consola);
-	  do{string sub;
-	       iss >> sub;
-	       //					  cout<< "Substring: " << sub << endl;
-	       lista_comandos.push_back(sub);
-	  }while(iss);
+        //EXTRACCION DEL COMANDOS Y LOS PARAMETROS
+        string entrada_consola;
+        getline(cin,entrada_consola);
+        //cout<<"Se ha introducido: "<<comando;
+        list<string> lista_comandos;
+        istringstream iss(entrada_consola);
+        do{string sub;
+            iss >> sub;
+            //					  cout<< "Substring: " << sub << endl;
+            lista_comandos.push_back(sub);
+        }while(iss);
 
-	  if(!lista_comandos.empty()){
-	       comando=lista_comandos.front();
-	       lista_comandos.pop_front();
-	  }
+        if(!lista_comandos.empty()){
+            comando=lista_comandos.front();
+            lista_comandos.pop_front();
+        }
 
-	  if(!lista_comandos.empty()){
-	       parametro1=lista_comandos.front();
-	       lista_comandos.pop_front();
-	  }
+        if(!lista_comandos.empty()){
+            parametro1=lista_comandos.front();
+            lista_comandos.pop_front();
+        }
 
-	  if(!lista_comandos.empty()){
-	       parametro2=lista_comandos.front();
-	       lista_comandos.pop_front();
-	  }
+        if(!lista_comandos.empty()){
+            parametro2=lista_comandos.front();
+            lista_comandos.pop_front();
+        }
 
-	  //list<string> params;
-	  //params.push_back(parametro1);
-	  //params.push_back(parametro2);
+        //list<string> params;
+        //params.push_back(parametro1);
+        //params.push_back(parametro2);
 
-	  ///TRATAMIENTO DE COMANDOS	  
-	  int ret_val = invocador_comandos.exec(comando,parametro1,parametro2);
-	  if(ret_val == 1)
-	  {
-	       contador_mal_comportamiento++;
-	  }
+        ///TRATAMIENTO DE COMANDOS	  
+        int ret_val = invocador_comandos.exec(comando,parametro1,parametro2);
+        if(ret_val == 1)
+        {
+            contador_mal_comportamiento++;
+        }
 
 	  
-	  //Actualizar Objetos
-	  actualizar_objetos();
+        //Actualizar Objetos
+        actualizar_objetos();
 
-	  //Actualizar Salidas
-	  actualizar_salidas();
-     }
+        //Actualizar Salidas
+        actualizar_salidas();
+    }
 
-     //TODO: GUARDAR LA PARTIDA CON TODOS SUS ESTADOS
+    //TODO: GUARDAR LA PARTIDA CON TODOS SUS ESTADOS
 
-     //SALIDA DEL JUEGO
-     if(contador_mal_comportamiento < 3 )
-	  cout<<endl<<"GRACIAS POR JUGAR! :),TE ESPERO PRONTO DE VUELTA."<<endl<<endl;
-     else
-     {
+    //SALIDA DEL JUEGO
+    if(contador_mal_comportamiento < 3 )
+        cout<<endl<<"GRACIAS POR JUGAR! :),TE ESPERO PRONTO DE VUELTA."<<endl<<endl;
+    else
+    {
 	  
-	  cout<<endl<<
-	       endl<<
-	       "Eres una desgracia humana mentalmente o no tienes"<<
-	       " la sufiente madurez, así que vuelve tan sólo cuando hayas soluciodado ese asunto. ADIOS!.";				
-	  cout<<endl<<"ERES UN MALEDUCADO, NECESITAS CLASES DE MODALES."<<endl<<endl;
-     }
+        cout<<endl<<
+            endl<<
+            "Eres una desgracia humana mentalmente o no tienes"<<
+            " la sufiente madurez, así que vuelve tan sólo cuando hayas soluciodado ese asunto. ADIOS!.";				
+        cout<<endl<<"ERES UN MALEDUCADO, NECESITAS CLASES DE MODALES."<<endl<<endl;
+    }
 }
 
 string Manager::get_comandos_disponibles()
 {
-     return comandos_disponibles;
+    return comandos_disponibles;
 }
 
 string Manager::get_descripcion_estado_actual(){
-     string descripcion=escena_actual->examine();
-     descripcion+="\n";
-     if(escena_actual->get_objetos_disponibles()!="")
-     {
-	  descripcion+="Puedes ver : \n";
-	  descripcion+=escena_actual->get_objetos_disponibles();
-     }
-     return descripcion;
+    string descripcion=escena_actual->examine();
+    descripcion+="\n";
+    if(escena_actual->get_objetos_disponibles()!="")
+    {
+        descripcion+="Puedes ver : \n";
+        descripcion+=escena_actual->get_objetos_disponibles();
+    }
+    return descripcion;
 }
 
 /*string Manager::get_salidas_estado_actual(){
 	  
-     string lista_salidas;
+  string lista_salidas;
 
-     //map<string,Escenario*> salidas=escena_actual->get_salidas();
+  //map<string,Escenario*> salidas=escena_actual->get_salidas();
 
-     map<string,pScene> salidas=escena_actual->get_salidas();
+  map<string,pScene> salidas=escena_actual->get_salidas();
 
-     for(map<string,pScene>::iterator it=salidas.begin();
-	 it!=salidas.end();it++)
-     {
-	  lista_salidas+=it->first;
-	  lista_salidas+=" ";
-     }
-     return lista_salidas;
-}*/
+  for(map<string,pScene>::iterator it=salidas.begin();
+  it!=salidas.end();it++)
+  {
+  lista_salidas+=it->first;
+  lista_salidas+=" ";
+  }
+  return lista_salidas;
+  }*/
 
 
 void Manager::clock(){
 
-     while(continuar_loop)
-     {
-	  int itime = (int) tiempo;
-	  if( itime % (5*60) == 0 )
-	  {
-	       cout<<"\nHan pasado "<<tiempo<<" segundos desde el inicio del juego\n"<<">>>";
-	  }
+    while(continuar_loop)
+    {
+        int itime = (int) tiempo;
+        if( itime % (5*60) == 0 )
+        {
+            cout<<"\nHan pasado "<<tiempo<<" segundos desde el inicio del juego\n"<<">>>";
+        }
 
-	  sleep(1); //detiene el hilo durante 1 segundo
-	  tiempo++;
-     }
+        sleep(1); //detiene el hilo durante 1 segundo
+        tiempo++;
+    }
 }
 
 //Actualizar atributos de objetos
 //Definir las reglas y relaciones entre objetos
 void Manager::actualizar_objetos(){
 
-     // Compsume events
-     eventsQueue.fire();
+    // Compsume events
+    eventsQueue.fire();
 
 /*	  IEvent *event;
 	  if(!eventsQueue.empty())
@@ -281,7 +281,7 @@ void Manager::actualizar_objetos(){
 
 //Actualizar salidas del escenario
 void Manager::actualizar_salidas(){
-     //Establecer reglas de activacion de salidas
+    //Establecer reglas de activacion de salidas
 }
 
 void Manager::dibujar(){

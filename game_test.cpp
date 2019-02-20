@@ -5,5 +5,5 @@ using namespace std;
 int main(){
 
 
-	  cout<<"Starting with Game class test"<<endl;
+    cout<<"Starting with Game class test"<<endl;
 }

@@ -9,27 +9,27 @@
 using namespace std;
 
 class Inventario{
-	public:
-	  Inventario();
+public:
+    Inventario();
 
-	  //GETTERS
-	  Objeto* get_objeto(string nombre_objeto);
-	  bool get_existe_objeto(string nombre);
-	  Objeto extraer_objeto();
-	  string listar();
+    //GETTERS
+    Objeto* get_objeto(string nombre_objeto);
+    bool get_existe_objeto(string nombre);
+    Objeto extraer_objeto();
+    string listar();
 
-	  bool posee_alcanzador();
-	  Objeto* tomar_alcanzador();
+    bool posee_alcanzador();
+    Objeto* tomar_alcanzador();
 
-	  bool posee_desatascador();
-	  Objeto* tomar_desatascador();
+    bool posee_desatascador();
+    Objeto* tomar_desatascador();
 
-	  //SETTERS
-	  void insertar_objeto(Objeto *objeto);
- 	  void eliminar(string nombre);
+    //SETTERS
+    void insertar_objeto(Objeto *objeto);
+    void eliminar(string nombre);
 
-	private:
-	  map<string,Objeto*> objetos_inventario;
+private:
+    map<string,Objeto*> objetos_inventario;
 };
 
 #endif

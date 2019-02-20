@@ -8,9 +8,9 @@
 #include "objeto.h"
 
 class ItemGameCreator : public AbstractGameCreator{
-	public:
-	  ItemGameCreator(const string xmlItemSpecs);	  
-	  Entidad* createById(string itemId);	  	  
+public:
+    ItemGameCreator(const string xmlItemSpecs);	  
+    Entidad* createById(string itemId);	  	  
 };
 
 #endif

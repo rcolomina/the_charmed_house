@@ -31,79 +31,79 @@ class Manager{
 //Crea los escenarios, los objetos, el jugador en estado incial.
 //Proporciona al jugador la salidas, los objetos, 
 //Desencaden los eventos que 
-	public:
-	  Manager();
-	  ~Manager(){}
+public:
+    Manager();
+    ~Manager(){}
 
-	  //METODOS LOOP PRINCIPAL
-	  void run();
-	  void update();
-	  void dibujar();
+    //METODOS LOOP PRINCIPAL
+    void run();
+    void update();
+    void dibujar();
 
-	  void prologo();
+    void prologo();
 
-	  void actualizar_objetos();
-	  void actualizar_salidas();
+    void actualizar_objetos();
+    void actualizar_salidas();
 	  
-	  //RELOJ
-	  void clock();
-	  int get_time(){return tiempo;}
+    //RELOJ
+    void clock();
+    int get_time(){return tiempo;}
 
-	  //SETTERS
-	  void set_comando(string comando);
-	  void set_escena_actual(Escenario *escenario);
+    //SETTERS
+    void set_comando(string comando);
+    void set_escena_actual(Escenario *escenario);
 
-	  //GETTERS
-	  string get_comandos_disponibles();
-	  string get_descripcion_estado_actual();
-	  string get_salidas_estado_actual();
-	  map<string,Escenario*> get_escenarios_mundo();
-	  map<string,Objeto> get_objetos_mundo();
+    //GETTERS
+    string get_comandos_disponibles();
+    string get_descripcion_estado_actual();
+    string get_salidas_estado_actual();
+    map<string,Escenario*> get_escenarios_mundo();
+    map<string,Objeto> get_objetos_mundo();
 
-	  Jugador get_jugador();
-	  Inventario get_inventario();
+    Jugador get_jugador();
+    Inventario get_inventario();
 
-	private:
+private:
 
-	  //Time rate
-	  const double dt;
-	  //Reloj
-	  double tiempo;
+    //Time rate
+    const double dt;
+    //Reloj
+    double tiempo;
 
-	  //Gestion de loop y comando de entrada de usuario
-	  string comandos_disponibles;
-	  bool continuar_loop;
+    //Gestion de loop y comando de entrada de usuario
+    string comandos_disponibles;
+    bool continuar_loop;
 
-	  // user inputs. TODO: Commands and parameters should be stored into a vector
-	  string comando;
-	  string parametro1;
-	  string parametro2;
-	  //string parametro3;
-	  vector<string> v_parameters;
-	  //vector<string> v_comandos;
+    // user inputs. TODO: Commands and parameters should be stored into a vector
+    string comando;
+    string parametro1;
+    string parametro2;
+    //string parametro3;
+    vector<string> v_parameters;
+    //vector<string> v_comandos;
 
-	  //TODO: Construir escenarios y objetos del mundo
-	  map<string,Escenario*> mundo;
-	  map<string,Objeto> objetos_mundo;
+    //TODO: Construir escenarios y objetos del mundo
+    map<string,Escenario*> mundo;
+    map<string,Objeto> objetos_mundo;
 	  
-	  //Inventario y jugador por defecto.
-	  Jugador jugador;       //
-	  Inventario inventario; //guardar los objetos del jugador
+    //Inventario y jugador por defecto.
+    Jugador jugador;       //
+    Inventario inventario; //guardar los objetos del jugador
 
-	  //Contador mal comportamiento
-	  int contador_mal_comportamiento;
+    //Contador mal comportamiento
+    int contador_mal_comportamiento;
 
-	  //referencia al escenario actual
-	  Escenario *escena_actual; //puntero al escenario actual
-	  Escenario escena_actual1; //escenario actual
+    //referencia al escenario actual
+    Escenario *escena_actual; //puntero al escenario actual
+    Escenario escena_actual1; //escenario actual
 
-	  bool primera_entrada;   //para mostrar la imagen del escenario une vez
-	  Invocador invocador_comandos;	   //gestiona los comandos 
-	  Game game;
+    bool primera_entrada;   //para mostrar la imagen del escenario une vez
+    Invocador invocador_comandos;	   //gestiona los comandos 
+    Game game;
 
-	  EventsQueue eventsQueue;
+    EventsQueue eventsQueue;
 
-	  FactoryGame fac;
+    FactoryGame fac;
 //	  EventsQueuet*> eventsQueue;
 }; 
 

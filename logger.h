@@ -14,52 +14,52 @@ using namespace std;
 class Logger
 {
 public:
-	static const string kLogLevelDebug;
-	static const string kLogLevelInfo;
-	static const string kLogLevelError;
-	static const string kLogLevelWarning;
+    static const string kLogLevelDebug;
+    static const string kLogLevelInfo;
+    static const string kLogLevelError;
+    static const string kLogLevelWarning;
 	  
-	// Returns a reference to the singleton Logger object
-	static Logger& instance();
+    // Returns a reference to the singleton Logger object
+    static Logger& instance();
 
-	// Logs a single message at the given log level
-	void log(const string& inMessage, 
-		const string& inLogLevel);
+    // Logs a single message at the given log level
+    void log(const string& inMessage, 
+             const string& inLogLevel);
 
-	// Logs a vector of messages at the given log level
-	void log(const vector<string>& inMessages, 
-		const string& inLogLevel);
+    // Logs a vector of messages at the given log level
+    void log(const vector<string>& inMessages, 
+             const string& inLogLevel);
 
 protected:
-	// Static variable for the one-and-only instance  
-	static Logger* pInstance;
+    // Static variable for the one-and-only instance  
+    static Logger* pInstance;
 
-	// Constant for the filename
-	static const char* const kLogFileName;
+    // Constant for the filename
+    static const char* const kLogFileName;
 
-	// Data member for the output stream
-	ofstream mOutputStream;
+    // Data member for the output stream
+    ofstream mOutputStream;
 
-	// Embedded class to make sure the single Logger
-	// instance gets deleted on program shutdown.
-	friend class Cleanup;
-	class Cleanup
-	{
-	public:
-		~Cleanup();
-	};
+    // Embedded class to make sure the single Logger
+    // instance gets deleted on program shutdown.
+    friend class Cleanup;
+    class Cleanup
+    {
+    public:
+        ~Cleanup();
+    };
 
-	// Logs message. The thread should own a lock on sMutex
-	// before calling this function.
-	void logHelper(const string& inMessage, 
-		const string& inLogLevel);
+    // Logs message. The thread should own a lock on sMutex
+    // before calling this function.
+    void logHelper(const string& inMessage, 
+                   const string& inLogLevel);
 
 private:
-	Logger();
-	virtual ~Logger();
-	Logger(const Logger&);
-	Logger& operator=(const Logger&);
-	static mutex sMutex;
+    Logger();
+    virtual ~Logger();
+    Logger(const Logger&);
+    Logger& operator=(const Logger&);
+    static mutex sMutex;
 };
 
 #endif
