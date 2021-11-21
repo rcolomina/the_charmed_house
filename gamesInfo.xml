@@ -4,6 +4,7 @@
   <pathimages>
     ./txt
   </pathimages>
+
   
   <game id="games.game_EjemploJuego" language="Spanish">	 
     <scenes>
@@ -250,8 +251,7 @@
       <connection id="con01" sceneIdOrigin="sce001" carIdOrig="car01" sceneIdDestiny="sce002" carIdDest="car05"></connection>
     </connections>
 
-    <events>
-      
+    <events>      
     </events>
     
   </game>

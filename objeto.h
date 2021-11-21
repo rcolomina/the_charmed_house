@@ -24,7 +24,8 @@ typedef Objeto Item;
 class Objeto : public Entidad{
    public:
      Objeto(int id,const string &name,const string& description):
-	  Entidad(id,name,description){}	  
+	  Entidad(id,name,description){}
+    
      Objeto(const Entidad &ent,
 	    vector<string> names,
 	    vector<string> descriptions,
@@ -46,7 +47,7 @@ class Objeto : public Entidad{
 	    vector<string> descriptions,
 	    vector<pBool> properties);
 
-     // This methods allows getting a generic property from this object
+     // This allows getting a generic property from this object
      template <typename T>
      T get_value(const char* pro);
 
@@ -56,7 +57,7 @@ class Objeto : public Entidad{
 
 //	  void set_event(IEvent *event);
 	  
-     // Operaciones
+     // TODO: These operations are too specific
      void tirar();
      void alcanzar();
      void insertar();

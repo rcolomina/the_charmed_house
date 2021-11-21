@@ -175,7 +175,10 @@ void Manager::run(){
 
     //SALIDA DEL JUEGO
     if(contador_mal_comportamiento < 3 )
-        cout<<endl<<"GRACIAS POR JUGAR! :),TE ESPERO PRONTO DE VUELTA."<<endl<<endl;
+    {
+        string goodbye_message = "GRACIAS POR JUGAR! :),TE ESPERO PRONTO DE VUELTA.";
+        cout<<endl<<goodbye_message<<endl<<endl;
+    }
     else
     {
 	  

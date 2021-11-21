@@ -14,31 +14,34 @@ typedef TiXmlHandle* pHand;
 
 //typedef Objeto* pItem;
 //typedef Objeto Item;
-
 //typedef Escenario* pScene;
 
 
-
 class FactoryGame{
-	public:
-	  FactoryGame(string xmlGameSpecifications);
+public:
+    FactoryGame(string xmlGameSpecifications);
+	  
+    pScene buildGameById(string gameId);
+    pScene buildScenarioById(string scenarioId);
+    pItem buildItemById(string itemId);
 
 	  
-	  pScene buildGameById(string gameId);
-	  pScene buildScenarioById(string scenarioId);
-	  pItem buildItemById(string itemId);
+private:
+	  
+    vector<string> getNameListFromNode(pNode node);
+    vector<string> getTextListFromNode(pNode node);
 
-	  
-	private:
-	  
-	  vector<string> getNameListFromNode(pNode node);
-	  vector<string> getTextListFromNode(pNode node);
+    pElem getGameElement(string name);
+    pElem searchForElementId(pElem parent,string id);
 
-	  pElem getGameElement(string name);
-	  pElem searchForElementId(pElem parent,string id);
-	  
-	  string xmlGameSpecifications;
-	  TiXmlDocument xmlDoc;
+    // specs given by XML file
+    string xmlGameSpecifications;
+    TiXmlDocument xmlDoc;
+
+    // specs given by sql table
+    
+    
+    // specs given by a JSON file
 };
 
 

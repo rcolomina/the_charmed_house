@@ -1,0 +1,19 @@
+File describing DB design similar to XML/JSON game descriptions 
+
+------
+Tables
+------
+
+Languages
+Games 
+Scenes 
+Descriptions (id, text, type, language)
+DescriptionTypes -> item, scene, cardinal
+
+Properties
+Items
+PropertiesToItems
+
+Cardinal
+Connections
+

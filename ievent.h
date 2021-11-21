@@ -6,8 +6,8 @@
 // Abstract interfacew for an Event.
 // This class has a virtual method which will
 // be implemented on concrete classes.
-// Furthermore, it avoids cyclic dependendenciees
-// amount scenes and events.
+// Furthermore, it avoids cyclic dependendencies
+// among scenes and events.
 class IEvent{
 	public:
 	  virtual const std::string activate() = 0;

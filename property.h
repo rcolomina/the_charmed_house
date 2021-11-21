@@ -71,7 +71,7 @@ std::ostream& operator<<( std::ostream& out, const Property<U>& prop) {
 }
 
 
-
+// Specialisations 
 typedef Property<bool>    Bool;
 typedef Property<bool>*   pBool;
 typedef Property<int>     Int;

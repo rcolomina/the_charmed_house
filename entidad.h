@@ -5,14 +5,22 @@
 
 using namespace std;
 
+// This class provides identification methods for its derived classes
+// Each object 
+
 class Entidad {
 public:
     Entidad():
-        id(0){}
-    Entidad(const int id,const string name,const string description):
+        sid("-1"),
+        id(-1),
+        name("no name"),
+        description("no description"){}
+    Entidad(const int id,const string name,const string description):        
         id(id),
         name(name),
-        description(description){}
+        description(description){
+        //sid=to_string(id);
+    }
 
     Entidad(const string sid,const string name,const string description):
         sid(sid),

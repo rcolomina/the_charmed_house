@@ -22,10 +22,8 @@
 #include "factory.h"
 #include "game.h"
 
-
 using namespace std;
 using namespace parametros;
-
 
 class Manager{
 //Crea los escenarios, los objetos, el jugador en estado incial.
@@ -45,7 +43,7 @@ public:
     void actualizar_objetos();
     void actualizar_salidas();
 	  
-    //RELOJ
+    // CLOCK
     void clock();
     int get_time(){return tiempo;}
 

@@ -14,6 +14,16 @@ FactoryGame::FactoryGame(string xmlGameSpecifications)
 
 pScene FactoryGame::buildGameById(string gameId){
 
+    // *** building process ***
+    // RUN SCENE IDS
+    // FOR EACH SCENEID
+    //    BUILD SECEN
+    // FOR EACH OBJECTID
+    //    BUILD OBJECT
+    // ADD OBJECTS TO SECENES
+    // ADD LINKS AMONG SCENES
+    
+    
      //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero
      // TODO: Build automatically all these objects running over its ids.
      pScene esc1 = this->buildScenarioById("game.scenes.scene.sce001");
@@ -124,13 +134,16 @@ vector<string> FactoryGame::getTextListFromNode(pNode parent){
 
 
 pElem FactoryGame::getGameElement(string name){
-     // Looking for the Element Items
-     pNode node=NULL;
-     node = xmlDoc.FirstChild("games");
-     assert(node);	  
-     TiXmlHandle docHandle(node);
-     pElem elem = docHandle.FirstChild("game").FirstChild(name.c_str()).ToElement();
-     return elem;
+
+    // TODO: Depending on data origin setup work on JSON, XML or SQL table
+    
+    // Looking for the Element Items
+    pNode node=NULL;
+    node = xmlDoc.FirstChild("games");
+    assert(node);	  
+    TiXmlHandle docHandle(node);
+    pElem elem = docHandle.FirstChild("game").FirstChild(name.c_str()).ToElement();
+    return elem;
 }
 
 // Return the child element with a specific id 

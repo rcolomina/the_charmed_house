@@ -13,6 +13,7 @@ public:
         mapCommands(mapCommands){}
 
     int exec(string commandKey,string parametro1,string parametro2);    
+    int exec(string commmadKey,list<string> parameters);
     
     list<string> get_commands(){
         list<string> keysCommands;

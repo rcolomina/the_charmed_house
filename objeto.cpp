@@ -48,7 +48,8 @@ void Objeto::set_value(string prop,bool value){
      map_pBools[prop]=new Bool(prop,value);
 }
 
-// TODO: Create a generic method to operate do operation with objects, which will accept functors
+// TODO: Create a generic method to operate with objects, which will be
+//       accepting functons
 void Objeto::tirar()
 {
      cout<<endl<<descripcion_tirar<<endl;
@@ -77,7 +78,6 @@ template <typename U>
 U Objeto::get_value(const char* pro){
      return U();
 }
-
 
 
 template<>
