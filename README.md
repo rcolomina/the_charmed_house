@@ -1,6 +1,6 @@
 # The Charmed House
 
-Game Engine for Interactive Adventures.
+Game Engine to create Interactive Adventures.
 
 [TBW]
 
