@@ -16,9 +16,9 @@ SOURCES :=$(shell ls src/*.cpp | grep -v "test" | xargs)
 OBJECTS := $(SOURCES:.cpp=.o)    
 
 # Sources and objets to compile test classes
-TESTCPP := $(wildcard *test.cpp)
+TESTCPP := $(wildcard src/*test.cpp)
 TEST := $(TESTCPP:.cpp=)
-SOURCETEST :=$(shell ls *.cpp | grep -v "test" | grep -v "main.cpp" | xargs)
+SOURCETEST :=$(shell ls src/*.cpp | grep -v "test" | grep -v "main.cpp" | xargs)
 OBJECTSTEST := $(SOURCETEST:.cpp=.o)    
 
 
