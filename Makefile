@@ -10,15 +10,17 @@ PATH_TINYXML := ./3rdParty/tinyxml
 OBJ_TINYXML := ${PATH_TINYXML}/tinystr.o ${PATH_TINYXML}/tinyxmlerror.o ${PATH_TINYXML}/tinyxml.o ${PATH_TINYXML}/tinyxmlparser.o
 INCS := -I${PATH_TINYXML}
 EXECUTABLE=main
+SRC_FOLDER=src
+
 
 # Sources and objects to compile main program
-SOURCES :=$(shell ls src/*.cpp | grep -v "test" | xargs)
+SOURCES :=$(shell ls ${SRC_FOLDER}/*.cpp | grep -v "test" | xargs)
 OBJECTS := $(SOURCES:.cpp=.o)    
 
 # Sources and objets to compile test classes
-TESTCPP := $(wildcard src/*test.cpp)
+TESTCPP := $(wildcard ${SRC_FOLDER}/*test.cpp)
 TEST := $(TESTCPP:.cpp=)
-SOURCETEST :=$(shell ls src/*.cpp | grep -v "test" | grep -v "main.cpp" | xargs)
+SOURCETEST :=$(shell ls ${SRC_FOLDER}/*.cpp | grep -v "test" | grep -v "main.cpp" | xargs)
 OBJECTSTEST := $(SOURCETEST:.cpp=.o)    
 
 
@@ -47,7 +49,7 @@ $(OBJ_TINYXML):
 
 clean:
 	@echo "Cleaning objects and executables"
-	rm -f *.o *.gch core $(EXECUTABLE) *_test log.out
+	rm -f src/*.o src/*.gch core $(EXECUTABLE) src/*_test log.out
 
 cleanall:
 	@echo "Cleaning objects and executables and 3rd parties"
