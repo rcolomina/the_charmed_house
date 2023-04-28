@@ -12,7 +12,7 @@ INCS := -I${PATH_TINYXML}
 EXECUTABLE=main
 
 # Sources and objects to compile main program
-SOURCES :=$(shell ls *.cpp | grep -v "test" | xargs)
+SOURCES :=$(shell ls src/*.cpp | grep -v "test" | xargs)
 OBJECTS := $(SOURCES:.cpp=.o)    
 
 # Sources and objets to compile test classes

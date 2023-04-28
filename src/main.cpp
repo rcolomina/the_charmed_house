@@ -82,8 +82,7 @@ file.read((char*)&memblock,size);
 file.close();
 */
 
-	  
-	  
+	  	  
     delete manager;
 
     return 0;

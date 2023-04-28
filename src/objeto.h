@@ -19,11 +19,14 @@ class IEvent;
 
 typedef Objeto* pItem;
 typedef Objeto Item;
+
 //typedef Property<bool>* pBool;
 
 class Objeto : public Entidad{
    public:
-     Objeto(int id,const string &name,const string& description):
+     Objeto(int id,
+	    const string &name,
+	    const string &description):
 	  Entidad(id,name,description){}
     
      Objeto(const Entidad &ent,
@@ -52,10 +55,10 @@ class Objeto : public Entidad{
      T get_value(const char* pro);
 
      //SETTERS
-     void set_value(string prop,bool value);
+     void set_value(string prop, bool value);
      void set_tirable(Objeto *objeto,string descrip_tirable);
 
-//	  void set_event(IEvent *event);
+     // void set_event(IEvent *event);
 	  
      // TODO: These operations are too specific
      void tirar();
@@ -64,6 +67,7 @@ class Objeto : public Entidad{
 
      void insert_event(IEvent* event);
      IEvent* activate_event();
+  
    private:
      
      const vector<string> descriptions;
@@ -81,6 +85,7 @@ class Objeto : public Entidad{
      // const string nombre_alternativo;
      string descripcion_secundaria;
      string descripcion_tirar;
+  
      // Hacer visible y/o alcanzable tras la accion
      pItem objeto_rel_tirar;
      pItem objeto_rel_alcanzar;
