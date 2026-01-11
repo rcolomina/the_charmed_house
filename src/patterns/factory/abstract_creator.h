@@ -5,7 +5,7 @@
 #include <string>
 #include <tinyxml.h>
 
-#include "entidad.h"
+#include "../../core/entidad.h"
 
 typedef TiXmlNode* pNode;
 typedef TiXmlElement* pElem;

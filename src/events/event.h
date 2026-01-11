@@ -2,7 +2,7 @@
 #define _event_
 
 #include "ievent.h"
-#include "escenario.h"
+#include "../core/escenario.h"
 
 // Event that open a scene connection on a cardinal point
 class EventOpenConnection : public IEvent {

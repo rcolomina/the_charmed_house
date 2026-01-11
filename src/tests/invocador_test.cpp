@@ -1,8 +1,8 @@
 #include <map>
-//#include "escenario.h"
-#include "factory.h"
-#include "invocador.h"
-#include "operaciones.h"
+//#include "../core/escenario.h"
+#include "../patterns/factory/factory.h"
+#include "../patterns/command/invocador.h"
+#include "../patterns/command/operaciones.h"
 
 int main(){
 

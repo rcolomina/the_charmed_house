@@ -1,5 +1,5 @@
 
-#include "distance.h"
+#include "lib/distance/distance.h"
 
 #include <string>
 #include <iostream>

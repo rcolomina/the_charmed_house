@@ -4,7 +4,7 @@
 
 #include <fstream>
 
-#include "manager.h"
+#include "manager/manager.h"
 
 #include <tinyxml.h>
 

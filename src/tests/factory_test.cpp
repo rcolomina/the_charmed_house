@@ -1,5 +1,5 @@
-#include "factory.h"
-#include "game.h"
+#include "../patterns/factory/factory.h"
+#include "../core/game.h"
 #include <string>
 
 

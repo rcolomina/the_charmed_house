@@ -1,6 +1,6 @@
 #include "manager.h"
-#include "logger.h"
-#include "operaciones.h"
+#include "lib/logger/logger.h"
+#include "../patterns/command/operaciones.h"
 
 using namespace parametros;
 
