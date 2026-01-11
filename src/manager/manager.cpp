@@ -1,7 +1,8 @@
 #include "manager.h"
 #include "lib/logger/logger.h"
-#include "../patterns/command/operaciones.h"
 #include "../data/JSONGameDataLoader.h"
+#include "../patterns/command/operaciones.h"
+#include <functional>
 
 using namespace parametros;
 
@@ -20,52 +21,11 @@ Manager::Manager():dt(freq),
     //scene using id
     escena_actual = fac->buildGameById(gameId);
     cout<<"manager() escena_actual address: "<<escena_actual<<endl;
-     
-    //CommandBuilder *commandBuilder    = new CommandBuilder();
-    //map<string,ICommand*> mapComandos = commandBuilder->buildCommands(continuar_loop,
-    //                                                                  escena_actual,
-    //                                                                  inventario,
-    //                                                                  parametro1,
-    //                                                                  parametro2,
-    //                                                                  primera_entrada,
-    //                                                                  eventsQueue);
-     
-    //Construir los comandos y conectarlos al invocador
-    string comandos_disponibles="Comandos disponibles: ";
-    vector<string> v_comandos;
-    for(int i=0;i<NUMBER_COMMANDS;++i)
-        v_comandos.push_back(comandos[i]);
 
-    list<ICommand*> mycommands;
-    
-    mycommands.push_back(new Exit(continuar_loop));
-    mycommands.push_back(new Ayuda(v_comandos));
-    mycommands.push_back(new Ver(&escena_actual));
-    mycommands.push_back(new Examinar(&escena_actual,inventario,parametro1));
-    mycommands.push_back(new CommandInventario(inventario));
-    mycommands.push_back(new Cardinal(&escena_actual,s_norte,primera_entrada));
-    mycommands.push_back(new Cardinal(&escena_actual,s_sur,primera_entrada));
-    mycommands.push_back(new Cardinal(&escena_actual,s_oeste,primera_entrada));
-    mycommands.push_back(new Cardinal(&escena_actual,s_este,primera_entrada));
-    mycommands.push_back(new Tirar(&escena_actual,inventario,parametro1,parametro2));
-    mycommands.push_back(new Coger(&escena_actual,inventario,parametro1));
-    mycommands.push_back(new Dejar(&escena_actual,inventario,parametro1));
-    mycommands.push_back(new Alcanzar(&escena_actual,inventario,parametro1));
-    mycommands.push_back(new Colocar(&escena_actual,inventario,eventsQueue,parametro1,parametro2));    
-    
-    map<string,ICommand*> mapComandos; // = new map<string,ICommand*>;
-
-    for(auto it=mycommands.begin();
-        it!=mycommands.end();
-        ++it){
-        string key=(*it)->get_command_id();
-        mapComandos[key]=*it;
-        //cout<<"Added key "<<key<<endl;
-    }
-    
-    // Build command trigger
-    this->invocador_comandos = Invocador(mapComandos);
-
+    CommandBuilder cb;
+    map<string,ICommand*> cmds = cb.buildCommands(continuar_loop, escena_actual, inventario,
+                                                  parametro1, parametro2, primera_entrada, eventsQueue);
+    this->invocador_comandos = Invocador(cmds);
 }
 
 // New constructor with language support using JSON
@@ -86,42 +46,10 @@ Manager::Manager(const std::string& language):dt(freq),
     escena_actual = fac->buildGameById(gameId);
     cout<<"manager() escena_actual address: "<<escena_actual<<endl;
 
-    //Construir los comandos y conectarlos al invocador
-    string comandos_disponibles="Comandos disponibles: ";
-    vector<string> v_comandos;
-    for(int i=0;i<NUMBER_COMMANDS;++i)
-        v_comandos.push_back(comandos[i]);
-
-    list<ICommand*> mycommands;
-
-    mycommands.push_back(new Exit(continuar_loop));
-    mycommands.push_back(new Ayuda(v_comandos));
-    mycommands.push_back(new Ver(&escena_actual));
-    mycommands.push_back(new Examinar(&escena_actual,inventario,parametro1));
-    mycommands.push_back(new CommandInventario(inventario));
-    mycommands.push_back(new Cardinal(&escena_actual,s_norte,primera_entrada));
-    mycommands.push_back(new Cardinal(&escena_actual,s_sur,primera_entrada));
-    mycommands.push_back(new Cardinal(&escena_actual,s_oeste,primera_entrada));
-    mycommands.push_back(new Cardinal(&escena_actual,s_este,primera_entrada));
-    mycommands.push_back(new Tirar(&escena_actual,inventario,parametro1,parametro2));
-    mycommands.push_back(new Coger(&escena_actual,inventario,parametro1));
-    mycommands.push_back(new Dejar(&escena_actual,inventario,parametro1));
-    mycommands.push_back(new Alcanzar(&escena_actual,inventario,parametro1));
-    mycommands.push_back(new Colocar(&escena_actual,inventario,eventsQueue,parametro1,parametro2));
-
-    map<string,ICommand*> mapComandos; // = new map<string,ICommand*>;
-
-    for(auto it=mycommands.begin();
-        it!=mycommands.end();
-        ++it){
-        string key=(*it)->get_command_id();
-        mapComandos[key]=*it;
-        //cout<<"Added key "<<key<<endl;
-    }
-
-    // Build command trigger
-    this->invocador_comandos = Invocador(mapComandos);
-
+    CommandBuilder cb;
+    map<string,ICommand*> cmds = cb.buildCommands(continuar_loop, escena_actual, inventario,
+                                                  parametro1, parametro2, primera_entrada, eventsQueue);
+    this->invocador_comandos = Invocador(cmds);
 }
 
 void Manager::prologo(){
@@ -159,95 +87,17 @@ void Manager::prologo(){
 
 }
 
-void Manager::run(){
+void Manager::run() {
+    using namespace std::placeholders;
+    auto update_objects_func = std::bind(&Manager::actualizar_objetos, this);
+    auto update_exits_func = std::bind(&Manager::actualizar_salidas, this);
 
-    //Marcar la primera entrada al metodo
-    primera_entrada=true;
+    GameLoop gameLoop(continuar_loop, escena_actual, invocador_comandos,
+                      comando, parametro1, parametro2, contador_mal_comportamiento,
+                      update_objects_func, update_exits_func);
+    gameLoop.run();
 
-    while(continuar_loop){
-
-        ///DIBUJAR ESCENARIO///
-        if(primera_entrada)
-        {
-            //prologo();
-            cout<<endl;
-            dibujar();
-            cout<<endl;
-            cout<<get_descripcion_estado_actual()<<endl;
-            primera_entrada=false;
-        }
-
-        ///RECOGIDA DE COMMANDOS CONSOLA///
-//	     cout<<"[Escena: "<<escena_actual->get_nombre()<<"]"
-//				  <<"[Objetos: "<<escena_actual->get_objetos_disponibles()<<"]"
-//				  <<"[Salidas: "<<escena_actual->
-//				  <<endl<<">>>";
-
-        cout<<">>>";
-
-        //EXTRACCION DEL COMANDOS Y LOS PARAMETROS
-        string entrada_consola;
-        getline(cin,entrada_consola);
-        //cout<<"Se ha introducido: "<<comando;
-        list<string> lista_comandos;
-        istringstream iss(entrada_consola);
-        do{string sub;
-            iss >> sub;
-            //					  cout<< "Substring: " << sub << endl;
-            lista_comandos.push_back(sub);
-        }while(iss);
-
-        if(!lista_comandos.empty()){
-            comando=lista_comandos.front();
-            lista_comandos.pop_front();
-        }
-
-        if(!lista_comandos.empty()){
-            parametro1=lista_comandos.front();
-            lista_comandos.pop_front();
-        }
-
-        if(!lista_comandos.empty()){
-            parametro2=lista_comandos.front();
-            lista_comandos.pop_front();
-        }
-
-        //list<string> params;
-        //params.push_back(parametro1);
-        //params.push_back(parametro2);
-
-        ///TRATAMIENTO DE COMANDOS	  
-        int ret_val = invocador_comandos.exec(comando,parametro1,parametro2);
-        if(ret_val == 1)
-        {
-            contador_mal_comportamiento++;
-        }
-
-	  
-        //Actualizar Objetos
-        actualizar_objetos();
-
-        //Actualizar Salidas
-        actualizar_salidas();
-    }
-
-    //TODO: GUARDAR LA PARTIDA CON TODOS SUS ESTADOS
-
-    //SALIDA DEL JUEGO
-    if(contador_mal_comportamiento < 3 )
-    {
-        string goodbye_message = "GRACIAS POR JUGAR! :),TE ESPERO PRONTO DE VUELTA.";
-        cout<<endl<<goodbye_message<<endl<<endl;
-    }
-    else
-    {
-	  
-        cout<<endl<<
-            endl<<
-            "Eres una desgracia humana mentalmente o no tienes"<<
-            " la sufiente madurez, así que vuelve tan sólo cuando hayas soluciodado ese asunto. ADIOS!.";				
-        cout<<endl<<"ERES UN MALEDUCADO, NECESITAS CLASES DE MODALES."<<endl<<endl;
-    }
+    // TODO: Save game state
 }
 
 string Manager::get_comandos_disponibles()

@@ -198,8 +198,8 @@ class CommandBuilder {
 public:
     CommandBuilder(){}
      
-    map<string,ICommand*> buildCommands(bool continuar_loop,
-                                        pScene current_scene,
+    map<string,ICommand*> buildCommands(bool &continuar_loop,
+                                        pScene &current_scene,
                                         Inventario &inventario,
                                         string &parametro1,
                                         string &parametro2,
@@ -251,17 +251,13 @@ public:
             mapComandos[s_alcanzar]  = c_alcanzar;
             mapComandos[s_colocar]   = c_colocar;
 
-            // execution from command builder
-            mapComandos[s_ver]->execute();
-            mapComandos[s_norte]->execute();
-          
             return mapComandos;	  
         }
 
 
     void initMapCommands(map<string,ICommand*> &mapComandos,
                          bool &continuar_loop,
-                         pScene current_scene,
+                         pScene &current_scene,
                          Inventario &inventario,
                          string &parametro1,
                          string &parametro2,

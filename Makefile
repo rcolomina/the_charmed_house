@@ -110,3 +110,38 @@ game_test: ${SRC_DIR}/tests/game_test.cpp $(OBJECTSTEST) $(OBJ_TINYXML)
 
 json_loader_test: ${SRC_DIR}/tests/json_loader_test.cpp $(OBJECTSTEST) $(OBJ_TINYXML)
 	$(CC) $(CFLAGS) $< $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} $(LDFLAGS) -o ${SRC_DIR}/tests/json_loader_test
+
+# Integration tests
+command_builder_test: ${SRC_DIR}/tests/command_builder_test.cpp $(OBJECTSTEST) $(OBJ_TINYXML)
+	$(CC) $(CFLAGS) $< $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} $(LDFLAGS) -o ${SRC_DIR}/tests/command_builder_test
+
+movement_test: ${SRC_DIR}/tests/movement_test.cpp $(OBJECTSTEST) $(OBJ_TINYXML)
+	$(CC) $(CFLAGS) $< $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} $(LDFLAGS) -o ${SRC_DIR}/tests/movement_test
+
+game_loop_test: ${SRC_DIR}/tests/game_loop_test.cpp $(OBJECTSTEST) $(OBJ_TINYXML)
+	$(CC) $(CFLAGS) $< $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} $(LDFLAGS) -o ${SRC_DIR}/tests/game_loop_test
+
+# Run all integration tests
+.PHONY: test-integration
+test-integration: command_builder_test movement_test game_loop_test
+	@echo "==========================================="
+	@echo "Running Integration Tests"
+	@echo "==========================================="
+	@echo ""
+	@echo "--- CommandBuilder Test ---"
+	@${SRC_DIR}/tests/command_builder_test || exit 1
+	@echo ""
+	@echo "--- Movement Test ---"
+	@${SRC_DIR}/tests/movement_test || exit 1
+	@echo ""
+	@echo "--- GameLoop Test ---"
+	@${SRC_DIR}/tests/game_loop_test || exit 1
+	@echo ""
+	@echo "==========================================="
+	@echo "All Integration Tests PASSED!"
+	@echo "==========================================="
+
+# Run all tests (unit + integration)
+.PHONY: test-all
+test-all: test test-integration
+	@echo "All unit and integration tests completed!"
