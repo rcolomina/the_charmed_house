@@ -64,23 +64,27 @@ void CommandInventario::execute(){
 void Cardinal::execute(){
     //cout<<"existeSalida "<<existeSalida<<endl;
     Logger::instance().log("Entering into Cardinal::execute() method ", Logger::kLogLevelInfo);
-	  
+
     pScene psce=*escena_actual;
-     
 
-     
-    bool existeSalida=(psce->get_salida(cardinal)!=nullptr);
-    bool estadoSalida=psce->get_estado_salida(cardinal);
+    // Convert string direction to cardinal enum
+    parametros::cardinal cardinalDir = psce->stringToCardinal(cardinal);
 
+    // Get the connected scene from the permanent connections map
+    pScene nextScene = psce->conexion(cardinalDir);
+    bool existeSalida = (nextScene != nullptr);
+
+    // Check if the exit is currently enabled (unlocked/open)
+    bool estadoSalida = psce->get_estado_salida(cardinal);
 
     if(existeSalida and estadoSalida)
-    {			
-        *escena_actual = (*escena_actual)->get_salida(cardinal);
+    {
+        *escena_actual = nextScene;
         primera_entrada=true;
         // cout<<"cambiando de escena"<<endl;
-    } 
+    }
     else
-        cout<<Color::red<<"No puedes ir: "<<cardinal<<Color::def<<endl;					
+        cout<<Color::red<<"No puedes ir: "<<cardinal<<Color::def<<endl;
 
 }
 

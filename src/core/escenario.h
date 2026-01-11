@@ -31,7 +31,8 @@ public:
     map<string,pScene> get_salidas(){return escenarioSalidas;} //devuelve lista de escenarios salidas
     string salidasDisponibles();	 
     pScene get_salida(string coordenada){return escenarioSalidas[coordenada];} // return null if does not exist
-    pScene conexion(cardinal car);
+    pScene conexion(parametros::cardinal car);
+    parametros::cardinal stringToCardinal(const string& direction); // Convert string to cardinal enum
     bool get_estado_salida(string coordenada);
     map<string,pItem> get_objetos(){return objetos;} // what objects are availables
     string get_objetos_disponibles();	  
@@ -52,10 +53,10 @@ private:
     string observacion;	  
     map<string,pScene> escenarioSalidas;       // guarda par (cardinal, pScene)
     map<string,bool>   estadoSalidas; // salida abierta o cerrada
-    map<string,pItem>  objetos;       // nombre y referenca a objeto	 
-    const string pathFileImageText;	  
-    map<cardinal,pScene> conexions;
-    friend void connect(Escenario* scenA,cardinal carA,Escenario* scenB,cardinal carB);
+    map<string,pItem>  objetos;       // nombre y referenca a objeto
+    const string pathFileImageText;
+    map<parametros::cardinal,pScene> conexions;
+    friend void connect(Escenario* scenA,parametros::cardinal carA,Escenario* scenB,parametros::cardinal carB);
 };
 
 #endif
