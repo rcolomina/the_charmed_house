@@ -1,7 +1,38 @@
-
-#Ignoring type of files
+# Build artifacts
 *.o
-*~
-miprograma
-*_test
+*.gch
+core
 main
+miprograma
+
+# Logs
+log.out
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test executables (keep source files)
+*_test
+!*_test.cpp
+!*_test.h
+
+# Data files (legacy)
+gamesInfo.xml
+data.xml
+
+# macOS
+.DS_Store
+
+# Backup files
+*.bak
+*.backup
+
+# Compiled libraries
+*.a
+*.so
+*.dylib
