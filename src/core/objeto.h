@@ -7,9 +7,9 @@
 #include <vector>
 #include <queue>
 
-#include "property.h"
+#include "lib/property/property.h"
 #include "entidad.h"
-#include "parametros.h"
+#include "../manager/parametros.h"
 
 //#define DEBUG
 using namespace std;

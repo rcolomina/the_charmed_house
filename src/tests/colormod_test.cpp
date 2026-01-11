@@ -1,4 +1,4 @@
-#include "colormod.h" // namespace Color
+#include "lib/colormod/colormod.h" // namespace Color
 #include <iostream>
 using namespace std;
 using namespace Color;

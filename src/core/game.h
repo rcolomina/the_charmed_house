@@ -5,8 +5,8 @@
 #include <iostream>
 
 
-#include "operaciones.h"
-//#include "event.h"
+#include "../patterns/command/operaciones.h"
+//#include "../events/event.h"
 
 using namespace std;
 

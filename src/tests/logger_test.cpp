@@ -1,5 +1,5 @@
 // TestThreadSafeLogger.cpp
-#include "logger.h"
+#include "lib/logger/logger.h"
 #include <vector>
 #include <string>
 

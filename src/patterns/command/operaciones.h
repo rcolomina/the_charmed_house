@@ -6,9 +6,9 @@
 #include <list>
 
 //#include "parametros.h"
-#include "event.h"
-#include "inventario.h"
-#include "eventsqueue.h"
+#include "../../events/event.h"
+#include "../../core/inventario.h"
+#include "../../events/eventsqueue.h"
 
 using namespace std;
 using namespace parametros;

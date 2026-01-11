@@ -1,8 +1,8 @@
 #include <cassert>
 
 #include "operaciones.h"
-#include "logger.h"
-#include "colormod.h"
+#include "lib/logger/logger.h"
+#include "lib/colormod/colormod.h"
 
 
 void Exit::execute(){

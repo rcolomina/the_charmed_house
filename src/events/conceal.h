@@ -1,7 +1,7 @@
 #ifndef _concealment_h_
 #define _concealment_h_
 
-#include "objeto.h"
+#include "../core/objeto.h"
 
 
 

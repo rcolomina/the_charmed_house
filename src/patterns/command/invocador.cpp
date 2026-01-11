@@ -1,5 +1,5 @@
 #include "invocador.h"
-#include "distance.h"
+#include "lib/distance/distance.h"
 
 // Return: -1 Error, 0 Ok, 1 Bad Behaviour
 int Invocador::exec(string command,

@@ -5,7 +5,7 @@
 #include <tinyxml.h>
 
 #include "abstract_creator.h"
-#include "objeto.h"
+#include "../../core/objeto.h"
 
 class ItemGameCreator : public AbstractGameCreator{
 public:

@@ -15,12 +15,12 @@
 //#include "inventario.h"
 //#include "escenario.h"
 //#include "objeto.h"
-#include "jugador.h"
-#include "invocador.h"
+#include "../core/jugador.h"
+#include "../patterns/command/invocador.h"
 //#include "parametros.h"
 
-#include "factory.h"
-#include "game.h"
+#include "../patterns/factory/factory.h"
+#include "../core/game.h"
 
 using namespace std;
 using namespace parametros;

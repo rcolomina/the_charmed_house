@@ -1,4 +1,4 @@
-#include "objeto.h"
+#include "../core/objeto.h"
 #include <cassert>
 
 int main(){

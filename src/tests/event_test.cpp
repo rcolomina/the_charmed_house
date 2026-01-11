@@ -1,5 +1,5 @@
-#include "event.h"
-#include "factory.h"
+#include "../events/event.h"
+#include "../patterns/factory/factory.h"
 
 int main(){
 

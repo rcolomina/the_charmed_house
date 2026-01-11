@@ -4,9 +4,9 @@
 #include <vector>
 #include <tinyxml.h>
 
-//#include "escenario.h"
-//#include "objeto.h"
-#include "game.h"
+//#include "../../core/escenario.h"
+//#include "../../core/objeto.h"
+#include "../../core/game.h"
 
 typedef TiXmlNode* pNode;
 typedef TiXmlElement* pElem;
