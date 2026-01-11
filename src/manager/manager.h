@@ -20,6 +20,7 @@
 //#include "parametros.h"
 #include "../patterns/factory/factory.h"
 #include "../core/game.h"
+#include "game_loop.h"
 
 // Forward declarations
 class JSONGameDataLoader;
