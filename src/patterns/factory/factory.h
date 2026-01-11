@@ -2,11 +2,14 @@
 #define _FACTORY_
 
 #include <vector>
+#include <memory>
 #include <tinyxml.h>
 
 //#include "../../core/escenario.h"
 //#include "../../core/objeto.h"
 #include "../../core/game.h"
+#include "../../data/IGameDataLoader.h"
+#include "../../data/GameData.h"
 
 typedef TiXmlNode* pNode;
 typedef TiXmlElement* pElem;
@@ -19,29 +22,38 @@ typedef TiXmlHandle* pHand;
 
 class FactoryGame{
 public:
-    FactoryGame(string xmlGameSpecifications);
-	  
-    pScene buildGameById(string gameId);
-    pScene buildScenarioById(string scenarioId);
-    pItem buildItemById(string itemId);
+    // Legacy constructor for XML loading
+    FactoryGame(std::string xmlGameSpecifications);
 
-	  
+    // New constructor using data loader strategy
+    FactoryGame(IGameDataLoader* loader, const std::string& dataFilePath);
+
+    pScene buildGameById(std::string gameId);
+    pScene buildScenarioById(std::string scenarioId);
+    pItem buildItemById(std::string itemId);
+
+
 private:
-	  
-    vector<string> getNameListFromNode(pNode node);
-    vector<string> getTextListFromNode(pNode node);
+    // Legacy XML methods
+    std::vector<std::string> getNameListFromNode(pNode node);
+    std::vector<std::string> getTextListFromNode(pNode node);
 
-    pElem getGameElement(string name);
-    pElem searchForElementId(pElem parent,string id);
+    pElem getGameElement(std::string name);
+    pElem searchForElementId(pElem parent,std::string id);
 
-    // specs given by XML file
-    string xmlGameSpecifications;
+    // New data-driven methods
+    pScene buildScenarioFromData(const GameData::SceneData& sceneData);
+    pItem buildItemFromData(const GameData::ItemData& itemData);
+
+    // Data storage
+    bool useDataLoader;  // Flag to determine which system to use
+    IGameDataLoader* dataLoader;
+    std::string dataFilePath;
+    GameData::GameWorldData gameWorldData;
+
+    // Legacy XML data
+    std::string xmlGameSpecifications;
     TiXmlDocument xmlDoc;
-
-    // specs given by sql table
-    
-    
-    // specs given by a JSON file
 };
 
 

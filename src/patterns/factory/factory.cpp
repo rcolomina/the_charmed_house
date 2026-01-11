@@ -1,15 +1,42 @@
 #include "factory.h"
+#include <iostream>
 
-FactoryGame::FactoryGame(string xmlGameSpecifications)
-     :xmlGameSpecifications(xmlGameSpecifications){
+// Legacy constructor for XML loading
+FactoryGame::FactoryGame(std::string xmlGameSpecifications)
+    : xmlGameSpecifications(xmlGameSpecifications),
+      useDataLoader(false),
+      dataLoader(nullptr) {
 
-     bool loadOkay = xmlDoc.LoadFile(xmlGameSpecifications.c_str());
+    bool loadOkay = xmlDoc.LoadFile(xmlGameSpecifications.c_str());
 
-     if (!loadOkay)
-     {
-	  printf("Could not load test xml file. Error='%s'. Exiting.\n", xmlDoc.ErrorDesc());
-	  exit(1);
-     }
+    if (!loadOkay)
+    {
+        printf("Could not load test xml file. Error='%s'. Exiting.\n", xmlDoc.ErrorDesc());
+        exit(1);
+    }
+}
+
+// New constructor using data loader strategy
+FactoryGame::FactoryGame(IGameDataLoader* loader, const std::string& dataFilePath)
+    : dataLoader(loader),
+      dataFilePath(dataFilePath),
+      useDataLoader(true),
+      xmlGameSpecifications("") {
+
+    if (dataLoader == nullptr) {
+        std::cerr << "Error: DataLoader is nullptr" << std::endl;
+        exit(1);
+    }
+
+    try {
+        gameWorldData = dataLoader->loadGameWorld(dataFilePath);
+        std::cout << "Successfully loaded game data from: " << dataFilePath << std::endl;
+        std::cout << "Loaded " << gameWorldData.scenes.size() << " scenes and "
+                  << gameWorldData.items.size() << " items" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to load game data: " << e.what() << std::endl;
+        exit(1);
+    }
 }
 
 pScene FactoryGame::buildGameById(string gameId){
@@ -166,106 +193,183 @@ pElem FactoryGame::searchForElementId(pElem parent,string id){
 
 /* This method accepts and item id, looking
    into the xml file of the game to get all its
-   informations and build an item with those 
+   informations and build an item with those
 */
-pItem FactoryGame::buildItemById(string itemId){
+pItem FactoryGame::buildItemById(std::string itemId){
 
-     // getting element item
-     pElem elem_Items=this->getGameElement(string("items"));
-     assert(elem_Items!=nullptr);
-	  
-     pElem elem_Item=this->searchForElementId(elem_Items,itemId);
-     assert(elem_Item!=nullptr);
-	  
-     // handler over xml
-     TiXmlHandle itemHandle(elem_Item);
-	  
-     pElem elem_names=itemHandle.FirstChild("names").ToElement();
-     assert(elem_names!=nullptr);
-     vector<string> names=getTextListFromNode(elem_names);
-	  			 
-     pElem elem_descriptions=itemHandle.FirstChild("descriptions").ToElement();
-     assert(elem_descriptions!=nullptr);
-     vector<string> descrip=getTextListFromNode(elem_descriptions);	  
+    // Use new data loader if available
+    if (useDataLoader) {
+        // Try to find with full ID first
+        auto it = gameWorldData.items.find(itemId);
 
-     pElem elem_properties=itemHandle.FirstChild("properties").ToElement();
-     assert(elem_properties!=nullptr);
-	  
-     // Getting the properties
-     vector<string> prop=getTextListFromNode(elem_properties);	  
-     vector<string> propN=getNameListFromNode(elem_properties);
-     vector<pair<string,string> > props;	  
-     vector<string>::iterator it1;
-     vector<string>::iterator it2;
-     for(it1 = propN.begin(),it2 = prop.begin();
-	 it1 < propN.end() && it2 < prop.end();
-	 it1++,it2++)
-     {			 					
-	  pair<string,string> pa(*it1,*it2);
-	  props.push_back(pa);			 
-     }
+        // If not found, try extracting short ID (last part after last '.')
+        if (it == gameWorldData.items.end()) {
+            size_t lastDot = itemId.find_last_of('.');
+            if (lastDot != std::string::npos) {
+                std::string shortId = itemId.substr(lastDot + 1);
+                it = gameWorldData.items.find(shortId);
+            }
+        }
 
-     // Getting path file to image
-     // pElem elem_image = itemHandle.FirstChild("images").ToElement();
+        if (it != gameWorldData.items.end()) {
+            return buildItemFromData(it->second);
+        } else {
+            std::cerr << "Item not found: " << itemId << std::endl;
+            exit(1);
+        }
+    }
 
-     TiXmlHandle itemHandle2(elem_Item);	  	  
-     pElem elem_image=itemHandle.FirstChild("image").ToElement();	  
-     assert(elem_image != nullptr);
-     string pathFileText = elem_image->GetText();
-					
-     // vector<string> v_pathFileText = getTextListFromNode(elem_image);	  
-     // string pathFileText=v_pathFileText[0];
-	  
-     const Entidad& ent =  Entidad(itemId,names[0],descrip[0]);	  	  
-     pItem item=new Item(ent,names,descrip,props,pathFileText);
-	
-     return item;
+    // Legacy XML code
+    // getting element item
+    pElem elem_Items=this->getGameElement(std::string("items"));
+    assert(elem_Items!=nullptr);
+
+    pElem elem_Item=this->searchForElementId(elem_Items,itemId);
+    assert(elem_Item!=nullptr);
+
+    // handler over xml
+    TiXmlHandle itemHandle(elem_Item);
+
+    pElem elem_names=itemHandle.FirstChild("names").ToElement();
+    assert(elem_names!=nullptr);
+    std::vector<std::string> names=getTextListFromNode(elem_names);
+
+    pElem elem_descriptions=itemHandle.FirstChild("descriptions").ToElement();
+    assert(elem_descriptions!=nullptr);
+    std::vector<std::string> descrip=getTextListFromNode(elem_descriptions);
+
+    pElem elem_properties=itemHandle.FirstChild("properties").ToElement();
+    assert(elem_properties!=nullptr);
+
+    // Getting the properties
+    std::vector<std::string> prop=getTextListFromNode(elem_properties);
+    std::vector<std::string> propN=getNameListFromNode(elem_properties);
+    std::vector<std::pair<std::string,std::string> > props;
+    std::vector<std::string>::iterator it1;
+    std::vector<std::string>::iterator it2;
+    for(it1 = propN.begin(),it2 = prop.begin();
+        it1 < propN.end() && it2 < prop.end();
+        it1++,it2++)
+    {
+        std::pair<std::string,std::string> pa(*it1,*it2);
+        props.push_back(pa);
+    }
+
+    // Getting path file to image
+    // pElem elem_image = itemHandle.FirstChild("images").ToElement();
+
+    TiXmlHandle itemHandle2(elem_Item);
+    pElem elem_image=itemHandle.FirstChild("image").ToElement();
+    assert(elem_image != nullptr);
+    std::string pathFileText = elem_image->GetText();
+
+    // vector<string> v_pathFileText = getTextListFromNode(elem_image);
+    // string pathFileText=v_pathFileText[0];
+
+    const Entidad& ent =  Entidad(itemId,names[0],descrip[0]);
+    pItem item=new Item(ent,names,descrip,props,pathFileText);
+
+    return item;
+}
+
+pItem FactoryGame::buildItemFromData(const GameData::ItemData& itemData){
+    // Convert PropertyData to pair<string,string> format expected by Item
+    std::vector<std::pair<std::string,std::string>> props;
+    for (const auto& prop : itemData.properties) {
+        props.push_back(std::make_pair(prop.name, prop.value));
+    }
+
+    // Create the item using the GameData DTO
+    const Entidad& ent = Entidad(itemData.id,
+                                  itemData.names.empty() ? "" : itemData.names[0],
+                                  itemData.descriptions.empty() ? "" : itemData.descriptions[0]);
+
+    pItem item = new Item(ent,
+                          itemData.names,
+                          itemData.descriptions,
+                          props,
+                          itemData.pathFileText);
+
+    return item;
 }
 
 
-pScene FactoryGame::buildScenarioById(string scenId){
+pScene FactoryGame::buildScenarioById(std::string scenId){
 
-     string mainNode("scenes");
-     string attrib("title");
-     string childrenNode("descriptions");
-     string childrenNode2("image");
+    // Use new data loader if available
+    if (useDataLoader) {
+        // Try to find with full ID first
+        auto it = gameWorldData.scenes.find(scenId);
 
-     // getting element item
-     pElem elem_Scenes = this->getGameElement(mainNode.c_str());	  	  
-     pElem elem_Scene  = this->searchForElementId(elem_Scenes,scenId.c_str());
+        // If not found, try extracting short ID (last part after last '.')
+        if (it == gameWorldData.scenes.end()) {
+            size_t lastDot = scenId.find_last_of('.');
+            if (lastDot != std::string::npos) {
+                std::string shortId = scenId.substr(lastDot + 1);
+                it = gameWorldData.scenes.find(shortId);
+            }
+        }
 
-     if(elem_Scenes==nullptr){
-	  cout<<"Handle returned a Null at elem_Scenes"<<endl;
-	  exit(0);
-     }
-	  
-     if(elem_Scene==nullptr){
-	  cout<<"Handle returned a Null at elem_Scen"<<endl;
-	  exit(0);
-     }
+        if (it != gameWorldData.scenes.end()) {
+            return buildScenarioFromData(it->second);
+        } else {
+            std::cerr << "Scene not found: " << scenId << std::endl;
+            exit(1);
+        }
+    }
 
-     const string& scen_title = elem_Scene->Attribute(attrib.c_str());
+    // Legacy XML code
+    std::string mainNode("scenes");
+    std::string attrib("title");
+    std::string childrenNode("descriptions");
+    std::string childrenNode2("image");
 
-     //cout<<"title scenary:"<<scen_title<<endl;
-	  
-     // handler
-     TiXmlHandle itemHandle(elem_Scene);	  	  
-     pElem scen_descrips=itemHandle.FirstChild(childrenNode.c_str()).ToElement();
-	  
-     if(scen_descrips==nullptr){
-	  // TODO: Add an asscertion
-	  cout<<"Handle returned a Null value"<<endl;
-	  exit(0);
-     }
-	  
-     vector<string> descripts = getTextListFromNode(scen_descrips);
+    // getting element item
+    pElem elem_Scenes = this->getGameElement(mainNode.c_str());
+    pElem elem_Scene  = this->searchForElementId(elem_Scenes,scenId.c_str());
 
-     pElem scen_image = itemHandle.FirstChild(childrenNode2.c_str()).ToElement();	  
-     string pathText  = scen_image->GetText();
+    if(elem_Scenes==nullptr){
+        cout<<"Handle returned a Null at elem_Scenes"<<endl;
+        exit(0);
+    }
 
-     const Entidad& ent = Entidad(scenId,scen_title,descripts[0]);
-	  
-     pScene scene = new Escenario(ent,descripts[1],pathText);
-			 
-     return scene;
+    if(elem_Scene==nullptr){
+        cout<<"Handle returned a Null at elem_Scen"<<endl;
+        exit(0);
+    }
+
+    const std::string& scen_title = elem_Scene->Attribute(attrib.c_str());
+
+    //cout<<"title scenary:"<<scen_title<<endl;
+
+    // handler
+    TiXmlHandle itemHandle(elem_Scene);
+    pElem scen_descrips=itemHandle.FirstChild(childrenNode.c_str()).ToElement();
+
+    if(scen_descrips==nullptr){
+        // TODO: Add an asscertion
+        cout<<"Handle returned a Null value"<<endl;
+        exit(0);
+    }
+
+    std::vector<std::string> descripts = getTextListFromNode(scen_descrips);
+
+    pElem scen_image = itemHandle.FirstChild(childrenNode2.c_str()).ToElement();
+    std::string pathText  = scen_image->GetText();
+
+    const Entidad& ent = Entidad(scenId,scen_title,descripts[0]);
+
+    pScene scene = new Escenario(ent,descripts[1],pathText);
+
+    return scene;
+}
+
+pScene FactoryGame::buildScenarioFromData(const GameData::SceneData& sceneData){
+    // Create the scene using the GameData DTO
+    const Entidad& ent = Entidad(sceneData.id, sceneData.title, sceneData.description);
+
+    // Use observation as the second description parameter
+    pScene scene = new Escenario(ent, sceneData.observation, sceneData.imagePath);
+
+    return scene;
 }

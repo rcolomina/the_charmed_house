@@ -1,0 +1,271 @@
+{
+  "version": "1.0",
+  "pathImages": "./txt",
+  "scenes": {
+    "sce000": {
+      "id": "game.scenes.scene.sce000",
+      "title": "Prelude: The adventure begins...",
+      "descriptions": [
+        "In a village far from the city, there was a ruined and ancient house for as long as I can remember. As the adventurer that I am, I have always wanted to explore it, but I have never dared. There are signs forbidding entry around it. Whoever the owner is, they want intruders to stay away.",
+        "For nights I had been dreaming about that ruined house, imagining what might be inside. One night, in one of my dreams, I glimpsed an unrecognizable human figure. The only thing I could decipher in that enigmatic dream was the call of that entity. It whispered, -Help me!!, help me!!-. \n From that moment, I could wait no longer. I had to enter that abandoned house, despite the warnings around it."
+      ],
+      "observation": "",
+      "imagePath": "./txt/scenes/fronthouse.txt",
+      "items": [],
+      "exits": {}
+    },
+    "sce001": {
+      "id": "game.scenes.scene.sce001",
+      "title": "The House Entrance",
+      "descriptions": [
+        "An old house built of stone and wood stands before you. \nIt barely holds on to its\n foundations.\nThere are courtesy signs warning intruders. \n¡ATTENTION! NO ENTRY, DANGER, GET OUT!, GO AWAY, HAVEN'T YOU UNDERSTOOD?.",
+        "You can see a tree branch pointing to a brick in the wall."
+      ],
+      "observation": "",
+      "imagePath": "./txt/scenes/fronthouse.txt",
+      "items": ["item02"],
+      "exits": {
+        "norte": "sce002"
+      }
+    },
+    "sce002": {
+      "id": "game.scenes.scene.sce002",
+      "title": "The Stone Monument",
+      "descriptions": [
+        "Stones piled in three groups seemed to represent some kind of monument at one time.",
+        "The stones are piled in 3 groups, each with a certain number. It's a combination of 3 numbers."
+      ],
+      "observation": "",
+      "imagePath": "./txt/scenes/stones.txt",
+      "items": [],
+      "exits": {
+        "sur": "sce001"
+      }
+    },
+    "sce003": {
+      "id": "game.scenes.scene.sce003",
+      "title": "Cemetery",
+      "descriptions": [
+        "Stones piled in three groups seemed to represent some kind of monument at one time."
+      ],
+      "observation": "Looking carefully at one of the tombstones, you discover an inscription: L-R-L-L-R-R-L-R-L-R-R-R. Could they be dance steps?",
+      "imagePath": "./txt/scenes/cementery.txt",
+      "items": [],
+      "exits": {}
+    },
+    "sce004": {
+      "id": "game.scenes.scene.sce004",
+      "title": "Tree Arch",
+      "descriptions": [
+        "A stone arch rises in your path. You can see a metallic object at its highest part. You don't think you can reach it with bare hands."
+      ],
+      "observation": "You can see that the object is a lever to pull anything",
+      "imagePath": "./txt/scenes/arcoarboles.txt",
+      "items": ["item04"],
+      "exits": {}
+    },
+    "sce005": {
+      "id": "game.scenes.scene.sce005",
+      "title": "The Lake",
+      "descriptions": [
+        "An idyllic landscape presents itself before you. A lake blocks your way, although you can see a small island in its center, populated with trees."
+      ],
+      "observation": "A small cavity seems to indicate that at one time it could have been some kind of key.",
+      "imagePath": "./txt/scenes/island.txt",
+      "items": ["item06"],
+      "exits": {}
+    },
+    "sce006": {
+      "id": "game.scenes.scene.sce006",
+      "title": "Ruins of the Lake Island",
+      "descriptions": [
+        "You are on a small island populated with trees. A ruined stone house stands before you. Vegetation has invaded it over the years."
+      ],
+      "observation": "Examining inside the house, you can find a stone mechanism that could contain something.",
+      "imagePath": "./txt/scenes/ruimsLake.txt",
+      "items": ["item07"],
+      "exits": {}
+    }
+  },
+  "items": {
+    "item01": {
+      "id": "game.items.item.item01",
+      "names": ["staff", "stick"],
+      "descriptions": [
+        "It's an elongated wooden staff with a handle at its end.",
+        "Deteriorated by the passage of time."
+      ],
+      "properties": [
+        {
+          "name": "reacher",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item02": {
+      "id": "game.items.item.item02",
+      "names": ["brick", "brik"],
+      "descriptions": [
+        "A loose brick in the house wall. You could try pulling it."
+      ],
+      "properties": [
+        {
+          "name": "fix",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "stucked",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "tirable",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item03": {
+      "id": "game.items.item.item03",
+      "names": ["lock", "Lock"],
+      "descriptions": [
+        "A golden and ancient lock."
+      ],
+      "properties": [
+        {
+          "name": "visibility",
+          "type": "boolean",
+          "value": "false"
+        },
+        {
+          "name": "fix",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item04": {
+      "id": "game.items.item.item04",
+      "names": ["crowbar", "Crowbar"],
+      "descriptions": [
+        "It's a metal crowbar forged in steel and elongated, twisted at one of its ends, and ending in a flat wedge. It allows forcing doors, windows or mechanisms, something essential in any thief's toolbox."
+      ],
+      "properties": [
+        {
+          "name": "visibility",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "stuck",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "stucked",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item05": {
+      "id": "game.items.item.item05",
+      "names": ["figurine"],
+      "descriptions": [
+        "It's a figurine carved in stone in the shape of an angel. At its base it has a protruding shape that could fit into some cavity."
+      ],
+      "properties": [
+        {
+          "name": "stuck",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "plug",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "key",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "code",
+          "type": "integer",
+          "value": "12345"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item06": {
+      "id": "game.items.item.item06",
+      "names": ["hole", "cavity"],
+      "descriptions": [
+        "It's a hole carved in the rock, clearly made by a human hand, specially designed to hold or fit something on it."
+      ],
+      "properties": [
+        {
+          "name": "fix",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "socket",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "lock",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "code",
+          "type": "integer",
+          "value": "12345"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item07": {
+      "id": "game.items.item.item07",
+      "names": ["mechanical panel", "panel"],
+      "descriptions": [
+        "It's a mechanical panel from an old toy. It has three small switches with various positions."
+      ],
+      "properties": [
+        {
+          "name": "fix",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    }
+  },
+  "cardinals": [
+    "north",
+    "northeast",
+    "east",
+    "southeast",
+    "south",
+    "southwest",
+    "west",
+    "northwest"
+  ],
+  "connections": [
+    {
+      "sceneIdOrigin": "sce001",
+      "cardinalOrigin": "north",
+      "sceneIdDestination": "sce002",
+      "cardinalDestination": "south"
+    }
+  ]
+}

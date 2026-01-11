@@ -49,14 +49,18 @@ since connection amount scenes, complex objects and triggers, as hidden objects,
 -It will be great to store all commads written, even more, all things that are being done by the software by level,
 a logger system. This is covered by logger files.
 
--IDEA: Do not forget to use UUID (universal identifiers) for all item's identification. This is the best thing to do in order to not have collisions amount instances.
+-IDEA: Do not forget to use UUID (universal identifiers) for all item's identification. 
+This is the best thing to do in order to not have collisions amount instances.
 
 03/07/2016
--IDEA: Build a whole test functional without interface. This will be a synthetic player writing operation to pass the game chapter after chapter. All the traces could be seen on the logger.
+-IDEA: Build a whole test functional without interface. 
+This will be a synthetic player writing operation to pass the game chapter after chapter. 
+All the traces could be seen on the logger.
 
 07/07/2016
 
--IDEA: When player make a misspelling for a command, the system may suggest the closest one to the user. This could help to the player so far with commands .
+-IDEA: When player make a misspelling for a command, the system may suggest the closest one to the user. 
+This could help to the player so far with commands .
 
 
 21/07/2016

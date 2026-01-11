@@ -21,16 +21,23 @@
 #include "../patterns/factory/factory.h"
 #include "../core/game.h"
 
+// Forward declarations
+class JSONGameDataLoader;
+
 using namespace std;
 using namespace parametros;
 
 class Manager{
 //Crea los escenarios, los objetos, el jugador en estado incial.
-//Proporciona al jugador la salidas, los objetos, 
-//Desencaden los eventos que 
+//Proporciona al jugador la salidas, los objetos,
+//Desencaden los eventos que
 public:
-    Manager();
-    ~Manager(){}
+    Manager();  // Legacy constructor using XML
+    Manager(const std::string& language);  // New constructor with language support
+    ~Manager(){
+        delete fac;
+        delete jsonLoader;
+    }
 
     //METODOS LOOP PRINCIPAL
     void run();
@@ -100,7 +107,8 @@ private:
 
     EventsQueue eventsQueue;
 
-    FactoryGame fac;
+    FactoryGame* fac;
+    JSONGameDataLoader* jsonLoader;  // For JSON-based loading
 //	  EventsQueuet*> eventsQueue;
 }; 
 
