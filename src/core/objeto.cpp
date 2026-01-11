@@ -1,5 +1,21 @@
 #include "objeto.h"
 
+Objeto::~Objeto() {
+    // Clean up dynamically allocated properties
+    for (auto& pair : map_pBools) {
+        delete pair.second;
+    }
+    map_pBools.clear();
+
+    for (auto& pair : map_pInts) {
+        delete pair.second;
+    }
+    map_pInts.clear();
+
+    // Note: Events in eventsToFire queue are not owned by Objeto,
+    // so we don't delete them here. They should be managed elsewhere.
+}
+
 Objeto::Objeto(const Entidad &entity,
 	       vector<string> names,
 	       vector<string> descriptions,
@@ -53,7 +69,7 @@ void Objeto::set_value(string prop,bool value){
 void Objeto::tirar()
 {
      cout<<endl<<descripcion_tirar<<endl;
-     if(objeto_rel_tirar!=NULL)
+     if(objeto_rel_tirar!=nullptr)
      {
 	  objeto_rel_tirar->set_value(string("visibility"),true);
      }
@@ -65,7 +81,7 @@ void Objeto::tirar()
 
 void Objeto::set_tirable(Objeto *objeto,string descrip_tirable)
 {
-     if(objeto!=NULL)
+     if(objeto!=nullptr)
      {
 	  this->objeto_rel_tirar=objeto;
 	  objeto_rel_tirar->set_value(string("visibility"),false);
@@ -85,7 +101,7 @@ bool Objeto::get_value<bool>(const char* pro)
 {			 
     pBool pb=map_pBools[string(pro)];
     bool value=false; // TODO: Return false value by default 
-    if(pb!=NULL)
+    if(pb!=nullptr)
     {
         value=pb->Value();
     }
@@ -102,7 +118,7 @@ int Objeto::get_value<int>(const char* pro)
 {			 
     pInt pI=map_pInts[string(pro)];
     int value=0; 
-    if(pI!=NULL)
+    if(pI!=nullptr)
     {
         value=pI->Value();
     }
@@ -128,5 +144,5 @@ IEvent* Objeto::activate_event()
         eventsToFire.pop();
         return event;					
     }
-    return NULL;
+    return nullptr;
 }

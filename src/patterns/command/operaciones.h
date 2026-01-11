@@ -17,6 +17,7 @@ using namespace parametros;
 class ICommand{
 public:
     ICommand(string command_id):command_id(command_id){}
+    virtual ~ICommand() = default;
     virtual void execute()=0;
     string get_command_id(){return command_id;}
 protected:

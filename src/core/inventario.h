@@ -6,17 +6,15 @@
 
 #include "objeto.h"
 
-using namespace std;
-
 class Inventario{
 public:
     Inventario();
 
     //GETTERS
-    Objeto* get_objeto(string nombre_objeto);
-    bool get_existe_objeto(string nombre);
+    Objeto* get_objeto(std::string nombre_objeto);
+    bool get_existe_objeto(std::string nombre);
     Objeto extraer_objeto();
-    string listar();
+    std::string listar();
 
     bool posee_alcanzador();
     Objeto* tomar_alcanzador();
@@ -26,10 +24,10 @@ public:
 
     //SETTERS
     void insertar_objeto(Objeto *objeto);
-    void eliminar(string nombre);
+    void eliminar(std::string nombre);
 
 private:
-    map<string,Objeto*> objetos_inventario;
+    std::map<std::string,Objeto*> objetos_inventario;
 };
 
 #endif

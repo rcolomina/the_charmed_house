@@ -3,7 +3,7 @@
 
 const string EventOpenConnection::activate(){
 
-    assert(scene!=NULL);
+    assert(scene!=nullptr);
     scene->set_estado_salida(cardinal,true);
     /// TODO: If something goes wrong this should return an error messages
 //	  return string("message");

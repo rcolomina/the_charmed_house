@@ -138,7 +138,7 @@ pElem FactoryGame::getGameElement(string name){
     // TODO: Depending on data origin setup work on JSON, XML or SQL table
     
     // Looking for the Element Items
-    pNode node=NULL;
+    pNode node=nullptr;
     node = xmlDoc.FirstChild("games");
     assert(node);	  
     TiXmlHandle docHandle(node);
@@ -159,7 +159,7 @@ pElem FactoryGame::searchForElementId(pElem parent,string id){
 	       return temp;
 	  }
      }	  
-     return NULL;
+     return nullptr;
 }
 
 
@@ -172,24 +172,24 @@ pItem FactoryGame::buildItemById(string itemId){
 
      // getting element item
      pElem elem_Items=this->getGameElement(string("items"));
-     assert(elem_Items!=NULL);
+     assert(elem_Items!=nullptr);
 	  
      pElem elem_Item=this->searchForElementId(elem_Items,itemId);
-     assert(elem_Item!=NULL);
+     assert(elem_Item!=nullptr);
 	  
      // handler over xml
      TiXmlHandle itemHandle(elem_Item);
 	  
      pElem elem_names=itemHandle.FirstChild("names").ToElement();
-     assert(elem_names!=NULL);
+     assert(elem_names!=nullptr);
      vector<string> names=getTextListFromNode(elem_names);
 	  			 
      pElem elem_descriptions=itemHandle.FirstChild("descriptions").ToElement();
-     assert(elem_descriptions!=NULL);
+     assert(elem_descriptions!=nullptr);
      vector<string> descrip=getTextListFromNode(elem_descriptions);	  
 
      pElem elem_properties=itemHandle.FirstChild("properties").ToElement();
-     assert(elem_properties!=NULL);
+     assert(elem_properties!=nullptr);
 	  
      // Getting the properties
      vector<string> prop=getTextListFromNode(elem_properties);	  
@@ -210,7 +210,7 @@ pItem FactoryGame::buildItemById(string itemId){
 
      TiXmlHandle itemHandle2(elem_Item);	  	  
      pElem elem_image=itemHandle.FirstChild("image").ToElement();	  
-     assert(elem_image != NULL);
+     assert(elem_image != nullptr);
      string pathFileText = elem_image->GetText();
 					
      // vector<string> v_pathFileText = getTextListFromNode(elem_image);	  
@@ -234,12 +234,12 @@ pScene FactoryGame::buildScenarioById(string scenId){
      pElem elem_Scenes = this->getGameElement(mainNode.c_str());	  	  
      pElem elem_Scene  = this->searchForElementId(elem_Scenes,scenId.c_str());
 
-     if(elem_Scenes==NULL){
+     if(elem_Scenes==nullptr){
 	  cout<<"Handle returned a Null at elem_Scenes"<<endl;
 	  exit(0);
      }
 	  
-     if(elem_Scene==NULL){
+     if(elem_Scene==nullptr){
 	  cout<<"Handle returned a Null at elem_Scen"<<endl;
 	  exit(0);
      }
@@ -252,7 +252,7 @@ pScene FactoryGame::buildScenarioById(string scenId){
      TiXmlHandle itemHandle(elem_Scene);	  	  
      pElem scen_descrips=itemHandle.FirstChild(childrenNode.c_str()).ToElement();
 	  
-     if(scen_descrips==NULL){
+     if(scen_descrips==nullptr){
 	  // TODO: Add an asscertion
 	  cout<<"Handle returned a Null value"<<endl;
 	  exit(0);

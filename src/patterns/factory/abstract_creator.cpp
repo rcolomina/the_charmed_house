@@ -1,13 +1,13 @@
 #include "abstract_creator.h"
 
-vector<std::string> AbstractGameCreator::getInfoList(const pNode &parent,const InfoClass &info)
+std::vector<std::string> AbstractGameCreator::getInfoList(const pNode &parent,const InfoClass &info)
 {
 
      std::vector<std::string> output;
      pNode child = 0;
      while((child = parent->IterateChildren(child)))
      {
-	  string value_text;
+	  std::string value_text;
 	  if(info==Name)
 	       value_text = child->Value();
 	  else if(info==Text){
@@ -19,9 +19,9 @@ vector<std::string> AbstractGameCreator::getInfoList(const pNode &parent,const I
      return output;	  
 }
 
-pElem AbstractGameCreator::searchForGame(const string &name){
+pElem AbstractGameCreator::searchForGame(const std::string &name){
      // Looking for the Element Items
-     pNode node=NULL;
+     pNode node=nullptr;
      node = xmlDoc.FirstChild("games");
      assert(node);	  
      TiXmlHandle docHandle(node);
@@ -36,11 +36,11 @@ pElem AbstractGameCreator::searchForId(const pElem &parent,const std::string &id
      while((child = parent->IterateChildren(child)))
      {
 	  pElem temp = child->ToElement();
-	  string value_attribute = temp->Attribute("id");
+	  std::string value_attribute = temp->Attribute("id");
 	  if(id.compare(value_attribute)==0 )
 	  {
 	       return temp;
 	  }
      }	  
-     return NULL;
+     return nullptr;
 }

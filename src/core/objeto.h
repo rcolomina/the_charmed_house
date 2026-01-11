@@ -24,11 +24,6 @@ typedef Objeto Item;
 
 class Objeto : public Entidad{
    public:
-     Objeto(int id,
-	    const string &name,
-	    const string &description):
-	  Entidad(id,name,description){}
-    
      Objeto(const Entidad &ent,
 	    vector<string> names,
 	    vector<string> descriptions,
@@ -44,11 +39,13 @@ class Objeto : public Entidad{
 	    vector<string> oidChildren,
 	    string typeObject
 	  );
-     
+
      Objeto(const Entidad &ent,
 	    vector<string> names,
 	    vector<string> descriptions,
 	    vector<pBool> properties);
+
+     ~Objeto();
 
      // This allows getting a generic property from this object
      template <typename T>

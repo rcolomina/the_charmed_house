@@ -69,7 +69,7 @@ void Cardinal::execute(){
      
 
      
-    bool existeSalida=(psce->get_salida(cardinal)!=NULL);
+    bool existeSalida=(psce->get_salida(cardinal)!=nullptr);
     bool estadoSalida=psce->get_estado_salida(cardinal);
 
 
@@ -300,8 +300,8 @@ void Colocar::execute(){
                 Objeto *obj1=inventory.get_objeto(parametro);
                 Objeto *obj2=(*scene)->get_objeto(parametro2);
 
-                assert(obj1!=NULL);
-                assert(obj2!=NULL);								 
+                assert(obj1!=nullptr);
+                assert(obj2!=nullptr);								 
 						  
                 bool isKey  =  true;//obj1->get_value<bool>("key");
                 bool isLock =  true;//obj2->get_value<bool>("lock");
@@ -315,7 +315,7 @@ void Colocar::execute(){
                         cout<<Color::yellow<<"Has colocado "<<parametro<<" sobre "<<parametro2;
                         cout<<". Un mecanismo se ha activado."<<Color::def<<endl;			
                         IEvent* event=obj2->activate_event();	
-                        if(event!=NULL)
+                        if(event!=nullptr)
                             eventsQueue.push(event);
                     }
                     else
