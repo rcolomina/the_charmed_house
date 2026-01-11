@@ -15,24 +15,24 @@ Entidad* ItemGameCreator::createById(std::string itemId){
 
     // getting element item
     pElem elem_Items=this->searchForGame(string("items"));
-    assert(elem_Items!=NULL);
+    assert(elem_Items!=nullptr);
 	  
     pElem elem_Item=this->searchForId(elem_Items,itemId);
-    assert(elem_Item!=NULL);
+    assert(elem_Item!=nullptr);
 	  
     // handler
     TiXmlHandle itemHandle(elem_Item);
 	  
     pElem elem_names=itemHandle.FirstChild("names").ToElement();
-    assert(elem_names!=NULL);
+    assert(elem_names!=nullptr);
     vector<std::string> names=getInfoList(elem_names,Name);
 	  			 
     pElem elem_descriptions=itemHandle.FirstChild("descriptions").ToElement();
-    assert(elem_descriptions!=NULL);
+    assert(elem_descriptions!=nullptr);
     vector<string> descrip=getInfoList(elem_descriptions,Text);	  
 
     pElem elem_properties=itemHandle.FirstChild("properties").ToElement();
-    assert(elem_properties!=NULL);
+    assert(elem_properties!=nullptr);
 	  
     vector<string> prop=getInfoList(elem_properties,Text);	  
     vector<string> propN=getInfoList(elem_properties,Name);

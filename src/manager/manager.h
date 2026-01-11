@@ -18,7 +18,6 @@
 #include "../core/jugador.h"
 #include "../patterns/command/invocador.h"
 //#include "parametros.h"
-
 #include "../patterns/factory/factory.h"
 #include "../core/game.h"
 

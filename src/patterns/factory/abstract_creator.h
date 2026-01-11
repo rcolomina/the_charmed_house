@@ -17,9 +17,9 @@ class AbstractGameCreator{
 	public:
 	  virtual Entidad* createById(const std::string itemId) = 0;
 	protected:
-	  vector<string> getInfoList(const pNode &parent,const InfoClass &info);
+	  std::vector<std::string> getInfoList(const pNode &parent,const InfoClass &info);
 
-	  pElem searchForGame(const string &gameName);
+	  pElem searchForGame(const std::string &gameName);
 	  pElem searchForId(const pElem &parent,const std::string &id);
 
 	  TiXmlDocument xmlDoc;

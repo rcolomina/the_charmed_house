@@ -12,11 +12,6 @@ void connect(pScene scenA,cardinal carA,pScene scenB,cardinal carB){
      scenB->conexions[carB]=scenA;	  	  
 }
 
-Escenario::Escenario(int id,string nombre,string descripcion,string observacion):
-     Entidad(id,nombre,descripcion),
-     observacion(observacion){
-     }
-
 Escenario::Escenario(const Entidad &ent,const string &observacion,const string &path):
      Entidad(ent),
      observacion(observacion),
@@ -26,9 +21,9 @@ Escenario::Escenario(const Entidad &ent,const string &observacion,const string &
 
 pScene Escenario::conexion(cardinal car)
 {
-     if(conexions[car]!=NULL)
+     if(conexions[car]!=nullptr)
 	  return conexions[car];
-     return NULL;
+     return nullptr;
 }
 
 

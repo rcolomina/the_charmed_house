@@ -3,45 +3,37 @@
 
 #include <string>
 
-using namespace std;
-
 // This class provides identification methods for its derived classes
-// Each object 
+// Each object
 
 class Entidad {
 public:
     Entidad():
         sid("-1"),
-        id(-1),
         name("no name"),
         description("no description"){}
-    Entidad(const int id,const string name,const string description):        
-        id(id),
-        name(name),
-        description(description){
-        //sid=to_string(id);
-    }
 
-    Entidad(const string sid,const string name,const string description):
+    Entidad(const std::string sid,const std::string name,const std::string description):
         sid(sid),
-        id(1),  //todo
         name(name),
         description(description){}
 
-    Entidad(const Entidad &other):id(other.id),
-                                  name(other.name),
-                                  description(other.description){}
+    Entidad(const Entidad &other):
+        sid(other.sid),
+        name(other.name),
+        description(other.description){}
 
-    const string sId(){return sid;}
-    const int Id(){return id;}
-    const string Name(){return name;}
-    const string examine(){return description;}
+    virtual ~Entidad() = default;
+
+    const std::string& id() const { return sid; }
+    const std::string& sId() const { return sid; }  // Deprecated: use id() instead
+    const std::string& Name() const { return name; }
+    const std::string& examine() const { return description; }
 
 protected:
-    const string sid;
-    const int id; 
-    const string name;
-    const string description;
+    const std::string sid;
+    const std::string name;
+    const std::string description;
 };
 
 

@@ -12,7 +12,7 @@ void EventsQueue::fire(){
     if(!eventsQueue.empty())
     {
         IEvent *event=eventsQueue.front();
-        assert(event!=NULL);
+        assert(event!=nullptr);
 //			 cout<<event->message()<<endl;
         cout<<event->activate()<<std::endl;
         eventsQueue.pop();

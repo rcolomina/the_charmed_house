@@ -72,7 +72,7 @@ Objeto* Inventario::tomar_desatascador(){
         if(it->second->get_value<bool>("desatascador"))
             return it->second;
     }
-    return NULL;
+    return nullptr;
 }
 
 

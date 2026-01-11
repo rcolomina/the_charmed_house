@@ -253,7 +253,7 @@ void Manager::actualizar_objetos(){
 	  event=eventsQueue.front();
   	
 	  cout<<"Size eventsQueue:"<<eventsQueue.size()<<endl;
-	  assert(event!=NULL);
+	  assert(event!=nullptr);
 	  Logger::instance().log("actualizar_objetos", Logger::kLogLevelInfo);
 	  //cout<<event->message()<<endl;
 	  cout<<event->activate()<<endl;
@@ -272,7 +272,7 @@ void Manager::actualizar_objetos(){
 //Chequear el ladrillo de la puerta
 /*			 Objeto *ladrillo=mundo[escena1]->get_objeto(o_ladrillo);
 			 Objeto *llave=mundo[escena1]->get_objeto(o_cerradura);
-			 if(llave!=NULL and ladrillo!=NULL)
+			 if(llave!=nullptr and ladrillo!=nullptr)
                          if(not llave->get_visible() and ladrillo->get_usado()){
                          cout<<"Una llave dorada aparece ante tu vista."<<endl;
                          llave->set_visible(true);
