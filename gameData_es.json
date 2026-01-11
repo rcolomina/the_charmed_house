@@ -1,0 +1,271 @@
+{
+  "version": "1.0",
+  "pathImages": "./txt",
+  "scenes": {
+    "sce000": {
+      "id": "game.scenes.scene.sce000",
+      "title": "Preludio: La aventura comienza...",
+      "descriptions": [
+        "En un pueblo lejos de la ciudad, había una casa ruinosa y antigua desde que tengo ojos para ver. Como aventurero que soy, he tenido en mente explorarla en todo momento, pero nunca me he atrevido. Existen carteles prohibiendo el paso en sus alrededores. Quien quiera que sea el dueño, quiere que los intrusos permanezcan lejos.",
+        "Durante noches había estado soñando con aquella casa en ruinas, imaginando que podría haber en su inferior. Una noche, en uno de mis sueños, vislumbré una figura humana irreconocible. Lo único que pude descifrar en aquel enigmático sueño, es la llamada de aquella entidad. Susurraba, -Ayuuudame!!, ayuudame!!-.  \n Desde aquel momento, no pude esperar más. Debía entrar en aquella casa abandonada,  a pesar de que las advertencias en los alrededores."
+      ],
+      "observation": "",
+      "imagePath": "./txt/scenes/fronthouse.txt",
+      "items": [],
+      "exits": {}
+    },
+    "sce001": {
+      "id": "game.scenes.scene.sce001",
+      "title": "La Entrada a la Casa",
+      "descriptions": [
+        "Una casa antigua construída en piedra y madera se presenta ante tí. \nA duras penas se sostiene sobre sus\n cimientos.\nHay carteles de cortesia advirtiendo a los intrusos. \n¡ATENCION! NO PASAR, PELIGRO, FUERA!, A LA MIERDA, ¿NO TE HAS ENTERADO?.",
+        "Puedes ver una rama de árbol indicando ladrillo en la pared."
+      ],
+      "observation": "",
+      "imagePath": "./txt/scenes/fronthouse.txt",
+      "items": ["item02"],
+      "exits": {
+        "norte": "sce002"
+      }
+    },
+    "sce002": {
+      "id": "game.scenes.scene.sce002",
+      "title": "El monumento de piedras",
+      "descriptions": [
+        "Piedras amontonadas en tres grupos parecían representar algún tipo de monumento en otro tiempo.",
+        "Las piedras están amontonadas en 3 grupos, cada uno con un número determinado. Es una combinación de 3 números."
+      ],
+      "observation": "",
+      "imagePath": "./txt/scenes/stones.txt",
+      "items": [],
+      "exits": {
+        "sur": "sce001"
+      }
+    },
+    "sce003": {
+      "id": "game.scenes.scene.sce003",
+      "title": "Cementerio",
+      "descriptions": [
+        "Piedras amontonadas en tres grupos parecían representar algún tipo de monumento en otro tiempo."
+      ],
+      "observation": "Mirando atentamente sobre una de las lápida, descubres una inscripción: I-D-I-I-D-D-I-D-I-D-D-D. ¿Podrían ser paso de baile?",
+      "imagePath": "./txt/scenes/cementery.txt",
+      "items": [],
+      "exits": {}
+    },
+    "sce004": {
+      "id": "game.scenes.scene.sce004",
+      "title": "Arco de árboles",
+      "descriptions": [
+        "Un arco de piedra se alza en tu camino. Puedes ver que un objeto metálico en su parte mas alta. No crees que puedas alcanzarlo con las manos desnudas."
+      ],
+      "observation": "Puedes ver que el objeto es una palanca para tirar de cualquier cosa",
+      "imagePath": "./txt/scenes/arcoarboles.txt",
+      "items": ["item04"],
+      "exits": {}
+    },
+    "sce005": {
+      "id": "game.scenes.scene.sce005",
+      "title": "El Lago",
+      "descriptions": [
+        "Un paraje idílico se presenta ante tí. Un lago te corta el camino, aunque puedes ver una pequeña isla en su centro, poblada de árboles."
+      ],
+      "observation": "Una pequeña oquedad parece indicar que en otro tiempo pudo ser algún tipo de llave.",
+      "imagePath": "./txt/scenes/island.txt",
+      "items": ["item06"],
+      "exits": {}
+    },
+    "sce006": {
+      "id": "game.scenes.scene.sce006",
+      "title": "Ruinas de la isla del lago",
+      "descriptions": [
+        "Estás en una pequeña isla poblada de árboles. Una casa ruinosa hecha de piedra se preseneta ante ti. La vegetación la ha invadido con el paso de los años."
+      ],
+      "observation": "Examinando en el interior de la casa, puedes encontrar un mecanismo en piedra que podría contener alguna cosa.",
+      "imagePath": "./txt/scenes/ruimsLake.txt",
+      "items": ["item07"],
+      "exits": {}
+    }
+  },
+  "items": {
+    "item01": {
+      "id": "game.items.item.item01",
+      "names": ["bastón", "baston"],
+      "descriptions": [
+        "Es un batón de madera alargado, con una empuñadura en su extremo.",
+        "Deteriorado por el paso del tiempo."
+      ],
+      "properties": [
+        {
+          "name": "reacher",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item02": {
+      "id": "game.items.item.item02",
+      "names": ["ladrillo", "ladril"],
+      "descriptions": [
+        "Ladrillo desencajado en la pared de la casa. Podrias intentar tirar de él."
+      ],
+      "properties": [
+        {
+          "name": "fix",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "stucked",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "tirable",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item03": {
+      "id": "game.items.item.item03",
+      "names": ["cerradura", "Cerradura"],
+      "descriptions": [
+        "Una cerradura dorada y antigua."
+      ],
+      "properties": [
+        {
+          "name": "visibility",
+          "type": "boolean",
+          "value": "false"
+        },
+        {
+          "name": "fix",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item04": {
+      "id": "game.items.item.item04",
+      "names": ["palanca", "Palanca"],
+      "descriptions": [
+        "Es una palanca metálica forjadad en acero y alargada, retorcida en uno de sus extremos, y terminando en una cuña plana. Permite forzar puertas, ventanas o mecanismos, algo escencial en la maleta de herramientas de cualquier  ladrón."
+      ],
+      "properties": [
+        {
+          "name": "visibility",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "stuck",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "stucked",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item05": {
+      "id": "game.items.item.item05",
+      "names": ["figurita"],
+      "descriptions": [
+        "Es una figurita tallada en piedra en forma de ángel. En su base posee una forma saliente que podria encajar en alguna oquedad."
+      ],
+      "properties": [
+        {
+          "name": "stuck",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "plug",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "key",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "code",
+          "type": "integer",
+          "value": "12345"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item06": {
+      "id": "game.items.item.item06",
+      "names": ["hueco"],
+      "descriptions": [
+        "Es un hueco tallado en la roca, hecho claramente por una mano humana, especialmente diseñado para albergar o encajar algo sobre él."
+      ],
+      "properties": [
+        {
+          "name": "fix",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "socket",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "lock",
+          "type": "boolean",
+          "value": "true"
+        },
+        {
+          "name": "code",
+          "type": "integer",
+          "value": "12345"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    },
+    "item07": {
+      "id": "game.items.item.item07",
+      "names": ["panel mecánico"],
+      "descriptions": [
+        "Es un panel mecánico de un viejo juguete. Posee tres pequeños conmutadores con varias posiciones."
+      ],
+      "properties": [
+        {
+          "name": "fix",
+          "type": "boolean",
+          "value": "true"
+        }
+      ],
+      "pathFileText": "./txt/items"
+    }
+  },
+  "cardinals": [
+    "norte",
+    "nordeste",
+    "este",
+    "surdeste",
+    "sur",
+    "suroeste",
+    "oeste",
+    "noroeste"
+  ],
+  "connections": [
+    {
+      "sceneIdOrigin": "sce001",
+      "cardinalOrigin": "norte",
+      "sceneIdDestination": "sce002",
+      "cardinalDestination": "sur"
+    }
+  ]
+}

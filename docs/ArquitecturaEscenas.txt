@@ -55,19 +55,14 @@ LAB Laberinto
 Map first chapter		      							  	  	  	  	  	 
 		 CEL ----- LAG ----- ARC ----- MPI ---- FAC ---- CEM
 LAB
- N	  							  	 
-	  	  	  			  	  	 
+				 N
 				 |	  								 
 				 |	  								 
-		  w ------- E				 
+    	    W ------- E				 
 		 		 |									 
 		 		 |									 
 		 		 									 
-		  	  	 S									 
-
-
-
-					  
+		  	  	 S									 	  
                 ||------------------||
 					 ||------------------||
 					 ||						||				

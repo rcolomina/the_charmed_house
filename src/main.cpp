@@ -3,6 +3,8 @@
 #include <pthread.h>
 
 #include <fstream>
+#include <iostream>
+#include <string>
 
 #include "manager/manager.h"
 
@@ -16,6 +18,41 @@ void *events_thread(void *ptr);
 
 
 int main(int argc,char **n_args){
+
+    // Language selection
+    std::string language = "es";  // Default to Spanish
+
+    // Check for command line argument
+    if (argc > 1) {
+        std::string arg = n_args[1];
+        if (arg == "--lang=en" || arg == "-l=en" || arg == "en") {
+            language = "en";
+        } else if (arg == "--lang=es" || arg == "-l=es" || arg == "es") {
+            language = "es";
+        }
+    } else {
+        // Interactive language selection
+        std::cout << "\n==================================" << std::endl;
+        std::cout << "  THE CHARMED HOUSE / LA CASA ENCANTADA" << std::endl;
+        std::cout << "==================================" << std::endl;
+        std::cout << "\nSelect language / Seleccione idioma:" << std::endl;
+        std::cout << "  1. English" << std::endl;
+        std::cout << "  2. Español" << std::endl;
+        std::cout << "\nEnter your choice (1 or 2): ";
+
+        int choice;
+        std::cin >> choice;
+        std::cin.ignore();  // Clear the input buffer
+
+        if (choice == 1) {
+            language = "en";
+        } else {
+            language = "es";
+        }
+    }
+
+    std::cout << "\nLanguage selected: " << (language == "en" ? "English" : "Español") << std::endl;
+    std::cout << std::endl;
 
     pthread_t thread1,thread2;
 
@@ -53,8 +90,8 @@ int main(int argc,char **n_args){
     */
 
 //	  exit(1);
-				
-    Manager *manager=new Manager();
+
+    Manager *manager=new Manager(language);
 
     pthread_create(&thread1, NULL, main_thread, (void*)manager);  //inteface de usuario
     //pthread_create(&thread2, NULL, events_thread, (void*)manager);    //eventos del juego

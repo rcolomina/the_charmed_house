@@ -8,8 +8,8 @@ int main(){
     cout<<"Creating and Entity"<<endl;
     int id=1;
     string name="device";
-    string descrip="This is a piece of juck";	  
-    Entidad entity(id,name,descrip);
+    string descrip="This is a piece of junk";	  
+    Entidad entity(std::to_string(id),name,descrip);
 	  
     cout<<"entity name is:"<<entity.Name()<<endl;
     cout<<"entity description is:"<<entity.examine()<<endl;
@@ -63,7 +63,7 @@ int main(){
 
     cout<<"TESTING RELATED OBJECTS"<<endl;
 
-    Entidad ent2(2,"hidden","hidden object");
+    Entidad ent2(std::to_string(2),"hidden","hidden object");
     Objeto item2(ent2,names,descr,props,fileNameText);
     cout<<"New object item2 created"<<endl;
     item2.set_value("visibility",false);

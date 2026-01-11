@@ -11,9 +11,10 @@ LDFLAGS=-lpthread
 SRC_DIR := src
 LIB_DIR := lib
 PATH_TINYXML := ./3rdParty/tinyxml
+PATH_JSON := ./3rdParty/json
 
 # Include paths - add src/ and lib/ to include search paths
-INCS := -I. -I${SRC_DIR} -I${LIB_DIR} -I${PATH_TINYXML}
+INCS := -I. -I${SRC_DIR} -I${LIB_DIR} -I${PATH_TINYXML} -I${PATH_JSON}
 
 # Executable name
 EXECUTABLE := main
@@ -106,3 +107,6 @@ invocador_test: ${SRC_DIR}/tests/invocador_test.cpp $(OBJECTSTEST) $(OBJ_TINYXML
 
 game_test: ${SRC_DIR}/tests/game_test.cpp $(OBJECTSTEST) $(OBJ_TINYXML)
 	$(CC) $(CFLAGS) $< $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} $(LDFLAGS) -o ${SRC_DIR}/tests/game_test
+
+json_loader_test: ${SRC_DIR}/tests/json_loader_test.cpp $(OBJECTSTEST) $(OBJ_TINYXML)
+	$(CC) $(CFLAGS) $< $(OBJECTSTEST) $(OBJ_TINYXML) ${INCS} $(LDFLAGS) -o ${SRC_DIR}/tests/json_loader_test

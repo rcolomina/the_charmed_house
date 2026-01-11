@@ -1,20 +1,24 @@
 #include "manager.h"
 #include "lib/logger/logger.h"
 #include "../patterns/command/operaciones.h"
+#include "../data/JSONGameDataLoader.h"
 
 using namespace parametros;
 
 const double freq=1.0/60.0; 
 
+// Legacy constructor using XML
 Manager::Manager():dt(freq),
                    tiempo(0),
                    continuar_loop(true),
                    contador_mal_comportamiento(0),
-		   fac("gamesInfo.xml")
+                   jsonLoader(nullptr)
 {
+    fac = new FactoryGame("gamesInfo.xml");
+
     string gameId="";
     //scene using id
-    escena_actual = fac.buildGameById(gameId);
+    escena_actual = fac->buildGameById(gameId);
     cout<<"manager() escena_actual address: "<<escena_actual<<endl;
      
     //CommandBuilder *commandBuilder    = new CommandBuilder();
@@ -61,7 +65,63 @@ Manager::Manager():dt(freq),
     
     // Build command trigger
     this->invocador_comandos = Invocador(mapComandos);
-	 
+
+}
+
+// New constructor with language support using JSON
+Manager::Manager(const std::string& language):dt(freq),
+                   tiempo(0),
+                   continuar_loop(true),
+                   contador_mal_comportamiento(0)
+{
+    // Build game data file path based on language
+    std::string gameDataFile = "gameData_" + language + ".json";
+
+    // Create JSON loader and factory
+    jsonLoader = new JSONGameDataLoader();
+    fac = new FactoryGame(jsonLoader, gameDataFile);
+
+    string gameId="";
+    //scene using id
+    escena_actual = fac->buildGameById(gameId);
+    cout<<"manager() escena_actual address: "<<escena_actual<<endl;
+
+    //Construir los comandos y conectarlos al invocador
+    string comandos_disponibles="Comandos disponibles: ";
+    vector<string> v_comandos;
+    for(int i=0;i<NUMBER_COMMANDS;++i)
+        v_comandos.push_back(comandos[i]);
+
+    list<ICommand*> mycommands;
+
+    mycommands.push_back(new Exit(continuar_loop));
+    mycommands.push_back(new Ayuda(v_comandos));
+    mycommands.push_back(new Ver(&escena_actual));
+    mycommands.push_back(new Examinar(&escena_actual,inventario,parametro1));
+    mycommands.push_back(new CommandInventario(inventario));
+    mycommands.push_back(new Cardinal(&escena_actual,s_norte,primera_entrada));
+    mycommands.push_back(new Cardinal(&escena_actual,s_sur,primera_entrada));
+    mycommands.push_back(new Cardinal(&escena_actual,s_oeste,primera_entrada));
+    mycommands.push_back(new Cardinal(&escena_actual,s_este,primera_entrada));
+    mycommands.push_back(new Tirar(&escena_actual,inventario,parametro1,parametro2));
+    mycommands.push_back(new Coger(&escena_actual,inventario,parametro1));
+    mycommands.push_back(new Dejar(&escena_actual,inventario,parametro1));
+    mycommands.push_back(new Alcanzar(&escena_actual,inventario,parametro1));
+    mycommands.push_back(new Colocar(&escena_actual,inventario,eventsQueue,parametro1,parametro2));
+
+    map<string,ICommand*> mapComandos; // = new map<string,ICommand*>;
+
+    for(auto it=mycommands.begin();
+        it!=mycommands.end();
+        ++it){
+        string key=(*it)->get_command_id();
+        mapComandos[key]=*it;
+        //cout<<"Added key "<<key<<endl;
+    }
+
+    // Build command trigger
+    this->invocador_comandos = Invocador(mapComandos);
+
 }
 
 void Manager::prologo(){
