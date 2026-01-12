@@ -90,27 +90,31 @@ pScene FactoryGame::buildGameById(string gameId){
       mundo[nombre3]=esc3;
       mundo[nombre4]=esc4;*/
 	 
-     // Enlaces entre escenas
-     //Id: 1->[2(o),3(e)] ,2->[1(e),4(i)), 3->[1(o)], 4->[2(e)]
+     // Enlaces entre escenas (permanent connections using connect())
+     //Id: 1->[2(o),3(e)] ,2->[1(e),4(o)), 3->[1(o)], 4->[2(e),5(o)], 5->[4(e),6(o)], 6->[5(e)]
      connect(esc1,west,esc2,east);
      connect(esc1,east,esc3,west);
      connect(esc2,west,esc4,east);
+     connect(esc4,west,esc5,east);
+     connect(esc5,west,esc6,east);
 
-	 
-     esc1->set_salida(esc2,oeste,true);	 
-     esc2->set_salida(esc1,este,true);
-		  
-     esc1->set_salida(esc3,este,true);
-     esc3->set_salida(esc1,oeste,true);
-	 
-     esc2->set_salida(esc4,oeste,true);
-     esc4->set_salida(esc2,este,true);
+     // Set initial state of exits (true=enabled/open, false=disabled/locked)
+     // Now using set_estado_salida() instead of set_salida() for state management
+     esc1->set_estado_salida(oeste,true);
+     esc1->set_estado_salida(este,true);
 
-     esc4->set_salida(esc5,oeste,true);
-     esc5->set_salida(esc4,este,true);
+     esc2->set_estado_salida(este,true);
+     esc2->set_estado_salida(oeste,true);
 
-     esc5->set_salida(esc6,oeste,false);
-     esc6->set_salida(esc5,este,true);
+     esc3->set_estado_salida(oeste,true);
+
+     esc4->set_estado_salida(este,true);
+     esc4->set_estado_salida(oeste,true);
+
+     esc5->set_estado_salida(este,true);
+     esc5->set_estado_salida(oeste,false); // Initially locked! (example: door needs key)
+
+     esc6->set_estado_salida(este,true);
 
      //RELACIONAR OBJETOS
      // Ladrillo con llave

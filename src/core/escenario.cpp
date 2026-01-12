@@ -1,29 +1,51 @@
 #include "escenario.h"
 // Friend functions
-void connect(pScene scenA,cardinal carA,pScene scenB,cardinal carB){
+void connect(pScene scenA,parametros::cardinal carA,pScene scenB,parametros::cardinal carB){
 
      if(scenA->conexions[carA]==scenB)
 	  throw "scenA already connected with scenB by carA";
 
      if(scenB->conexions[carB]==scenA)
 	  throw "scenB already connected with scenA by carB";
-					
-     scenA->conexions[carA]=scenB;	  
-     scenB->conexions[carB]=scenA;	  	  
+
+     scenA->conexions[carA]=scenB;
+     scenB->conexions[carB]=scenA;
 }
 
 Escenario::Escenario(const Entidad &ent,const string &observacion,const string &path):
      Entidad(ent),
      observacion(observacion),
      pathFileImageText(path)
-{	  
+{
 }
 
-pScene Escenario::conexion(cardinal car)
+pScene Escenario::conexion(parametros::cardinal car)
 {
      if(conexions[car]!=nullptr)
 	  return conexions[car];
      return nullptr;
+}
+
+parametros::cardinal Escenario::stringToCardinal(const string& direction) {
+     using namespace parametros;
+     if (direction == "norte" || direction == "north")
+          return north;
+     else if (direction == "sur" || direction == "south")
+          return south;
+     else if (direction == "este" || direction == "east")
+          return east;
+     else if (direction == "oeste" || direction == "west")
+          return west;
+     else if (direction == "noroeste" || direction == "northwest")
+          return northwest;
+     else if (direction == "noreste" || direction == "northeast")
+          return northeast;
+     else if (direction == "suroeste" || direction == "southwest")
+          return southwest;
+     else if (direction == "sureste" || direction == "southeast")
+          return southeast;
+     else
+          return north; // default, should not happen
 }
 
 
