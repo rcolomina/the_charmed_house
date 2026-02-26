@@ -13,7 +13,8 @@ Manager::Manager():dt(freq),
                    tiempo(0),
                    continuar_loop(true),
                    contador_mal_comportamiento(0),
-                   jsonLoader(nullptr)
+                   jsonLoader(nullptr),
+                   language_("es")
 {
     fac = new FactoryGame("gamesInfo.xml");
 
@@ -32,7 +33,8 @@ Manager::Manager():dt(freq),
 Manager::Manager(const std::string& language):dt(freq),
                    tiempo(0),
                    continuar_loop(true),
-                   contador_mal_comportamiento(0)
+                   contador_mal_comportamiento(0),
+                   language_(language)
 {
     // Build game data file path based on language
     std::string gameDataFile = "gameData_" + language + ".json";
@@ -94,7 +96,7 @@ void Manager::run() {
 
     GameLoop gameLoop(continuar_loop, escena_actual, invocador_comandos,
                       comando, parametro1, parametro2, contador_mal_comportamiento,
-                      update_objects_func, update_exits_func);
+                      update_objects_func, update_exits_func, language_);
     gameLoop.run();
 
     // TODO: Save game state
@@ -110,7 +112,11 @@ string Manager::get_descripcion_estado_actual(){
     descripcion+="\n";
     if(escena_actual->get_objetos_disponibles()!="")
     {
-        descripcion+="Puedes ver : \n";
+        if(language_ == "en") {
+            descripcion+="You can see: \n";
+        } else {
+            descripcion+="Puedes ver : \n";
+        }
         descripcion+=escena_actual->get_objetos_disponibles();
     }
     return descripcion;
@@ -141,7 +147,11 @@ void Manager::clock(){
         int itime = (int) tiempo;
         if( itime % (5*60) == 0 )
         {
-            cout<<"\nHan pasado "<<tiempo<<" segundos desde el inicio del juego\n"<<">>>";
+            if(language_ == "en") {
+                cout<<"\n"<<tiempo<<" seconds have passed since the start of the game\n"<<">>>";
+            } else {
+                cout<<"\nHan pasado "<<tiempo<<" segundos desde el inicio del juego\n"<<">>>";
+            }
         }
 
         sleep(1); //detiene el hilo durante 1 segundo

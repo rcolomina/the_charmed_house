@@ -110,6 +110,7 @@ private:
 
     FactoryGame* fac;
     JSONGameDataLoader* jsonLoader;  // For JSON-based loading
+    std::string language_;  // Store the selected language
 //	  EventsQueuet*> eventsQueue;
 }; 
 
