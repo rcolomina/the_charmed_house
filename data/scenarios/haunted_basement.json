@@ -1,0 +1,80 @@
+{
+  "id": "sce_sotano",
+  "nombre": "El Sótano Embrujado",
+  "name": "The Haunted Basement",
+  "descripcion": "Un sótano oscuro y húmedo se extiende ante ti. El aire es denso y huele a moho y vino añejo. Barriles de roble alineados contra las paredes parecen contener secretos de otra época. Cadenas oxidadas cuelgan del techo, meciéndose sin viento aparente. En las sombras, puedes escuchar el rasguño incesante de algo... o alguien.",
+  "description": "A dark, damp cellar stretches before you. The air is thick and smells of mold and aged wine. Oak barrels lined against the walls seem to hold secrets from another era. Rusty chains hang from the ceiling, swaying without any apparent wind. In the shadows, you can hear the incessant scratching of something... or someone.",
+  "observacion": "Al examinar más de cerca, notas marcas de garras en las paredes de piedra. Las cadenas tienen manchas oscuras que podrían ser óxido... o sangre seca.",
+  "observation": "Upon closer examination, you notice claw marks on the stone walls. The chains have dark stains that could be rust... or dried blood.",
+  "imagePath": "./txt/scenes/sotano.txt",
+  "objetos": [
+    {
+      "id": "item_antorcha",
+      "nombres": ["antorcha", "tea", "torch"],
+      "descripcion": "Una antorcha de madera empapada en brea. Aún conserva algo de combustible.",
+      "description": "A wooden torch soaked in pitch. It still has some fuel left.",
+      "propiedades": {
+        "portable": true,
+        "iluminable": true,
+        "encendida": false
+      },
+      "interacciones": {
+        "usar": "La antorcha ilumina el sótano revelando inscripciones antiguas en las paredes.",
+        "examinar": "La antorcha está hecha de madera de pino, con trapos empapados en brea en su extremo."
+      }
+    },
+    {
+      "id": "item_barril",
+      "nombres": ["barril", "tonel", "barrel"],
+      "descripcion": "Un barril de roble viejo con aros de hierro oxidado. Algo chapotea en su interior.",
+      "description": "An old oak barrel with rusty iron hoops. Something splashes inside.",
+      "propiedades": {
+        "portable": false,
+        "contenedor": true,
+        "abierto": false
+      },
+      "interacciones": {
+        "abrir": "Al abrir el barril, un olor pútrido escapa. Dentro hay vino convertido en vinagre... y algo que brilla en el fondo.",
+        "examinar": "El barril tiene grabado el año 1847. Los aros de hierro están corroídos por el tiempo."
+      }
+    },
+    {
+      "id": "item_cadenas",
+      "nombres": ["cadenas", "cadena", "chains"],
+      "descripcion": "Cadenas de hierro forjado cuelgan del techo, oxidadas por siglos de humedad.",
+      "description": "Wrought iron chains hang from the ceiling, rusted by centuries of moisture.",
+      "propiedades": {
+        "portable": false,
+        "interactivo": true
+      },
+      "interacciones": {
+        "tirar": "Al tirar de las cadenas, escuchas un mecanismo activarse en algún lugar de la casa.",
+        "examinar": "Las cadenas tienen grilletes en sus extremos. Alguien estuvo encadenado aquí."
+      }
+    },
+    {
+      "id": "item_rata",
+      "nombres": ["rata", "roedor", "rat"],
+      "descripcion": "Una rata enorme con ojos rojos brillantes te observa desde las sombras.",
+      "description": "A huge rat with glowing red eyes watches you from the shadows.",
+      "propiedades": {
+        "portable": false,
+        "vivo": true,
+        "hostil": false
+      },
+      "interacciones": {
+        "hablar": "La rata chilla y corre hacia un agujero en la pared, revelando un pasaje oculto.",
+        "examinar": "La rata es anormalmente grande. Sus ojos parecen tener una inteligencia inquietante."
+      }
+    }
+  ],
+  "conexiones": {
+    "arriba": "sce_cocina",
+    "norte": "sce_cripta"
+  },
+  "ambiente": {
+    "iluminacion": "oscuro",
+    "sonidos": ["goteo", "rasguños", "cadenas"],
+    "temperatura": "frio_humedo"
+  }
+}

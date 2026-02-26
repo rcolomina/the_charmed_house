@@ -1,0 +1,81 @@
+{
+  "id": "sce_torre",
+  "nombre": "La Torre del Campanario",
+  "name": "The Bell Tower",
+  "descripcion": "Has ascendido a la torre más alta de la casa. Campanas antiguas cuelgan silenciosas, cubiertas de telarañas y excrementos de murciélago. Las ventanas rotas dejan entrar el viento helado de la noche. Desde aquí puedes ver todo el pueblo abandonado abajo, envuelto en niebla. El vértigo es intenso; el suelo parece llamarte.",
+  "description": "You have climbed to the tallest tower of the house. Ancient bells hang silent, covered in cobwebs and bat droppings. Broken windows let in the freezing night wind. From here you can see the entire abandoned village below, shrouded in fog. The vertigo is intense; the floor seems to call to you.",
+  "observacion": "Las campanas tienen inscripciones en un idioma antiguo. Dicen que cuando suenan, los muertos despiertan.",
+  "observation": "The bells have inscriptions in an ancient language. They say when they ring, the dead awaken.",
+  "imagePath": "./txt/scenes/torre.txt",
+  "objetos": [
+    {
+      "id": "item_campana",
+      "nombres": ["campana", "campanas", "bell"],
+      "descripcion": "Una campana de bronce ennegrecido con símbolos arcanos grabados en su superficie.",
+      "description": "A blackened bronze bell with arcane symbols engraved on its surface.",
+      "propiedades": {
+        "portable": false,
+        "interactivo": true,
+        "peligroso": true
+      },
+      "interacciones": {
+        "tocar": "El sonido de la campana resuena por toda la casa. Abajo, escuchas movimiento... muchos movimientos.",
+        "examinar": "La campana está fechada en 1666. Los símbolos parecen ser de protección... o invocación."
+      }
+    },
+    {
+      "id": "item_cuerda",
+      "nombres": ["cuerda", "soga", "rope"],
+      "descripcion": "Una cuerda gruesa y deshilachada que cuelga de la campana principal.",
+      "description": "A thick, frayed rope hanging from the main bell.",
+      "propiedades": {
+        "portable": true,
+        "herramienta": true,
+        "longitud": "larga"
+      },
+      "interacciones": {
+        "tirar": "La campana suena con un tañido grave que hace vibrar tus huesos.",
+        "cortar": "Cortas la cuerda. Podría ser útil para descender o atar algo."
+      }
+    },
+    {
+      "id": "item_murcielago",
+      "nombres": ["murciélago", "murcielago", "bat"],
+      "descripcion": "Un murciélago anormalmente grande cuelga del techo, observándote con ojos inteligentes.",
+      "description": "An abnormally large bat hangs from the ceiling, watching you with intelligent eyes.",
+      "propiedades": {
+        "portable": false,
+        "vivo": true,
+        "familiar": true
+      },
+      "interacciones": {
+        "hablar": "El murciélago chilla y vuela en círculos, señalando algo oculto en las vigas.",
+        "examinar": "Este murciélago es demasiado grande para ser normal. Sus ojos brillan con un rojo sobrenatural."
+      }
+    },
+    {
+      "id": "item_catalejo",
+      "nombres": ["catalejo", "telescopio", "spyglass"],
+      "descripcion": "Un catalejo de latón antiguo apoyado en el alféizar de la ventana.",
+      "description": "An antique brass spyglass resting on the window sill.",
+      "propiedades": {
+        "portable": true,
+        "herramienta": true,
+        "vision": true
+      },
+      "interacciones": {
+        "usar": "A través del catalejo ves el cementerio del pueblo. Las tumbas están abiertas y vacías.",
+        "examinar": "El catalejo tiene grabado: 'Para ver lo que otros no pueden'. Tiene lentes de cristal extrañamente coloreado."
+      }
+    }
+  ],
+  "conexiones": {
+    "abajo": "sce_pasillo_superior",
+    "oeste": "sce_jardin"
+  },
+  "ambiente": {
+    "iluminacion": "luna_y_estrellas",
+    "sonidos": ["viento", "murcielagos", "crujidos_madera"],
+    "temperatura": "muy_frio"
+  }
+}
