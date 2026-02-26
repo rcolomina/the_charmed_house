@@ -44,6 +44,11 @@ private:
     // New data-driven methods
     pScene buildScenarioFromData(const GameData::SceneData& sceneData);
     pItem buildItemFromData(const GameData::ItemData& itemData);
+    void buildConnectionsFromData(std::map<std::string, pScene>& sceneMap);
+    pScene buildGameFromData();
+    void setupSpecialObjectRelationships(
+        std::map<std::string, pScene>& sceneMap,
+        std::map<std::string, pItem>& itemMap);
 
     // Data storage
     bool useDataLoader;  // Flag to determine which system to use

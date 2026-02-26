@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include <sstream>
 #include "../core/escenario.h"
 #include "../core/objeto.h"
 #include "../core/entidad.h"
@@ -297,7 +298,7 @@ void test_object_manipulation() {
         
         if (scene != nullptr) {
             // Create a test object
-            Entidad ent("test_obj", "Test Object");
+            Entidad ent("test_obj", "Test Object", "A test object for testing");
             vector<string> names = {"test"};
             vector<string> descriptions = {"A test object"};
             vector<pair<string, string>> props = {{"visibility", "true"}};
@@ -372,11 +373,13 @@ void test_multiple_scenes() {
         TEST_ASSERT(gameData.scenes.size() > 0, "Game has multiple scenes");
         
         // Verify each scene has required data
-        for (const auto& sceneData : gameData.scenes) {
-            TEST_ASSERT(sceneData.id.length() > 0, 
-                       string("Scene ") + sceneData.id + " has ID");
-            TEST_ASSERT(sceneData.descriptions.size() > 0,
-                       string("Scene ") + sceneData.id + " has descriptions");
+        for (const auto& scenePair : gameData.scenes) {
+            const auto& sceneId = scenePair.first;
+            const auto& sceneData = scenePair.second;
+            TEST_ASSERT(sceneId.length() > 0, 
+                       string("Scene ") + sceneId + " has ID");
+            TEST_ASSERT(sceneData.description.length() > 0,
+                       string("Scene ") + sceneId + " has description");
         }
     } catch (const exception& e) {
         TEST_ASSERT(false, string("Exception: ") + e.what());
@@ -390,7 +393,7 @@ void test_scene_no_exits() {
     cout << "\n=== Test: Scene with No Exits ===" << endl;
     
     // Create a scene with no exits
-    Entidad ent("isolated", "Isolated Scene");
+    Entidad ent("isolated", "Isolated Scene", "An isolated scene for testing");
     Escenario scene(ent, "An isolated scene", "./txt/scenes/fronthouse.txt");
     
     // Verify no exits
@@ -413,8 +416,8 @@ void test_connect_function() {
     cout << "\n=== Test: Scene Connection Function ===" << endl;
     
     // Create two scenes
-    Entidad ent1("scene1", "Scene 1");
-    Entidad ent2("scene2", "Scene 2");
+    Entidad ent1("scene1", "Scene 1", "First test scene");
+    Entidad ent2("scene2", "Scene 2", "Second test scene");
     
     Escenario* sceneA = new Escenario(ent1, "First scene", "./txt/scenes/fronthouse.txt");
     Escenario* sceneB = new Escenario(ent2, "Second scene", "./txt/scenes/stones.txt");

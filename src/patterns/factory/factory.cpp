@@ -42,100 +42,159 @@ FactoryGame::FactoryGame(IGameDataLoader* loader, const std::string& dataFilePat
 pScene FactoryGame::buildGameById(string gameId){
 
     // *** building process ***
-    // RUN SCENE IDS
-    // FOR EACH SCENEID
-    //    BUILD SECEN
-    // FOR EACH OBJECTID
-    //    BUILD OBJECT
-    // ADD OBJECTS TO SECENES
-    // ADD LINKS AMONG SCENES
-    
-    
-     //CONSTRUIMOS LA PRIMERA ESCENA: TODO:Cargar desde fichero
-     // TODO: Build automatically all these objects running over its ids.
-     pScene esc1 = this->buildScenarioById("game.scenes.scene.sce001");
-     pScene esc2 = this->buildScenarioById("game.scenes.scene.sce002");
-     pScene esc3 = this->buildScenarioById("game.scenes.scene.sce003");
-     pScene esc4 = this->buildScenarioById("game.scenes.scene.sce004");
-     pScene esc5 = this->buildScenarioById("game.scenes.scene.sce005");
-     pScene esc6 = this->buildScenarioById("game.scenes.scene.sce006");
-	  
-     //CONSTRUIR OBJETOS
-     // TODO: Build automatically all these objects running over its ids.	  
-     pItem o_baston    = this->buildItemById("game.items.item.item01");
-     pItem o_ladrillo  = this->buildItemById("game.items.item.item02");
-     pItem o_cerradura = this->buildItemById("game.items.item.item03");
-     pItem o_palanca   = this->buildItemById("game.items.item.item04");
-     pItem o_figurita  = this->buildItemById("game.items.item.item05");
-     pItem o_hueco     = this->buildItemById("game.items.item.item06");
+    // 1. Build all scenes from data
+    // 2. Build connections from data
+    // 3. Build items and place in scenes
+    // 4. Set up events and special object relationships
 
-     // Events on objects
-     IEvent *eventOpenConnection1 = new EventOpenConnection(esc5,
-							    s_oeste,
-							    postMessageActivationToEventOpenConnection1);
+    // Use data-driven approach if data loader is available
+    if (useDataLoader) {
+        return buildGameFromData();
+    }
 
-     o_hueco->insert_event(eventOpenConnection1);
+    // Legacy XML-based game building (fallback)
+    pScene esc1 = this->buildScenarioById("game.scenes.scene.sce001");
+    pScene esc2 = this->buildScenarioById("game.scenes.scene.sce002");
+    pScene esc3 = this->buildScenarioById("game.scenes.scene.sce003");
+    pScene esc4 = this->buildScenarioById("game.scenes.scene.sce004");
+    pScene esc5 = this->buildScenarioById("game.scenes.scene.sce005");
+    pScene esc6 = this->buildScenarioById("game.scenes.scene.sce006");
 
-//Continuar con el bucle principal del juego
-//	  continuar_loop=true;
-//   configurar reloj
-//	  tiempo=0; //segundos	  
-//   variables del jugador
-//	  contador_mal_comportamiento=0;
-  	 	  	  	 
+    pItem o_baston    = this->buildItemById("game.items.item.item01");
+    pItem o_ladrillo  = this->buildItemById("game.items.item.item02");
+    pItem o_cerradura = this->buildItemById("game.items.item.item03");
+    pItem o_palanca   = this->buildItemById("game.items.item.item04");
+    pItem o_figurita  = this->buildItemById("game.items.item.item05");
+    pItem o_hueco     = this->buildItemById("game.items.item.item06");
 
-     //insertar escenario en mundo
-/*    mundo[nombre1]=esc1;
-      mundo[nombre2]=esc2;
-      mundo[nombre3]=esc3;
-      mundo[nombre4]=esc4;*/
-	 
-     // Enlaces entre escenas (permanent connections using connect())
-     //Id: 1->[2(o),3(e)] ,2->[1(e),4(o)), 3->[1(o)], 4->[2(e),5(o)], 5->[4(e),6(o)], 6->[5(e)]
-     connect(esc1,west,esc2,east);
-     connect(esc1,east,esc3,west);
-     connect(esc2,west,esc4,east);
-     connect(esc4,west,esc5,east);
-     connect(esc5,west,esc6,east);
+    IEvent *eventOpenConnection1 = new EventOpenConnection(esc5,
+                                                           s_oeste,
+                                                           postMessageActivationToEventOpenConnection1);
+    o_hueco->insert_event(eventOpenConnection1);
 
-     // Set initial state of exits (true=enabled/open, false=disabled/locked)
-     // Now using set_estado_salida() instead of set_salida() for state management
-     esc1->set_estado_salida(oeste,true);
-     esc1->set_estado_salida(este,true);
+    connect(esc1,west,esc2,east);
+    connect(esc1,east,esc3,west);
+    connect(esc2,west,esc4,east);
+    connect(esc4,west,esc5,east);
+    connect(esc5,west,esc6,east);
 
-     esc2->set_estado_salida(este,true);
-     esc2->set_estado_salida(oeste,true);
+    esc1->set_estado_salida(oeste,true);
+    esc1->set_estado_salida(este,true);
+    esc2->set_estado_salida(este,true);
+    esc2->set_estado_salida(oeste,true);
+    esc3->set_estado_salida(oeste,true);
+    esc4->set_estado_salida(este,true);
+    esc4->set_estado_salida(oeste,true);
+    esc5->set_estado_salida(este,true);
+    esc5->set_estado_salida(oeste,false);
+    esc6->set_estado_salida(este,true);
 
-     esc3->set_estado_salida(oeste,true);
+    string descrip_tirar_ladrillo="Tiras con fuerza del ladrillo de la pared, y parece que comienza a ceder. Una vez sacado el ladrillo, tras el, aparece una cerradura escondida.";
+    o_ladrillo->set_tirable(o_cerradura,descrip_tirar_ladrillo);
 
-     esc4->set_estado_salida(este,true);
-     esc4->set_estado_salida(oeste,true);
+    esc1->set_objeto(o_ladrillo);
+    esc1->set_objeto(o_cerradura);
+    esc2->set_objeto(o_baston);
+    esc3->set_objeto(o_figurita);
+    esc4->set_objeto(o_palanca);
+    esc5->set_objeto(o_hueco);
 
-     esc5->set_estado_salida(este,true);
-     esc5->set_estado_salida(oeste,false); // Initially locked! (example: door needs key)
+    return esc1;
+}
 
-     esc6->set_estado_salida(este,true);
+pScene FactoryGame::buildGameFromData() {
+    std::cout << "Building game from JSON data..." << std::endl;
 
-     //RELACIONAR OBJETOS
-     // Ladrillo con llave
-     string descrip_tirar_ladrillo="Tiras con fuerza del ladrillo de la pared, y parece que comienza a ceder. Una vez sacado el ladrillo, tras el, aparece una cerradura escondida.";
-     o_ladrillo->set_tirable(o_cerradura,descrip_tirar_ladrillo);
+    // Step 1: Build all scenes and store in map
+    std::map<std::string, pScene> sceneMap;
+    for (auto it = gameWorldData.scenes.begin(); it != gameWorldData.scenes.end(); ++it) {
+        const std::string& sceneId = it->first;
+        const GameData::SceneData& sceneData = it->second;
+        pScene scene = buildScenarioFromData(sceneData);
+        sceneMap[sceneId] = scene;
+        std::cout << "Built scene: " << sceneId << " (" << sceneData.title << ")" << std::endl;
+    }
 
-     //o_hueco->subscribed(
-	 
-     //INSERTAR OBJETOS EN ESCENARIOS
-     esc1->set_objeto(o_ladrillo);
-     esc1->set_objeto(o_cerradura);
-     esc2->set_objeto(o_baston);
-     esc3->set_objeto(o_figurita);
-     esc4->set_objeto(o_palanca);
-     esc5->set_objeto(o_hueco);
-     //CONSTRUIR INVENTARIO
-     //inventario.insertar_objeto(objeto);
+    // Step 2: Build connections from data (uses exits defined in each scene)
+    buildConnectionsFromData(sceneMap);
 
-     
-          // Setear la escena de comienzo del juego
-     return esc1;
+    // Step 3: Build items and place them in scenes based on JSON data
+    std::map<std::string, pItem> itemMap;
+    for (auto it = gameWorldData.items.begin(); it != gameWorldData.items.end(); ++it) {
+        const std::string& itemId = it->first;
+        const GameData::ItemData& itemData = it->second;
+        pItem item = buildItemFromData(itemData);
+        itemMap[itemId] = item;
+        std::cout << "Built item: " << itemId << std::endl;
+    }
+
+    // Place items in scenes as defined in JSON
+    for (auto it = gameWorldData.scenes.begin(); it != gameWorldData.scenes.end(); ++it) {
+        const std::string& sceneId = it->first;
+        const GameData::SceneData& sceneData = it->second;
+        pScene scene = sceneMap[sceneId];
+        for (size_t i = 0; i < sceneData.itemIds.size(); ++i) {
+            const std::string& itemId = sceneData.itemIds[i];
+            auto itemIt = itemMap.find(itemId);
+            if (itemIt != itemMap.end()) {
+                scene->set_objeto(itemIt->second);
+                std::cout << "Placed item " << itemId << " in scene " << sceneId << std::endl;
+            } else {
+                std::cerr << "Warning: Item not found: " << itemId << std::endl;
+            }
+        }
+    }
+
+    // Step 4: Set up special object relationships and events
+    // TODO: These could also be data-driven in the future
+    setupSpecialObjectRelationships(sceneMap, itemMap);
+
+    // Return the starting scene (sce001)
+    auto startScene = sceneMap.find("sce001");
+    if (startScene != sceneMap.end()) {
+        return startScene->second;
+    }
+
+    // Fallback: return first scene if sce001 not found
+    if (!sceneMap.empty()) {
+        return sceneMap.begin()->second;
+    }
+
+    std::cerr << "Error: No scenes found in game data!" << std::endl;
+    exit(1);
+}
+
+void FactoryGame::setupSpecialObjectRelationships(
+    std::map<std::string, pScene>& sceneMap,
+    std::map<std::string, pItem>& itemMap) {
+
+    // Special relationship: ladrillo reveals cerradura when pulled
+    auto ladrilloIt = itemMap.find("item02");
+    auto cerraduraIt = itemMap.find("item03");
+    if (ladrilloIt != itemMap.end() && cerraduraIt != itemMap.end()) {
+        string descrip_tirar_ladrillo = "Tiras con fuerza del ladrillo de la pared, y parece que comienza a ceder. Una vez sacado el ladrillo, tras el, aparece una cerradura escondida.";
+        ladrilloIt->second->set_tirable(cerraduraIt->second, descrip_tirar_ladrillo);
+
+        // Also add cerradura to sce001 (hidden initially)
+        auto sce001It = sceneMap.find("sce001");
+        if (sce001It != sceneMap.end()) {
+            sce001It->second->set_objeto(cerraduraIt->second);
+        }
+    }
+
+    // Event: hueco opens west connection from sce005
+    auto huecoIt = itemMap.find("item06");
+    auto sce005It = sceneMap.find("sce005");
+    if (huecoIt != itemMap.end() && sce005It != sceneMap.end()) {
+        IEvent *eventOpenConnection1 = new EventOpenConnection(
+            sce005It->second,
+            s_oeste,
+            postMessageActivationToEventOpenConnection1);
+        huecoIt->second->insert_event(eventOpenConnection1);
+
+        // Set west exit as initially locked
+        sce005It->second->set_estado_salida(oeste, false);
+    }
 }
 
 vector<string> FactoryGame::getNameListFromNode(pNode parent){
@@ -376,4 +435,60 @@ pScene FactoryGame::buildScenarioFromData(const GameData::SceneData& sceneData){
     pScene scene = new Escenario(ent, sceneData.observation, sceneData.imagePath);
 
     return scene;
+}
+
+void FactoryGame::buildConnectionsFromData(std::map<std::string, pScene>& sceneMap) {
+    // Build connections from JSON data (exits field in each scene)
+    for (auto itScene = gameWorldData.scenes.begin(); itScene != gameWorldData.scenes.end(); ++itScene) {
+        const std::string& sceneId = itScene->first;
+        const GameData::SceneData& sceneData = itScene->second;
+
+        auto itOrigin = sceneMap.find(sceneId);
+        if (itOrigin == sceneMap.end()) {
+            continue;  // Scene not in our map, skip
+        }
+        pScene originScene = itOrigin->second;
+
+        // Process exits for this scene
+        for (auto itExit = sceneData.exits.begin(); itExit != sceneData.exits.end(); ++itExit) {
+            const std::string& direction = itExit->first;
+            const std::string& destSceneId = itExit->second;
+
+            auto itDest = sceneMap.find(destSceneId);
+            if (itDest == sceneMap.end()) {
+                std::cerr << "Warning: Connection destination not found: " << destSceneId << std::endl;
+                continue;
+            }
+            pScene destScene = itDest->second;
+
+            // Use string-based set_salida for escenarioSalidas map
+            originScene->set_salida(destScene, direction, true);
+
+            std::cout << "Connected: " << sceneId << " [" << direction << "] -> " << destSceneId << std::endl;
+        }
+    }
+
+    // Also process global connections array if present (bidirectional connections)
+    for (size_t i = 0; i < gameWorldData.connections.size(); ++i) {
+        const auto& conn = gameWorldData.connections[i];
+        auto itOrigin = sceneMap.find(conn.sceneIdOrigin);
+        auto itDest = sceneMap.find(conn.sceneIdDestination);
+
+        if (itOrigin == sceneMap.end() || itDest == sceneMap.end()) {
+            std::cerr << "Warning: Connection scenes not found: " << conn.sceneIdOrigin
+                      << " -> " << conn.sceneIdDestination << std::endl;
+            continue;
+        }
+
+        pScene originScene = itOrigin->second;
+        pScene destScene = itDest->second;
+
+        parametros::cardinal cardOrigin = originScene->stringToCardinal(conn.cardinalOrigin);
+        parametros::cardinal cardDest = destScene->stringToCardinal(conn.cardinalDestination);
+
+        // Use bidirectional connect for cardinal-based map
+        connect(originScene, cardOrigin, destScene, cardDest);
+
+        std::cout << "Connected (bidirectional): " << conn.sceneIdOrigin << " <-> " << conn.sceneIdDestination << std::endl;
+    }
 }
