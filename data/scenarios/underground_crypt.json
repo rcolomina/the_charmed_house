@@ -1,0 +1,91 @@
+{
+  "id": "sce_cripta",
+  "nombre": "La Cripta Subterránea",
+  "name": "The Underground Crypt",
+  "descripcion": "Has descendido a las entrañas de la tierra. Una cripta ancestral se revela ante ti, con sarcófagos de piedra alineados en nichos tallados en la roca. Calaveras apiladas forman paredes macabras. Llamas eternas arden en braseros de bronce, iluminando inscripciones que hablan de pactos oscuros. Este es el corazón de la maldición que aflige a la casa.",
+  "description": "You have descended into the bowels of the earth. An ancestral crypt reveals itself before you, with stone sarcophagi aligned in niches carved into the rock. Stacked skulls form macabre walls. Eternal flames burn in bronze braziers, illuminating inscriptions that speak of dark pacts. This is the heart of the curse that afflicts the house.",
+  "observacion": "El sarcófago central tiene el escudo de la familia que construyó la casa. La tapa está ligeramente abierta...",
+  "observation": "The central sarcophagus bears the crest of the family that built the house. The lid is slightly open...",
+  "imagePath": "./txt/scenes/cripta.txt",
+  "objetos": [
+    {
+      "id": "item_sarcofago",
+      "nombres": ["sarcófago", "sarcofago", "tumba", "sarcophagus"],
+      "descripcion": "Un sarcófago de mármol negro con la efigie de un noble tallada en su tapa.",
+      "description": "A black marble sarcophagus with the effigy of a nobleman carved on its lid.",
+      "propiedades": {
+        "portable": false,
+        "contenedor": true,
+        "peligroso": true,
+        "boss_area": true
+      },
+      "interacciones": {
+        "abrir": "La tapa se desliza con un gemido. Dentro yace un cuerpo perfectamente preservado... que abre los ojos.",
+        "examinar": "La inscripción dice: 'Aquí yace Lord Aldric Blackwood. Que su sueño sea eterno... o no.'"
+      }
+    },
+    {
+      "id": "item_calavera",
+      "nombres": ["calavera", "cráneo", "skull"],
+      "descripcion": "Una calavera humana con símbolos arcanos grabados en la frente.",
+      "description": "A human skull with arcane symbols carved into the forehead.",
+      "propiedades": {
+        "portable": true,
+        "magico": true,
+        "oraculo": true
+      },
+      "interacciones": {
+        "hablar": "La calavera cobra vida momentáneamente: 'La llave maestra rompe la maldición... o la sella para siempre.'",
+        "examinar": "Los símbolos brillan tenuemente. Esta calavera perteneció a alguien con conocimiento prohibido."
+      }
+    },
+    {
+      "id": "item_gema",
+      "nombres": ["gema", "piedra_preciosa", "gem", "joya"],
+      "descripcion": "Una gema carmesí del tamaño de un puño que pulsa con luz interior, como un corazón latiendo.",
+      "description": "A crimson gem the size of a fist that pulses with inner light, like a beating heart.",
+      "propiedades": {
+        "portable": true,
+        "magico": true,
+        "clave": true,
+        "valor": "incalculable"
+      },
+      "interacciones": {
+        "examinar": "La gema está caliente al tacto y late con un ritmo constante. Es el corazón cristalizado de algo antiguo.",
+        "usar": "Al colocar la gema en el altar, toda la cripta tiembla. El ritual puede comenzar."
+      }
+    },
+    {
+      "id": "item_llave_maestra",
+      "nombres": ["llave_maestra", "llave_dorada", "master_key"],
+      "descripcion": "Una llave de oro puro con dientes intrincados, guardada en un relicario de cristal.",
+      "description": "A pure gold key with intricate teeth, kept in a crystal reliquary.",
+      "propiedades": {
+        "portable": true,
+        "abre": "todas_las_puertas",
+        "final": true,
+        "decision": true
+      },
+      "interacciones": {
+        "examinar": "La llave tiene dos caras: una con un ángel, otra con un demonio. Representa una elección.",
+        "usar": "Con esta llave puedes liberar el alma atrapada... o condenarla para siempre. ¿Qué eliges?"
+      }
+    }
+  ],
+  "conexiones": {
+    "arriba": "sce_biblioteca",
+    "sur": "sce_sotano",
+    "portal": "sce_final"
+  },
+  "ambiente": {
+    "iluminacion": "llamas_eternas",
+    "sonidos": ["eco", "susurros_muertos", "latido"],
+    "temperatura": "helado"
+  },
+  "especial": {
+    "tipo": "boss_area",
+    "requisitos": ["gema", "llave_maestra"],
+    "final_bueno": "Usas la llave para liberar las almas. La casa se purifica y encuentras paz.",
+    "final_malo": "Usas la llave para sellar la maldición. Te conviertes en el nuevo guardián... por toda la eternidad."
+  }
+}

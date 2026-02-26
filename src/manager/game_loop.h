@@ -21,7 +21,8 @@ public:
              string& parametro2,
              int& contador_mal_comportamiento,
              function<void()> update_objects,
-             function<void()> update_exits);
+             function<void()> update_exits,
+             const string& language);
 
     void run();
 
@@ -35,6 +36,7 @@ private:
     int& contador_mal_comportamiento_;
     function<void()> update_objects_;
     function<void()> update_exits_;
+    string language_;
 
     void processInput();
     string get_descripcion_estado_actual();

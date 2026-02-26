@@ -1,0 +1,82 @@
+{
+  "id": "sce_jardin",
+  "nombre": "El Jardín Nocturno",
+  "name": "The Night Garden",
+  "descripcion": "Un jardín abandonado bajo la luz de la luna llena. Árboles muertos extienden sus ramas como dedos esqueléticos hacia el cielo nocturno. Una fuente rota en el centro ya no fluye, su agua estancada refleja la luna de manera inquietante. La niebla se arrastra entre las flores marchitas y las estatuas cubiertas de musgo.",
+  "description": "An abandoned garden under the full moon's light. Dead trees stretch their branches like skeletal fingers toward the night sky. A broken fountain in the center no longer flows, its stagnant water reflecting the moon in an unsettling way. Fog crawls between withered flowers and moss-covered statues.",
+  "observacion": "Entre la niebla, crees ver figuras moviéndose. ¿Son las estatuas... o algo más?",
+  "observation": "Through the fog, you think you see figures moving. Are they the statues... or something else?",
+  "imagePath": "./txt/scenes/jardin.txt",
+  "objetos": [
+    {
+      "id": "item_estatua",
+      "nombres": ["estatua", "figura", "statue"],
+      "descripcion": "Una estatua de piedra de un ángel llorando. Sus ojos parecen seguirte.",
+      "description": "A stone statue of a weeping angel. Its eyes seem to follow you.",
+      "propiedades": {
+        "portable": false,
+        "interactivo": true,
+        "misterioso": true
+      },
+      "interacciones": {
+        "examinar": "La estatua tiene una inscripción en su base: 'No parpadees'. Cuando miras de nuevo, la posición ha cambiado ligeramente.",
+        "tocar": "La piedra está helada al tacto. Por un momento, juras que sintió un latido."
+      }
+    },
+    {
+      "id": "item_fuente",
+      "nombres": ["fuente", "pileta", "fountain"],
+      "descripcion": "Una fuente ornamental con figuras de querubines. El agua está negra y estancada.",
+      "description": "An ornamental fountain with cherub figures. The water is black and stagnant.",
+      "propiedades": {
+        "portable": false,
+        "contenedor": true,
+        "agua_maldita": true
+      },
+      "interacciones": {
+        "examinar": "En el fondo de la fuente, algo brilla débilmente bajo el agua turbia.",
+        "buscar": "Introduces la mano en el agua helada y encuentras un medallón antiguo."
+      }
+    },
+    {
+      "id": "item_rosa_marchita",
+      "nombres": ["rosa", "rosa_marchita", "flor", "withered_rose"],
+      "descripcion": "Una rosa negra marchita que aún conserva un aroma dulce y enfermizo.",
+      "description": "A withered black rose that still retains a sweet, sickly aroma.",
+      "propiedades": {
+        "portable": true,
+        "magico": true,
+        "veneno": true
+      },
+      "interacciones": {
+        "oler": "El aroma es embriagador. Por un momento, ves visiones del pasado de la casa.",
+        "examinar": "Los pétalos están secos pero perfectamente preservados. Esta rosa no debería existir."
+      }
+    },
+    {
+      "id": "item_llave_oxidada",
+      "nombres": ["llave", "llave_oxidada", "rusty_key"],
+      "descripcion": "Una llave de hierro cubierta de óxido, medio enterrada junto a un árbol muerto.",
+      "description": "An iron key covered in rust, half-buried next to a dead tree.",
+      "propiedades": {
+        "portable": true,
+        "abre": "puerta_cripta"
+      },
+      "interacciones": {
+        "examinar": "La llave tiene un símbolo grabado: una calavera con alas. Parece abrir algo importante.",
+        "limpiar": "Al limpiar el óxido, descubres que la llave está hecha de plata ennegrecida."
+      }
+    }
+  ],
+  "conexiones": {
+    "norte": "sce_entrada",
+    "este": "sce_torre",
+    "sur": "sce_cripta",
+    "oeste": "sce_biblioteca"
+  },
+  "ambiente": {
+    "iluminacion": "luna_llena",
+    "sonidos": ["viento", "buhos", "susurros"],
+    "temperatura": "frio"
+  }
+}

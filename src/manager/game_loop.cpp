@@ -8,7 +8,8 @@ GameLoop::GameLoop(bool& continuar_loop,
                    string& parametro2,
                    int& contador_mal_comportamiento,
                    function<void()> update_objects,
-                   function<void()> update_exits)
+                   function<void()> update_exits,
+                   const string& language)
     : continuar_loop_(continuar_loop),
       escena_actual_(escena_actual),
       invocador_comandos_(invocador_comandos),
@@ -17,7 +18,8 @@ GameLoop::GameLoop(bool& continuar_loop,
       parametro2_(parametro2),
       contador_mal_comportamiento_(contador_mal_comportamiento),
       update_objects_(update_objects),
-      update_exits_(update_exits) {}
+      update_exits_(update_exits),
+      language_(language) {}
 
 void GameLoop::run() {
     bool primera_entrada = true;
@@ -52,13 +54,25 @@ void GameLoop::run() {
 
     //SALIDA DEL JUEGO
     if(contador_mal_comportamiento_ < 3) {
-        string goodbye_message = "GRACIAS POR JUGAR! :),TE ESPERO PRONTO DE VUELTA.";
+        string goodbye_message;
+        if(language_ == "en") {
+            goodbye_message = "THANKS FOR PLAYING! :) HOPE TO SEE YOU BACK SOON.";
+        } else {
+            goodbye_message = "GRACIAS POR JUGAR! :),TE ESPERO PRONTO DE VUELTA.";
+        }
         cout << endl << goodbye_message << endl << endl;
     } else {
-        cout << endl << endl <<
-            "Eres una desgracia humana mentalmente o no tienes" <<
-            " la sufiente madurez, así que vuelve tan sólo cuando hayas soluciodado ese asunto. ADIOS!.";
-        cout << endl << "ERES UN MALEDUCADO, NECESITAS CLASES DE MODALES." << endl << endl;
+        if(language_ == "en") {
+            cout << endl << endl <<
+                "You are a disgrace, you are not mentally mature enough," <<
+                " so come back only when you have solved that matter. GOODBYE!.";
+            cout << endl << "YOU ARE RUDE, YOU NEED MANNERS CLASSES." << endl << endl;
+        } else {
+            cout << endl << endl <<
+                "Eres una desgracia humana mentalmente o no tienes" <<
+                " la sufiente madurez, así que vuelve tan sólo cuando hayas soluciodado ese asunto. ADIOS!.";
+            cout << endl << "ERES UN MALEDUCADO, NECESITAS CLASES DE MODALES." << endl << endl;
+        }
     }
 }
 
@@ -98,7 +112,11 @@ string GameLoop::get_descripcion_estado_actual() {
     string descripcion = escena_actual_->examine();
     descripcion += "\n";
     if(escena_actual_->get_objetos_disponibles() != "") {
-        descripcion += "Puedes ver : \n";
+        if(language_ == "en") {
+            descripcion += "You can see: \n";
+        } else {
+            descripcion += "Puedes ver : \n";
+        }
         descripcion += escena_actual_->get_objetos_disponibles();
     }
     return descripcion;
