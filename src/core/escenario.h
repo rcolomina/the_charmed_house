@@ -1,5 +1,5 @@
-#ifndef _escenario_
-#define _escenerio_
+#ifndef _ESCENARIO_H_
+#define _ESCENARIO_H_
 
 #include <fstream> 
 #include <string>

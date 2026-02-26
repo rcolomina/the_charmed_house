@@ -2,6 +2,7 @@
 #define _GAME_STATE_
 
 #include <string>
+#include <vector>
 #include <memory>
 #include <functional>
 

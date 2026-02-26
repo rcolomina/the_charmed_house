@@ -23,7 +23,7 @@ EXECUTABLE := main
 OBJ_TINYXML := ${PATH_TINYXML}/tinystr.o ${PATH_TINYXML}/tinyxmlerror.o ${PATH_TINYXML}/tinyxml.o ${PATH_TINYXML}/tinyxmlparser.o
 
 # Find all .cpp source files recursively (excluding tests)
-SOURCES := $(shell find ${SRC_DIR} ${LIB_DIR} -name '*.cpp' ! -name '*_test.cpp')
+SOURCES := $(shell find ${SRC_DIR} ${LIB_DIR} -name '*.cpp' ! -name '*_test.cpp' ! -name 'test_*.cpp')
 OBJECTS := $(SOURCES:.cpp=.o)
 
 # Find all test files
@@ -31,7 +31,7 @@ TESTCPP := $(shell find ${SRC_DIR}/tests -name '*_test.cpp' 2>/dev/null)
 TEST := $(TESTCPP:.cpp=)
 
 # Objects for tests (everything except main.cpp and test files)
-SOURCETEST := $(shell find ${SRC_DIR} ${LIB_DIR} -name '*.cpp' ! -name '*_test.cpp' ! -name 'main.cpp')
+SOURCETEST := $(shell find ${SRC_DIR} ${LIB_DIR} -name '*.cpp' ! -name '*_test.cpp' ! -name 'test_*.cpp' ! -name 'main.cpp')
 OBJECTSTEST := $(SOURCETEST:.cpp=.o)
 
 .PHONY: all clean cleanall test

@@ -25,7 +25,8 @@
       "imagePath": "./txt/scenes/fronthouse.txt",
       "items": ["item02"],
       "exits": {
-        "norte": "sce002"
+        "west": "sce002",
+        "east": "sce003"
       }
     },
     "sce002": {
@@ -37,9 +38,10 @@
       ],
       "observation": "",
       "imagePath": "./txt/scenes/stones.txt",
-      "items": [],
+      "items": ["item01"],
       "exits": {
-        "sur": "sce001"
+        "east": "sce001",
+        "west": "sce004"
       }
     },
     "sce003": {
@@ -50,8 +52,10 @@
       ],
       "observation": "Looking carefully at one of the tombstones, you discover an inscription: L-R-L-L-R-R-L-R-L-R-R-R. Could they be dance steps?",
       "imagePath": "./txt/scenes/cementery.txt",
-      "items": [],
-      "exits": {}
+      "items": ["item05"],
+      "exits": {
+        "west": "sce001"
+      }
     },
     "sce004": {
       "id": "game.scenes.scene.sce004",
@@ -62,7 +66,10 @@
       "observation": "You can see that the object is a lever to pull anything",
       "imagePath": "./txt/scenes/arcoarboles.txt",
       "items": ["item04"],
-      "exits": {}
+      "exits": {
+        "east": "sce002",
+        "west": "sce005"
+      }
     },
     "sce005": {
       "id": "game.scenes.scene.sce005",
@@ -73,7 +80,10 @@
       "observation": "A small cavity seems to indicate that at one time it could have been some kind of key.",
       "imagePath": "./txt/scenes/island.txt",
       "items": ["item06"],
-      "exits": {}
+      "exits": {
+        "east": "sce004",
+        "west": "sce006"
+      }
     },
     "sce006": {
       "id": "game.scenes.scene.sce006",
@@ -84,7 +94,9 @@
       "observation": "Examining inside the house, you can find a stone mechanism that could contain something.",
       "imagePath": "./txt/scenes/ruimsLake.txt",
       "items": ["item07"],
-      "exits": {}
+      "exits": {
+        "east": "sce005"
+      }
     }
   },
   "items": {
@@ -263,9 +275,33 @@
   "connections": [
     {
       "sceneIdOrigin": "sce001",
-      "cardinalOrigin": "north",
+      "cardinalOrigin": "west",
       "sceneIdDestination": "sce002",
-      "cardinalDestination": "south"
+      "cardinalDestination": "east"
+    },
+    {
+      "sceneIdOrigin": "sce001",
+      "cardinalOrigin": "east",
+      "sceneIdDestination": "sce003",
+      "cardinalDestination": "west"
+    },
+    {
+      "sceneIdOrigin": "sce002",
+      "cardinalOrigin": "west",
+      "sceneIdDestination": "sce004",
+      "cardinalDestination": "east"
+    },
+    {
+      "sceneIdOrigin": "sce004",
+      "cardinalOrigin": "west",
+      "sceneIdDestination": "sce005",
+      "cardinalDestination": "east"
+    },
+    {
+      "sceneIdOrigin": "sce005",
+      "cardinalOrigin": "west",
+      "sceneIdDestination": "sce006",
+      "cardinalDestination": "east"
     }
   ]
 }
