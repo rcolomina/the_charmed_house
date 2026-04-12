@@ -1,6 +1,20 @@
-# The Charmed House
+# The Charmed House Engine
 
-Game Engine to create Interactive Adventures.
+## Purpose
+
+This repository provides an engine for generating interactive game adventures from a declarative set of configuration files and assets.
+
+## Interactive Game Adventures
+
+The engine enables players to experience interactive adventures through a command-line interface, interacting directly with a virtual world generated from configuration files.
+
+Currently, the engine supports Linux, with the potential to expand to other platforms in the future.
+
+At its core, the system acts as a parser that processes structured specification files describing all elements of a game adventure—such as scenes, objects, characters, and, most importantly, their interactions.
+
+## Project Example
+
+*The Charmed House* is the reference project that inspired and gives its name to this repository.
 
 ```
   .0000000000000000000KKKKKKKKKKKKKKKKKKKXXXXXXXXXXXXXXNNNXXWNNWWMMMWNNNNNNNNWWMMMMMMM
